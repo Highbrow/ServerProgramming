@@ -1,0 +1,13 @@
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.LoginForm.resources
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.Properties.Resources.resources
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.csproj.GenerateResource.Cache
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\bin\Debug\WarLord_Server_GUI.exe.config
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\bin\Debug\WarLord_Server_GUI.exe
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\bin\Debug\WarLord_Server_GUI.pdb
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\bin\Debug\Alchemy.dll
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.Form1.resources
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.exe
+D:\Work\VSWorkSpace\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.pdb
+D:\workspace\WarLord_Server_GUI\WarLord_Server_GUI\bin\Debug\WarLord_Server_GUI.exe.config
+D:\workspace\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.exe
+D:\workspace\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.pdb
