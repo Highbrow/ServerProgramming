@@ -31,35 +31,40 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.llb_client = new System.Windows.Forms.Label();
+            this.lb_ClientCounter = new System.Windows.Forms.Label();
+            this.LogBox = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.serverCheck_btn = new System.Windows.Forms.Button();
+            this.serverStop_btn = new System.Windows.Forms.Button();
+            this.serverStart_btn = new System.Windows.Forms.Button();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar2 = new System.Windows.Forms.ToolStripProgressBar();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.serverStart_btn = new System.Windows.Forms.Button();
-            this.serverStop_btn = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.statusStrip2.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -81,6 +86,12 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "file";
             // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+            this.testToolStripMenuItem.Text = "test";
+            // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -88,6 +99,12 @@
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "edit";
+            // 
+            // testToolStripMenuItem1
+            // 
+            this.testToolStripMenuItem1.Name = "testToolStripMenuItem1";
+            this.testToolStripMenuItem1.Size = new System.Drawing.Size(93, 22);
+            this.testToolStripMenuItem1.Text = "test";
             // 
             // toolStrip1
             // 
@@ -137,10 +154,11 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainer1.Panel1.Controls.Add(this.LogBox);
             this.splitContainer1.Panel1.Controls.Add(this.panel1);
             this.splitContainer1.Panel1.Controls.Add(this.flowLayoutPanel1);
             this.splitContainer1.Panel1.Controls.Add(this.panel2);
-            this.splitContainer1.Panel1.Controls.Add(this.listBox1);
             this.splitContainer1.Panel1.Controls.Add(this.statusStrip1);
             // 
             // splitContainer1.Panel2
@@ -149,6 +167,104 @@
             this.splitContainer1.Size = new System.Drawing.Size(1008, 513);
             this.splitContainer1.SplitterDistance = 516;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 38.46154F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.53846F));
+            this.tableLayoutPanel1.Controls.Add(this.llb_client, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lb_ClientCounter, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(332, 139);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(182, 121);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // llb_client
+            // 
+            this.llb_client.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.llb_client.AutoSize = true;
+            this.llb_client.Location = new System.Drawing.Point(4, 14);
+            this.llb_client.Name = "llb_client";
+            this.llb_client.Size = new System.Drawing.Size(61, 12);
+            this.llb_client.TabIndex = 0;
+            this.llb_client.Text = "접속자수 : ";
+            // 
+            // lb_ClientCounter
+            // 
+            this.lb_ClientCounter.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lb_ClientCounter.AutoSize = true;
+            this.lb_ClientCounter.Location = new System.Drawing.Point(73, 14);
+            this.lb_ClientCounter.Name = "lb_ClientCounter";
+            this.lb_ClientCounter.Size = new System.Drawing.Size(11, 12);
+            this.lb_ClientCounter.TabIndex = 1;
+            this.lb_ClientCounter.Text = "0";
+            // 
+            // LogBox
+            // 
+            this.LogBox.Location = new System.Drawing.Point(4, 267);
+            this.LogBox.Multiline = true;
+            this.LogBox.Name = "LogBox";
+            this.LogBox.Size = new System.Drawing.Size(321, 219);
+            this.LogBox.TabIndex = 7;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.serverCheck_btn);
+            this.panel1.Controls.Add(this.serverStop_btn);
+            this.panel1.Controls.Add(this.serverStart_btn);
+            this.panel1.Location = new System.Drawing.Point(332, 45);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(181, 215);
+            this.panel1.TabIndex = 6;
+            // 
+            // serverCheck_btn
+            // 
+            this.serverCheck_btn.Location = new System.Drawing.Point(102, 62);
+            this.serverCheck_btn.Name = "serverCheck_btn";
+            this.serverCheck_btn.Size = new System.Drawing.Size(75, 23);
+            this.serverCheck_btn.TabIndex = 2;
+            this.serverCheck_btn.Text = "CHECK";
+            this.serverCheck_btn.UseVisualStyleBackColor = true;
+            this.serverCheck_btn.Click += new System.EventHandler(this.checkServer_btn_Click);
+            // 
+            // serverStop_btn
+            // 
+            this.serverStop_btn.Location = new System.Drawing.Point(102, 33);
+            this.serverStop_btn.Name = "serverStop_btn";
+            this.serverStop_btn.Size = new System.Drawing.Size(75, 23);
+            this.serverStop_btn.TabIndex = 1;
+            this.serverStop_btn.Text = "STOP";
+            this.serverStop_btn.UseVisualStyleBackColor = true;
+            this.serverStop_btn.Click += new System.EventHandler(this.serverStop_btn_Click);
+            // 
+            // serverStart_btn
+            // 
+            this.serverStart_btn.Location = new System.Drawing.Point(102, 3);
+            this.serverStart_btn.Name = "serverStart_btn";
+            this.serverStart_btn.Size = new System.Drawing.Size(75, 23);
+            this.serverStart_btn.TabIndex = 0;
+            this.serverStart_btn.Text = "START";
+            this.serverStart_btn.UseVisualStyleBackColor = true;
+            this.serverStart_btn.Click += new System.EventHandler(this.serverStart_btn_Click);
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 45);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(321, 215);
+            this.flowLayoutPanel1.TabIndex = 5;
+            // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(4, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(512, 36);
+            this.panel2.TabIndex = 4;
             // 
             // statusStrip1
             // 
@@ -194,70 +310,6 @@
             this.toolStripProgressBar2.Name = "toolStripProgressBar2";
             this.toolStripProgressBar2.Size = new System.Drawing.Size(100, 16);
             // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(3, 268);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(322, 220);
-            this.listBox1.TabIndex = 1;
-            // 
-            // panel2
-            // 
-            this.panel2.Location = new System.Drawing.Point(4, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(512, 36);
-            this.panel2.TabIndex = 4;
-            // 
-            // testToolStripMenuItem
-            // 
-            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.testToolStripMenuItem.Text = "test";
-            // 
-            // testToolStripMenuItem1
-            // 
-            this.testToolStripMenuItem1.Name = "testToolStripMenuItem1";
-            this.testToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.testToolStripMenuItem1.Text = "test";
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 45);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(321, 215);
-            this.flowLayoutPanel1.TabIndex = 5;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.serverStop_btn);
-            this.panel1.Controls.Add(this.serverStart_btn);
-            this.panel1.Location = new System.Drawing.Point(332, 45);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(181, 215);
-            this.panel1.TabIndex = 6;
-            // 
-            // serverStart_btn
-            // 
-            this.serverStart_btn.Location = new System.Drawing.Point(102, 3);
-            this.serverStart_btn.Name = "serverStart_btn";
-            this.serverStart_btn.Size = new System.Drawing.Size(75, 23);
-            this.serverStart_btn.TabIndex = 0;
-            this.serverStart_btn.Text = "START";
-            this.serverStart_btn.UseVisualStyleBackColor = true;
-            this.serverStart_btn.Click += new System.EventHandler(this.serverStart_btn_Click);
-            // 
-            // serverStop_btn
-            // 
-            this.serverStop_btn.Location = new System.Drawing.Point(102, 33);
-            this.serverStop_btn.Name = "serverStop_btn";
-            this.serverStop_btn.Size = new System.Drawing.Size(75, 23);
-            this.serverStop_btn.TabIndex = 1;
-            this.serverStop_btn.Text = "STOP";
-            this.serverStop_btn.UseVisualStyleBackColor = true;
-            this.serverStop_btn.Click += new System.EventHandler(this.serverStop_btn_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -270,6 +322,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -280,11 +333,13 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.statusStrip2.ResumeLayout(false);
             this.statusStrip2.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -306,7 +361,6 @@
         private System.Windows.Forms.StatusStrip statusStrip2;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar2;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem1;
         private System.Windows.Forms.Panel panel2;
@@ -314,6 +368,11 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button serverStop_btn;
         private System.Windows.Forms.Button serverStart_btn;
+        private System.Windows.Forms.TextBox LogBox;
+        private System.Windows.Forms.Button serverCheck_btn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label llb_client;
+        private System.Windows.Forms.Label lb_ClientCounter;
 
     }
 }

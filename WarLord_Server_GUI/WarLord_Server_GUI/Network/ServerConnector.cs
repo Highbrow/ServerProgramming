@@ -12,13 +12,16 @@ namespace WarLord_Server_GUI.Network
 {
     class ServerConnector
     {
-        protected static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
+        public static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
         public WebSocketServer aServer;
         public static Connection conn;
+        public MainForm _mf;
 
-        public ServerConnector()
+        //=====[소켓 생성 및 초기화 : 본 클래스 생성자]=====
+        public ServerConnector(MainForm mf)
         {
-            aServer = new WebSocketServer(9001, System.Net.IPAddress.Any)
+            this._mf = mf;
+            aServer = new WebSocketServer(9001, System.Net.IPAddress.Any)   //소켓 생성
             {
                 OnReceive = OnReceive,
                 OnSend = OnSend,
@@ -26,93 +29,96 @@ namespace WarLord_Server_GUI.Network
                 OnDisconnect = OnDisconnect,
                 TimeOut = new TimeSpan(0, 5, 0)
             };
-            /*
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Title = "Warlord WebSocket Server";
-            Console.WriteLine("Running Warlord WebSocket Server ...");
-            Console.WriteLine("[Type \"exit\" and hit enter to stop the server]");
-
-            var command = string.Empty;
-            while (command != "exit")
-            {
-                command = Console.ReadLine();
-            }
-            */
         }
-        public int StartServer()
+        //=====[서버 시작]=====
+        public void StartServer()
         {
             try
             {
                 aServer.Start();
-            }
-            catch (Exception e) {
-                MessageBox.Show(e.Message.ToString());
-                return -1;  //연결 실패 : -1
-            }
-            return 1;   //연결 성공 : 1
-        }
-        public int StopServer()
-        {
-            try
-            {
-                aServer.Stop();
+
+                _mf.LogOutPut("Running Warlord Server..");
+                _mf.LogOutPut("[hit Stop Button to stop the server]");
+                MessageBox.Show("서버를 시작합니다.");
+                _mf._isRunningServer = true;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message.ToString());
-                return -1;  //연결 실패 : -1
             }
-            return 1;   //연결 성공 : 1
         }
-
-        public static void OnConnect(UserContext aContext)
-        {
-            Console.WriteLine("Client Connected From : " + aContext.ClientAddress.ToString());
-            var conn = new Connection { Context = aContext };
-            OnlineConnections.TryAdd(aContext.ClientAddress.ToString(), conn);
-        }
-
-        public static void OnReceive(UserContext aContext)
+        //=====[서버 종료]=====
+        public void StopServer()
         {
             try
             {
-                Console.WriteLine("Data Received From [" + aContext.ClientAddress.ToString() + "] - " + aContext.DataFrame.ToString());
+                aServer.Stop();
+                //OnlineConnections.Clear();
+
+                _mf.LogOutPut("Stop Server..");
+                MessageBox.Show("서버를 중지합니다.");
+                _mf._isRunningServer = false;
+                
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message.ToString());
+            }
+        }
+        //=====[연결]=====
+        public void OnConnect(UserContext aContext)
+        {
+            _mf.LogOutPut("Client Connected From : " + aContext.ClientAddress.ToString());
+            var conn = new Connection { Context = aContext };   //Connection
+            OnlineConnections.TryAdd(aContext.ClientAddress.ToString(), conn);
+        }
+
+        //=====[데이터 수신]=====
+        public void OnReceive(UserContext aContext)
+        {
+            try
+            {
+                _mf.LogOutPut("Data Received From [" + aContext.ClientAddress.ToString() + "] - " + aContext.DataFrame.ToString());
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message.ToString());
+                _mf.LogOutPut(ex.Message.ToString());
             }
 
         }
-        public static void OnSend(UserContext aContext)
+        //=====[데이터 송신]=====
+        public void OnSend(UserContext aContext)
         {
-            Console.WriteLine("Data Sent To : " + aContext.ClientAddress.ToString());
+            _mf.LogOutPut("Data Sent To : " + aContext.ClientAddress.ToString());
         }
 
-        public static void OnDisconnect(UserContext aContext)
+        //=====[연결 끊김]=====
+        public void OnDisconnect(UserContext aContext)
         {
-            Console.WriteLine("Client Disconnected : " + aContext.ClientAddress.ToString());
+            _mf.LogOutPut("Client Disconnected : " + aContext.ClientAddress.ToString());
 
             OnlineConnections.TryRemove(aContext.ClientAddress.ToString(), out conn);
             try
             {
-                conn.timer.Dispose();
+                //conn.timer.Dispose();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message.ToString());
+                _mf.LogOutPut(ex.Message.ToString());
             }
-
         }
     }
 
+    /**********************************************
+    ***************[[ Connection ]]****************
+    ***********************************************/
     public class Connection
     {
-        public System.Threading.Timer timer;
+        //public System.Threading.Timer timer;
         public UserContext Context { get; set; }
         public Connection()
         {
-            this.timer = new System.Threading.Timer(this.TimerCallback, null, 0, 1000);
+            //this.timer = new System.Threading.Timer(this.TimerCallback, null, 0, 1000);
         }
 
         private void TimerCallback(object state)

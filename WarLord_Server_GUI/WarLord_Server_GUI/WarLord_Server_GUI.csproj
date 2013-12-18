@@ -65,17 +65,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Network\ServerConnector.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -83,11 +83,11 @@
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\Debug\WarLord_Server_GUI.Form1.resources" />
     <EmbeddedResource Include="obj\Debug\WarLord_Server_GUI.Properties.Resources.resources" />
@@ -124,6 +124,7 @@
     <Content Include="bin\Debug\WarLord_Server_GUI.exe" />
     <Content Include="bin\Debug\WarLord_Server_GUI.pdb" />
     <Content Include="bin\Debug\WarLord_Server_GUI.vshost.exe" />
+    <Content Include="lib\Alchemy.dll" />
     <Content Include="obj\Debug\WarLord_Server_GUI.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\WarLord_Server_GUI.exe" />
     <Content Include="obj\Debug\WarLord_Server_GUI.pdb" />
