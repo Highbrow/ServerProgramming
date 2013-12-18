@@ -55,7 +55,18 @@ namespace WarLord_Server_GUI
             _sc.StopServer();   //서버 종료
             RefreshStatus();    //상태 갱신
         }
+        private void MainForm_Load(object sender, System.EventArgs e)
+        {
+            int scrW = Screen.PrimaryScreen.WorkingArea.Width;
+            int scrH = Screen.PrimaryScreen.WorkingArea.Height;
+            int thisW = this.Width;
+            int thisH = this.Height;
+            int centerW = (scrW - thisW) / 2;
+            int centerH = (scrH - thisH) / 2;
+            this.DesktopLocation = new Point(centerW, centerH);
+        }
 
+        //=====[ 상단 종료 버튼 이벤트 ]=====
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult result = MessageBox.Show("Abort your Server?", "Notice", MessageBoxButtons.YesNo);

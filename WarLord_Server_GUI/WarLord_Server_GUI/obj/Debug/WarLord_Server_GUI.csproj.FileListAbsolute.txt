@@ -15,10 +15,10 @@ D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_G
 D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\bin\Debug\WarLord_Server_GUI.exe
 D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\bin\Debug\WarLord_Server_GUI.pdb
 D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\bin\Debug\Alchemy.dll
+D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.csprojResolveAssemblyReference.cache
 D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.LoginForm.resources
 D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.MainForm.resources
 D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.Properties.Resources.resources
 D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.csproj.GenerateResource.Cache
 D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.exe
 D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.pdb
-D:\Highbrow\GitHub\Warlord\ServerProgramming\WarLord_Server_GUI\WarLord_Server_GUI\obj\Debug\WarLord_Server_GUI.csprojResolveAssemblyReference.cache

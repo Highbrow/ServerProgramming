@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WarLord_Server_GUI.GameLogic_A;
 
 namespace WarLord_Server_GUI.Network
 {
@@ -15,10 +16,12 @@ namespace WarLord_Server_GUI.Network
         //=====[소켓 생성 및 초기화]=====
         public MainForm _mf;
         public WebSocketServer aServer;
-        public static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
         public static Connection conn;
-        
-        public void ConnectServer(MainForm mf){
+        public static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
+
+
+        public void ConnectServer(MainForm mf)
+        {
             this._mf = mf;
             aServer = new WebSocketServer(9001, System.Net.IPAddress.Any)   //소켓 생성
             {
@@ -29,7 +32,7 @@ namespace WarLord_Server_GUI.Network
                 TimeOut = new TimeSpan(0, 5, 0)
             };
         }
-        
+
         //=====[서버 시작]=====
         public void StartServer()
         {
@@ -58,7 +61,7 @@ namespace WarLord_Server_GUI.Network
                 _mf.LogOutPut("Stop Server..");
                 MessageBox.Show("서버를 중지합니다.");
                 _mf._isRunningServer = false;
-                
+
             }
             catch (Exception e)
             {
@@ -78,7 +81,22 @@ namespace WarLord_Server_GUI.Network
         {
             try
             {
-                _mf.LogOutPut("Data Received From [" + aContext.ClientAddress.ToString() + "] - " + aContext.DataFrame.ToString());
+                List<ArraySegment<byte>> data = aContext.DataFrame.AsRaw();
+                byte[] command_code = { 0x40, 0x20, 0x00, 0x00, 0x00 };
+                byte[] command_code2 = { 0x40, 0x10, 0x00, 0x00, 0x00 };
+                foreach (var item in data)
+                {
+                    if (item.SequenceEqual(command_code))
+                    {
+                        GameReady.GameReadyConnections.TryAdd(aContext.ClientAddress.ToString(), conn);
+                        _mf.LogOutPut("Data Received From [" + aContext.ClientAddress.ToString() + "] - ");
+                    }
+                    if (item.SequenceEqual(command_code2))
+                    {
+                        GameReady.GameReadyConnections.TryRemove(aContext.ClientAddress.ToString(),out conn);
+                        _mf.LogOutPut("Data Received From [" + aContext.ClientAddress.ToString() + "] - ");
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -125,32 +143,6 @@ namespace WarLord_Server_GUI.Network
                     return instance;
                 }
             }
-        }
-    }
-
-    /**********************************************
-    ***************[[ Connection ]]****************
-    ***********************************************/
-    public class Connection
-    {
-        //public System.Threading.Timer timer;
-        public UserContext Context { get; set; }
-        public Connection()
-        {
-            //this.timer = new System.Threading.Timer(this.TimerCallback, null, 0, 1000);
-        }
-
-        private void TimerCallback(object state)
-        {
-            try
-            {
-                Context.Send("[" + Context.ClientAddress.ToString() + "] " + System.DateTime.Now.ToString());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
         }
     }
 }
