@@ -13,18 +13,17 @@ namespace WarLord_Server_GUI
 {
     public partial class MainForm : Form
     {
-
-        private ServerConnector _sc;
+        private ServerConnector _sc;    //서버 네트웍 관련 오브젝트
 
         public MainForm()
         {
             InitializeComponent();
-            _sc = new ServerConnector(this);
+            _sc = ServerConnector.Instance;
+            _sc.ConnectServer(this);
             RefreshStatus();
         }
 
         //=========[ 서버 상태 갱신 ]=======
-
         public bool _isRunningServer = false;
         public void RefreshStatus()
         {
@@ -32,17 +31,15 @@ namespace WarLord_Server_GUI
             {
                 serverStart_btn.Enabled = false;    //시작버튼 disabled
                 serverStop_btn.Enabled = true;      //종료버튼 enabled
-                //serverCheck_btn.Enabled = true;
+                //serverCheck_btn.Enabled = true;   //체크버튼 enabled
             }
             else
             {
                 serverStart_btn.Enabled = true;     //시작버튼 enabled
                 serverStop_btn.Enabled = false;     //종료버튼 disabled
-                //serverCheck_btn.Enabled = false;
+                //serverCheck_btn.Enabled = false;  //체크버튼 disabled
             }
         }
-
-
 
         /**********************************************
         *************[[ Button Event ]]****************

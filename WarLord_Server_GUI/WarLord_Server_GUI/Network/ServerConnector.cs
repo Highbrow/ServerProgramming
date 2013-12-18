@@ -12,14 +12,13 @@ namespace WarLord_Server_GUI.Network
 {
     class ServerConnector
     {
-        public static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
-        public WebSocketServer aServer;
-        public static Connection conn;
+        //=====[소켓 생성 및 초기화]=====
         public MainForm _mf;
-
-        //=====[소켓 생성 및 초기화 : 본 클래스 생성자]=====
-        public ServerConnector(MainForm mf)
-        {
+        public WebSocketServer aServer;
+        public static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
+        public static Connection conn;
+        
+        public void ConnectServer(MainForm mf){
             this._mf = mf;
             aServer = new WebSocketServer(9001, System.Net.IPAddress.Any)   //소켓 생성
             {
@@ -30,6 +29,7 @@ namespace WarLord_Server_GUI.Network
                 TimeOut = new TimeSpan(0, 5, 0)
             };
         }
+        
         //=====[서버 시작]=====
         public void StartServer()
         {
@@ -105,6 +105,25 @@ namespace WarLord_Server_GUI.Network
             catch (Exception ex)
             {
                 _mf.LogOutPut(ex.Message.ToString());
+            }
+        }
+        /**********************************************
+        ***********[[ Singleton 적용 ]]****************
+        ***********************************************/
+        static ServerConnector instance = null;
+        static readonly object padlock = new object();
+        public static ServerConnector Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new ServerConnector();
+                    }
+                    return instance;
+                }
             }
         }
     }
