@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alchemy.Classes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +12,23 @@ namespace WarLord_Server_GUI.Managers
     class CommandProcessManager : CommandLibrary
     {
 
-        protected override void cmdF_ReadyCancel()
+        protected override void cmdF_ReadyCancel(ref UserContext aContext)
         {
-            MessageBox.Show("readyCancel");
+            //MessageBox.Show("readyCancel");
+            aContext.Send("readyCancel");
         }
 
-        protected override void cmdF_ReadyFind()
+        protected override void cmdF_ReadyFind(ref UserContext aContext)
         {
-            MessageBox.Show("readyFind");
+            //MessageBox.Show("readyFind");
+            aContext.Send("readyFind");
         }
 
 
-        public void CommandProcess(List<ArraySegment<byte>> cmd)
+        public void CommandProcess(ref UserContext aContext)
         {
             StringBuilder command = new StringBuilder();
-            foreach (var item in cmd)
+            foreach (var item in aContext.DataFrame.AsRaw())
             {
                 foreach (var t in item)
                 {
@@ -34,7 +37,7 @@ namespace WarLord_Server_GUI.Managers
             }
             Delegate dg;
             CommandDic.TryGetValue(command.ToString(),out dg);
-            dg.DynamicInvoke();
+            dg.DynamicInvoke(aContext);
         }
 
         /**********************************************

@@ -83,13 +83,12 @@ namespace WarLord_Server_GUI.Network
         {
             try
             {
-                _cpm.CommandProcess(aContext.DataFrame.AsRaw());    //CPM에게 수신데이터 전송
+                _cpm.CommandProcess(ref aContext);    //CPM에게 수신데이터 전송
             }
             catch (Exception ex)
             {
                 _mf.LogOutPut(ex.Message.ToString());
             }
-
         }
         //=====[데이터 송신]=====
         public void OnSend(UserContext aContext)

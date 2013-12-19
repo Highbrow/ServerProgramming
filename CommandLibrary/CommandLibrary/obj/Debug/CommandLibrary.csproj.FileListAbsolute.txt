@@ -4,5 +4,7 @@ c:\users\administrator\documents\visual studio 2013\Projects\CommandLibrary\Comm
 c:\users\administrator\documents\visual studio 2013\Projects\CommandLibrary\CommandLibrary\obj\Debug\CommandLibrary.pdb
 D:\Highbrow\GitHub\Warlord\ServerProgramming\CommandLibrary\CommandLibrary\bin\Debug\CommandLibrary.dll
 D:\Highbrow\GitHub\Warlord\ServerProgramming\CommandLibrary\CommandLibrary\bin\Debug\CommandLibrary.pdb
+D:\Highbrow\GitHub\Warlord\ServerProgramming\CommandLibrary\CommandLibrary\bin\Debug\Alchemy.dll
+D:\Highbrow\GitHub\Warlord\ServerProgramming\CommandLibrary\CommandLibrary\obj\Debug\CommandLibrary.csprojResolveAssemblyReference.cache
 D:\Highbrow\GitHub\Warlord\ServerProgramming\CommandLibrary\CommandLibrary\obj\Debug\CommandLibrary.dll
 D:\Highbrow\GitHub\Warlord\ServerProgramming\CommandLibrary\CommandLibrary\obj\Debug\CommandLibrary.pdb

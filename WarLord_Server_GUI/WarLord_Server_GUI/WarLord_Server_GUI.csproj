@@ -111,6 +111,7 @@
     <None Include="bin\Debug\WarLord_Server_GUI.vshost.exe.config" />
     <None Include="bin\Debug\WarLord_Server_GUI.vshost.exe.manifest" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="obj\Debug\WarLord_Server_GUI.csproj.GenerateResource.Cache" />

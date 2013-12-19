@@ -55,6 +55,7 @@ namespace WarLord_Server_GUI
             _sc.StopServer();   //서버 종료
             RefreshStatus();    //상태 갱신
         }
+        //=====[ Form 로드시 설정 이벤트 ]=====
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             int scrW = Screen.PrimaryScreen.WorkingArea.Width;
@@ -100,7 +101,6 @@ namespace WarLord_Server_GUI
             {
                 LogBox.AppendText(text + "\n");
             }
-            
         }
         
         //=========[ 나중에 실시간 작업 할 내용, 임의의 체크 버튼 ]=======
