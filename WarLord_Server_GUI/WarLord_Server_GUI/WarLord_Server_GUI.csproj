@@ -50,8 +50,12 @@
     <StartupObject>WarLord_Server_GUI.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Alchemy">
-      <HintPath>..\..\..\..\Download\Highbrow\Highbrow\Project\DragonWarLord\프로그램\lib\[windows_server]Alchemy-Websocket\Alchemy.dll</HintPath>
+    <Reference Include="Alchemy, Version=2.2.0.238, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Alchemy.dll</HintPath>
+    </Reference>
+    <Reference Include="CommandLibrary">
+      <HintPath>lib\CommandLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,7 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameLogic_A\GameReady.cs" />
+    <Compile Include="GameLogic_A\RoomManager.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +82,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Managers\CommandProcessManager.cs" />
     <Compile Include="Network\Connection.cs" />
     <Compile Include="Network\ServerConnector.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />

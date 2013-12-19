@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarLord_Server_GUI.GameLogic_A;
+using WarLord_Server_GUI.Managers;
 
 namespace WarLord_Server_GUI.Network
 {
@@ -15,15 +16,16 @@ namespace WarLord_Server_GUI.Network
     {
         //=====[소켓 생성 및 초기화]=====
         public MainForm _mf;
-        public WebSocketServer aServer;
+        public CommandProcessManager _cpm;
+        public WebSocketServer _aServer;
         public static Connection conn;
         public static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
-
 
         public void ConnectServer(MainForm mf)
         {
             this._mf = mf;
-            aServer = new WebSocketServer(9001, System.Net.IPAddress.Any)   //소켓 생성
+            this._cpm = CommandProcessManager.Instance;
+            _aServer = new WebSocketServer(9001, System.Net.IPAddress.Any)   //소켓 생성
             {
                 OnReceive = OnReceive,
                 OnSend = OnSend,
@@ -38,7 +40,7 @@ namespace WarLord_Server_GUI.Network
         {
             try
             {
-                aServer.Start();
+                _aServer.Start();
 
                 _mf.LogOutPut("Running Warlord Server..");
                 _mf.LogOutPut("[hit Stop Button to stop the server]");
@@ -55,7 +57,7 @@ namespace WarLord_Server_GUI.Network
         {
             try
             {
-                aServer.Stop();
+                _aServer.Stop();
                 //OnlineConnections.Clear();
 
                 _mf.LogOutPut("Stop Server..");
@@ -81,22 +83,7 @@ namespace WarLord_Server_GUI.Network
         {
             try
             {
-                List<ArraySegment<byte>> data = aContext.DataFrame.AsRaw();
-                byte[] command_code = { 0x40, 0x20, 0x00, 0x00, 0x00 };
-                byte[] command_code2 = { 0x40, 0x10, 0x00, 0x00, 0x00 };
-                foreach (var item in data)
-                {
-                    if (item.SequenceEqual(command_code))
-                    {
-                        GameReady.GameReadyConnections.TryAdd(aContext.ClientAddress.ToString(), conn);
-                        _mf.LogOutPut("Data Received From [" + aContext.ClientAddress.ToString() + "] - ");
-                    }
-                    if (item.SequenceEqual(command_code2))
-                    {
-                        GameReady.GameReadyConnections.TryRemove(aContext.ClientAddress.ToString(),out conn);
-                        _mf.LogOutPut("Data Received From [" + aContext.ClientAddress.ToString() + "] - ");
-                    }
-                }
+                _cpm.CommandProcess(aContext.DataFrame.AsRaw());    //CPM에게 수신데이터 전송
             }
             catch (Exception ex)
             {
@@ -128,7 +115,7 @@ namespace WarLord_Server_GUI.Network
         /**********************************************
         ***********[[ Singleton 적용 ]]****************
         ***********************************************/
-        static ServerConnector instance = null;
+        static ServerConnector ServerConnectorInstance = null;
         static readonly object padlock = new object();
         public static ServerConnector Instance
         {
@@ -136,11 +123,11 @@ namespace WarLord_Server_GUI.Network
             {
                 lock (padlock)
                 {
-                    if (instance == null)
+                    if (ServerConnectorInstance == null)
                     {
-                        instance = new ServerConnector();
+                        ServerConnectorInstance = new ServerConnector();
                     }
-                    return instance;
+                    return ServerConnectorInstance;
                 }
             }
         }
