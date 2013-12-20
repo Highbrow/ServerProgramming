@@ -69,7 +69,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameLogic_A\RoomManager.cs" />
+    <Compile Include="GameLogic_A\GameRoom.cs" />
+    <Compile Include="GameLogic_A\GameRoomManager.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,13 +101,9 @@
     <EmbeddedResource Include="obj\Debug\WarLord_Server_GUI.Properties.Resources.resources" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="bin\Debug\WarLord_Server_GUI.exe.config" />
     <None Include="bin\Debug\WarLord_Server_GUI.vshost.exe.config" />
     <None Include="bin\Debug\WarLord_Server_GUI.vshost.exe.manifest" />
@@ -120,6 +117,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -137,6 +139,7 @@
     <Content Include="obj\Debug\WarLord_Server_GUI.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\WarLord_Server_GUI.exe" />
     <Content Include="obj\Debug\WarLord_Server_GUI.pdb" />
+    <None Include="Resources\ghost.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="obj\Debug\TempPE\" />

@@ -2,12 +2,7 @@
 using Alchemy.Classes;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WarLord_Server_GUI.GameLogic_A;
 using WarLord_Server_GUI.Managers;
 
 namespace WarLord_Server_GUI.Network
@@ -58,7 +53,6 @@ namespace WarLord_Server_GUI.Network
             try
             {
                 _aServer.Stop();
-                //OnlineConnections.Clear();
 
                 _mf.LogOutPut("Stop Server..");
                 MessageBox.Show("서버를 중지합니다.");
@@ -74,6 +68,7 @@ namespace WarLord_Server_GUI.Network
         public void OnConnect(UserContext aContext)
         {
             _mf.LogOutPut("Client Connected From : " + aContext.ClientAddress.ToString());
+            _mf.addClientMonitor(aContext.ClientAddress.ToString());
             var conn = new Connection { Context = aContext };   //Connection
             OnlineConnections.TryAdd(aContext.ClientAddress.ToString(), conn);
         }
@@ -97,13 +92,18 @@ namespace WarLord_Server_GUI.Network
         }
 
         //=====[연결 끊김]=====
+
+        public delegate void dDisconnectUser(ref UserContext user);
+        public static event dDisconnectUser eventDisconnectUser;
         public void OnDisconnect(UserContext aContext)
         {
             _mf.LogOutPut("Client Disconnected : " + aContext.ClientAddress.ToString());
-
-            OnlineConnections.TryRemove(aContext.ClientAddress.ToString(), out conn);
+            _mf.delClientMonitor(aContext.ClientAddress.ToString());
+            //??== 상태에 따른 조건 처리 필요
             try
             {
+                //eventDisconnectUser(ref aContext); //이벤트 발생
+                OnlineConnections.TryRemove(aContext.ClientAddress.ToString(), out conn);
                 //conn.timer.Dispose();
             }
             catch (Exception ex)
@@ -111,6 +111,7 @@ namespace WarLord_Server_GUI.Network
                 _mf.LogOutPut(ex.Message.ToString());
             }
         }
+
         /**********************************************
         ***********[[ Singleton 적용 ]]****************
         ***********************************************/

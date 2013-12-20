@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarLord_Server_GUI.Network;
@@ -14,6 +15,8 @@ namespace WarLord_Server_GUI
     public partial class MainForm : Form
     {
         private ServerConnector _sc;    //서버 네트웍 관련 오브젝트
+        delegate void invokeProc();     //쓰레드로부터 안전한 처리를 위한 invoke delegate
+        delegate void invokeProctext(string text);  //쓰레드로부터 안전한 처리를 위한 invoke delegate
 
         public MainForm()
         {
@@ -21,23 +24,84 @@ namespace WarLord_Server_GUI
             _sc = ServerConnector.Instance;
             _sc.ConnectServer(this);
             RefreshStatus();
+            Thread t_serverStatus = new Thread(new ThreadStart(ThreadServerStatus));
+            t_serverStatus.Start();
         }
 
-        //=========[ 서버 상태 갱신 ]=======
-        public bool _isRunningServer = false;
-        public void RefreshStatus()
+        //=====[ 서버 상태 실시간 체크 쓰레드 ]=====
+        void ThreadServerStatus()
         {
-            if (_isRunningServer)
+            while (true)
             {
-                serverStart_btn.Enabled = false;    //시작버튼 disabled
-                serverStop_btn.Enabled = true;      //종료버튼 enabled
-                //serverCheck_btn.Enabled = true;   //체크버튼 enabled
+                RefreshStatus();
+                setTextClientCounter();
+                Thread.Sleep(1000);
+            }
+        }
+        //=====[클라이언트 수]=====
+        private void setTextClientCounter()
+        {
+            if (lb_ClientCounter.InvokeRequired)
+            {
+                invokeProc call = new invokeProc(setTextClientCounter);
+                this.Invoke(call, null);
             }
             else
             {
-                serverStart_btn.Enabled = true;     //시작버튼 enabled
-                serverStop_btn.Enabled = false;     //종료버튼 disabled
-                //serverCheck_btn.Enabled = false;  //체크버튼 disabled
+                lb_ClientCounter.Text = ServerConnector.OnlineConnections.Count().ToString();
+            }
+        }
+
+        public void addClientMonitor(string data)
+        {
+            if (clientListBox.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(addClientMonitor);
+                this.Invoke(call, data);
+            }
+            else
+            {
+                clientListBox.Items.Add(data);
+            }
+        }
+        public void delClientMonitor(string data)
+        {
+            if (clientListBox.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(delClientMonitor);
+                this.Invoke(call, data);
+            }
+            else
+            {
+                clientListBox.Items.Remove(data);
+            }
+            
+        }
+        
+
+
+        //=========[ 서버 상태 갱신 ]=======
+        public bool _isRunningServer = false;
+
+        public void RefreshStatus()
+        {
+            if (serverStart_btn.InvokeRequired)
+            {
+                invokeProc call = new invokeProc(RefreshStatus);
+                this.Invoke(call, null);
+            }
+            else
+            {
+                if (_isRunningServer)
+                {
+                    serverStart_btn.Enabled = false;    //시작버튼 disabled
+                    serverStop_btn.Enabled = true;      //종료버튼 enabled
+                }
+                else
+                {
+                    serverStart_btn.Enabled = true;     //시작버튼 enabled
+                    serverStop_btn.Enabled = false;     //종료버튼 disabled
+                }
             }
         }
 
@@ -47,14 +111,13 @@ namespace WarLord_Server_GUI
         private void serverStart_btn_Click(object sender, EventArgs e)
         {
             _sc.StartServer();  //서버 시작
-            RefreshStatus();    //상태 갱신
         }
 
         private void serverStop_btn_Click(object sender, EventArgs e)
         {
             _sc.StopServer();   //서버 종료
-            RefreshStatus();    //상태 갱신
         }
+
         //=====[ Form 로드시 설정 이벤트 ]=====
         private void MainForm_Load(object sender, System.EventArgs e)
         {
@@ -88,25 +151,18 @@ namespace WarLord_Server_GUI
 
 
         //==========[ Log 출력 ]============
-        delegate void DLogOutPut(string text);
 
         public void LogOutPut(string text)
         {
             if (LogBox.InvokeRequired)
             {
-                DLogOutPut call = new DLogOutPut(LogOutPut);
+                invokeProctext call = new invokeProctext(LogOutPut);
                 this.Invoke(call, text);
             }
             else
             {
                 LogBox.AppendText(text + "\n");
             }
-        }
-        
-        //=========[ 나중에 실시간 작업 할 내용, 임의의 체크 버튼 ]=======
-        private void checkServer_btn_Click(object sender, EventArgs e)
-        {
-            lb_ClientCounter.Text = ServerConnector.OnlineConnections.Count().ToString();
         }
     }
 }
