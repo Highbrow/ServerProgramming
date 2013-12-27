@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WarLord_Server_GUI.GameLogic_B;
+using WarLord_Server_GUI.Managers;
 
 namespace WarLord_Server_GUI
 {
@@ -14,10 +16,11 @@ namespace WarLord_Server_GUI
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-            //Application.Run(new LoginForm());
+            //new DataBaseManager();
+
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new MainForm());
         }
     }
 }

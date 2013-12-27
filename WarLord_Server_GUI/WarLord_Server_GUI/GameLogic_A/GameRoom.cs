@@ -10,28 +10,41 @@ namespace WarLord_Server_GUI.GameLogic_A
 {
     class GameRoom
     {
-        private List<UserContext> _userList;
+        private List<Player> _userList;
         GameRoom gr;
+        Dealer dealer;
+        GameBoard board;
         
-        public GameRoom(ref UserContext p1,ref UserContext p2)
+        public GameRoom(Player p1,Player p2)
         {
+            board = new GameBoard();        // 게임판 생성
             gr = this;
-            _userList = new List<UserContext>();
+            _userList = new List<Player>();
             _userList.Add(p1);
             _userList.Add(p2);
-            ServerConnector.eventDisconnectUser += new ServerConnector.dDisconnectUser(delUser);
+
+            dealer = new Dealer(ref p1, ref p2, ref board);    //딜러 생성
+            
+            //ServerConnector.eventDisconnectUser += new ServerConnector.dDisconnectUser(delUser);
         }
 
         //=====[ User 추가 ]=====
-        public void addUser(ref UserContext user)
+        public void addUser(ref Player user)
         {
-            _userList.Add(user);
+            if (!_userList.Contains(user))
+            {
+                _userList.Add(user);
+            }
+            else
+            {
+
+            }
         }
         //=====[ User 삭제 ]=====
         public delegate void dDeleteRoom(ref GameRoom room);
         public static event dDeleteRoom eventDeleteRoom;
 
-        public void delUser(ref UserContext user)
+        public void delUser(Player user)
         {
             if (_userList.Count() != 0)
             {
@@ -43,7 +56,7 @@ namespace WarLord_Server_GUI.GameLogic_A
             }
         }
 
-        public List<UserContext> getUserList()
+        public List<Player> getUserList()
         {
             return _userList;
         }

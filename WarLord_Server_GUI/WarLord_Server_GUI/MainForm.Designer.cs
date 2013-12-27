@@ -35,7 +35,13 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.clientListBox = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.llb_client = new System.Windows.Forms.Label();
             this.lb_ClientCounter = new System.Windows.Forms.Label();
@@ -51,12 +57,8 @@
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar2 = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.clientListBox = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.serverRestart_btn = new System.Windows.Forms.Button();
+            this.roomListBox = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -120,6 +122,33 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "toolStripButton2";
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "toolStripButton3";
+            // 
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -129,6 +158,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.roomListBox);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.clientListBox);
@@ -147,6 +177,37 @@
             this.splitContainer1.Size = new System.Drawing.Size(1008, 513);
             this.splitContainer1.SplitterDistance = 591;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("HY견고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label2.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label2.Location = new System.Drawing.Point(4, 273);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Consol";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("HY견고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label1.Location = new System.Drawing.Point(403, 273);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(146, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Client IP Address";
+            // 
+            // clientListBox
+            // 
+            this.clientListBox.FormattingEnabled = true;
+            this.clientListBox.ItemHeight = 12;
+            this.clientListBox.Location = new System.Drawing.Point(403, 291);
+            this.clientListBox.Name = "clientListBox";
+            this.clientListBox.Size = new System.Drawing.Size(181, 196);
+            this.clientListBox.TabIndex = 8;
             // 
             // tableLayoutPanel1
             // 
@@ -189,11 +250,12 @@
             this.LogBox.Location = new System.Drawing.Point(4, 291);
             this.LogBox.Multiline = true;
             this.LogBox.Name = "LogBox";
-            this.LogBox.Size = new System.Drawing.Size(393, 195);
+            this.LogBox.Size = new System.Drawing.Size(198, 195);
             this.LogBox.TabIndex = 7;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.serverRestart_btn);
             this.panel1.Controls.Add(this.serverStop_btn);
             this.panel1.Controls.Add(this.serverStart_btn);
             this.panel1.Location = new System.Drawing.Point(403, 45);
@@ -279,63 +341,24 @@
             this.toolStripProgressBar2.Name = "toolStripProgressBar2";
             this.toolStripProgressBar2.Size = new System.Drawing.Size(100, 16);
             // 
-            // toolStripButton1
+            // serverRestart_btn
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.serverRestart_btn.Location = new System.Drawing.Point(101, 63);
+            this.serverRestart_btn.Name = "serverRestart_btn";
+            this.serverRestart_btn.Size = new System.Drawing.Size(75, 23);
+            this.serverRestart_btn.TabIndex = 2;
+            this.serverRestart_btn.Text = "RESTART";
+            this.serverRestart_btn.UseVisualStyleBackColor = true;
+            this.serverRestart_btn.Click += new System.EventHandler(this.serverRestart_btn_Click);
             // 
-            // toolStripButton2
+            // roomListBox
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "toolStripButton2";
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButton3";
-            // 
-            // clientListBox
-            // 
-            this.clientListBox.FormattingEnabled = true;
-            this.clientListBox.ItemHeight = 12;
-            this.clientListBox.Location = new System.Drawing.Point(403, 291);
-            this.clientListBox.Name = "clientListBox";
-            this.clientListBox.Size = new System.Drawing.Size(181, 196);
-            this.clientListBox.TabIndex = 8;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("HY견고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label1.Location = new System.Drawing.Point(403, 273);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(146, 13);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Client IP Address";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("HY견고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label2.Location = new System.Drawing.Point(4, 273);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Consol";
+            this.roomListBox.FormattingEnabled = true;
+            this.roomListBox.ItemHeight = 12;
+            this.roomListBox.Location = new System.Drawing.Point(208, 291);
+            this.roomListBox.Name = "roomListBox";
+            this.roomListBox.Size = new System.Drawing.Size(189, 196);
+            this.roomListBox.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -403,6 +426,8 @@
         private System.Windows.Forms.ListBox clientListBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button serverRestart_btn;
+        private System.Windows.Forms.ListBox roomListBox;
 
     }
 }

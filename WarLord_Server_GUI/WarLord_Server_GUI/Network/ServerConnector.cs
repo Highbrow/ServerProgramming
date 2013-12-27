@@ -11,15 +11,14 @@ namespace WarLord_Server_GUI.Network
     {
         //=====[소켓 생성 및 초기화]=====
         public MainForm _mf;
-        public CommandProcessManager _cpm;
+        
         public WebSocketServer _aServer;
-        public static Connection conn;
         public static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
 
         public void ConnectServer(MainForm mf)
         {
             this._mf = mf;
-            this._cpm = CommandProcessManager.Instance;
+            
             _aServer = new WebSocketServer(9001, System.Net.IPAddress.Any)   //소켓 생성
             {
                 OnReceive = OnReceive,
@@ -53,11 +52,25 @@ namespace WarLord_Server_GUI.Network
             try
             {
                 _aServer.Stop();
-
                 _mf.LogOutPut("Stop Server..");
                 MessageBox.Show("서버를 중지합니다.");
                 _mf._isRunningServer = false;
 
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message.ToString());
+            }
+        }
+        //=====[서버 재시작]=====
+        public void reStartServer()
+        {
+            try
+            {
+                _mf._isRunningServer = false;
+                _aServer.Restart();
+                _mf.LogOutPut("서버를 재시작 합니다..");
+                _mf._isRunningServer = true;
             }
             catch (Exception e)
             {
@@ -78,7 +91,9 @@ namespace WarLord_Server_GUI.Network
         {
             try
             {
-                _cpm.CommandProcess(ref aContext);    //CPM에게 수신데이터 전송
+                Connection conn;
+                OnlineConnections.TryGetValue(aContext.ClientAddress.ToString(), out conn);
+                conn.receivePacket(aContext);
             }
             catch (Exception ex)
             {
@@ -93,7 +108,7 @@ namespace WarLord_Server_GUI.Network
 
         //=====[연결 끊김]=====
 
-        public delegate void dDisconnectUser(ref UserContext user);
+        public delegate void dDisconnectUser(UserContext user);
         public static event dDisconnectUser eventDisconnectUser;
         public void OnDisconnect(UserContext aContext)
         {
@@ -102,9 +117,10 @@ namespace WarLord_Server_GUI.Network
             //??== 상태에 따른 조건 처리 필요
             try
             {
-                //eventDisconnectUser(ref aContext); //이벤트 발생
+                Connection conn;
                 OnlineConnections.TryRemove(aContext.ClientAddress.ToString(), out conn);
-                //conn.timer.Dispose();
+                conn.timer.Dispose();
+                eventDisconnectUser(aContext); //이벤트 발생
             }
             catch (Exception ex)
             {

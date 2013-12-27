@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WarLord_Server_GUI.GameLogic_A;
+using WarLord_Server_GUI.Managers;
 using WarLord_Server_GUI.Network;
 
 namespace WarLord_Server_GUI
@@ -15,16 +17,22 @@ namespace WarLord_Server_GUI
     public partial class MainForm : Form
     {
         private ServerConnector _sc;    //서버 네트웍 관련 오브젝트
+        private GameRoomManager _grm;
         delegate void invokeProc();     //쓰레드로부터 안전한 처리를 위한 invoke delegate
         delegate void invokeProctext(string text);  //쓰레드로부터 안전한 처리를 위한 invoke delegate
-
+        Thread t_serverStatus;
         public MainForm()
         {
             InitializeComponent();
             _sc = ServerConnector.Instance;
             _sc.ConnectServer(this);
+
+            new DataBaseManager();
+
+            _grm = GameRoomManager.Instance;
+
             RefreshStatus();
-            Thread t_serverStatus = new Thread(new ThreadStart(ThreadServerStatus));
+            t_serverStatus = new Thread(new ThreadStart(ThreadServerStatus));
             t_serverStatus.Start();
         }
 
@@ -77,8 +85,6 @@ namespace WarLord_Server_GUI
             }
             
         }
-        
-
 
         //=========[ 서버 상태 갱신 ]=======
         public bool _isRunningServer = false;
@@ -117,6 +123,10 @@ namespace WarLord_Server_GUI
         {
             _sc.StopServer();   //서버 종료
         }
+        private void serverRestart_btn_Click(object sender, EventArgs e)
+        {
+            _sc.reStartServer();
+        }
 
         //=====[ Form 로드시 설정 이벤트 ]=====
         private void MainForm_Load(object sender, System.EventArgs e)
@@ -142,6 +152,7 @@ namespace WarLord_Server_GUI
                 {
                     _sc.StopServer();
                 }
+                t_serverStatus.Interrupt(); // 종료를 위한 인터럽트
                 Application.ExitThread();
                 Environment.Exit(0);
             }
@@ -164,5 +175,7 @@ namespace WarLord_Server_GUI
                 LogBox.AppendText(text + "\n");
             }
         }
+
+        
     }
 }

@@ -54,8 +54,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Alchemy.dll</HintPath>
     </Reference>
-    <Reference Include="CommandLibrary">
+    <Reference Include="CommandLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\CommandLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -69,8 +74,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameLogic_A\GameBoard.cs" />
+    <Compile Include="GameLogic_A\Character.cs" />
+    <Compile Include="GameLogic_A\Dealer.cs" />
     <Compile Include="GameLogic_A\GameRoom.cs" />
     <Compile Include="GameLogic_A\GameRoomManager.cs" />
+    <Compile Include="GameLogic_A\Player.cs" />
+    <Compile Include="GameLogic_A\Card.cs" />
+    <Compile Include="GameLogic_B\GamePlayManager.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +95,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Managers\CommandProcessManager.cs" />
+    <Compile Include="Managers\DataBaseManager.cs" />
     <Compile Include="Network\Connection.cs" />
     <Compile Include="Network\ServerConnector.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
