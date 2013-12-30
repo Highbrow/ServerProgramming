@@ -53,6 +53,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Card_Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Card_Control.Designer.cs">
+      <DependentUpon>Card_Control.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameLogic_A\Card.cs" />
     <Compile Include="GameLogic_A\Character.cs" />
     <Compile Include="GameLogic_A\GameBoard.cs" />
@@ -64,17 +70,42 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="process.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="res\card.xls" />
+    <None Include="res\card.xlsx" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Card_Control.resx">
+      <DependentUpon>Card_Control.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ghost.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\backimg.png" />
+    <Content Include="Resources\dark.png" />
+    <Content Include="Resources\fire.png" />
+    <Content Include="Resources\ground.png" />
+    <Content Include="Resources\light.png" />
+    <Content Include="Resources\nothing.png" />
+    <Content Include="Resources\water.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

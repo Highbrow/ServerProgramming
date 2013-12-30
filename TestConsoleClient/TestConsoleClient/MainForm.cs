@@ -5,10 +5,13 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarLord_Server_GUI.GameLogic_A;
+using WarLord_Server_GUI.GameLogic_B;
 
 namespace TestConsoleClient
 {
@@ -20,14 +23,16 @@ namespace TestConsoleClient
         }
 
         //========================
-        process game;
+        GamePlayManager GM;
+        GameBoard GB;
+
         public MainForm()
         {
-            game = new process();
+            GM = GamePlayManager.Instance;
+            GM.mainForm = this;
+            GB = GameBoard.Instance;
             InitializeComponent();
         }
-        
-
         private void Form1_Load(object sender, EventArgs e)
         {
             int scrW = Screen.PrimaryScreen.WorkingArea.Width;
@@ -37,103 +42,81 @@ namespace TestConsoleClient
             int centerW = (scrW - thisW) / 2;
             int centerH = (scrH - thisH) / 2;
             this.DesktopLocation = new Point(centerW, centerH);
-            GameBasicSetting();
+            
+            GameDefaultSetting();   //게임 기본 셋팅
         }
 
-        private void GameBasicSetting()
+        private void GameDefaultSetting()
         {
-
-            Player1_Hands_zone.BeginUpdate();
-            Player2_Hands_zone.BeginUpdate();
-            Player1_warZone_listview.BeginUpdate();
-
-            // 뷰모드 지정
-            Player1_Hands_zone.View = View.Details;
-            Player2_Hands_zone.View = View.Details;
-            Player1_warZone_listview.View = View.Details;
-
-            foreach (var card in game.gb.P1_HandsZone)
+            foreach (Card card in GameBoard.P1_HandsZone)
             {
-                ListViewItem lvi = new ListViewItem(card.Name);
-                lvi.SubItems.Add(card.Type);
-                lvi.SubItems.Add(card.Attribute);
-                lvi.SubItems.Add(card.Consumption);
-                lvi.SubItems.Add(card.Ap.ToString());
-                lvi.SubItems.Add(card.Hp.ToString());
-                lvi.SubItems.Add(card.Information);
-                lvi.ImageIndex = 0;
-                // ListViewItem객체를 Items 속성에 추가
-                Player1_Hands_zone.Items.Add(lvi);
+                p1_hands_frame.Controls.Add(new Card_Control(this)
+                {
+                    card_Name = card.Name,
+                    card_type = card.Type,
+                    card_Species = card.Species,
+                    card_Attribute = card.Attribute,
+                    card_Consumption = card.Consumption,
+                    card_Ap = card.Ap,
+                    card_Hp = card.Hp,
+                    card_Information = card.Information,
+                });
             }
-            foreach (var card in game.gb.P2_HandsZone)
+            foreach (var card in GameBoard.P2_HandsZone)
             {
-                ListViewItem lvi = new ListViewItem(card.Name);
-                lvi.SubItems.Add(card.Type);
-                lvi.SubItems.Add(card.Attribute);
-                lvi.SubItems.Add(card.Consumption);
-                lvi.SubItems.Add(card.Ap.ToString());
-                lvi.SubItems.Add(card.Hp.ToString());
-                lvi.SubItems.Add(card.Information);
-                lvi.ImageIndex = 0;
-                // ListViewItem객체를 Items 속성에 추가
-                Player2_Hands_zone.Items.Add(lvi);
+                p2_hands_frame.Controls.Add(new Card_Control(this)
+                {
+                    card_Name = card.Name,
+                    card_type = card.Type,
+                    card_Species = card.Species,
+                    card_Attribute = card.Attribute,
+                    card_Consumption = card.Consumption,
+                    card_Ap = card.Ap,
+                    card_Hp = card.Hp,
+                    card_Information = card.Information,
+                });
             }
 
-            // 컬럼명과 컬럼사이즈 지정
-            Player1_Hands_zone.Columns.Add("이름", 150, HorizontalAlignment.Left);
-            Player1_Hands_zone.Columns.Add("종류", 50, HorizontalAlignment.Left);
-            Player1_Hands_zone.Columns.Add("속성", 50, HorizontalAlignment.Left);
-            Player1_Hands_zone.Columns.Add("필요마나", 50, HorizontalAlignment.Left);
-            Player1_Hands_zone.Columns.Add("공격력", 50, HorizontalAlignment.Left);
-            Player1_Hands_zone.Columns.Add("생명력", 50, HorizontalAlignment.Left);
-            Player1_Hands_zone.Columns.Add("설명", 700, HorizontalAlignment.Left);
-
-            // 컬럼명과 컬럼사이즈 지정
-            Player2_Hands_zone.Columns.Add("이름", 150, HorizontalAlignment.Left);
-            Player2_Hands_zone.Columns.Add("종류", 50, HorizontalAlignment.Left);
-            Player2_Hands_zone.Columns.Add("속성", 50, HorizontalAlignment.Left);
-            Player2_Hands_zone.Columns.Add("필요마나", 50, HorizontalAlignment.Left);
-            Player2_Hands_zone.Columns.Add("공격력", 50, HorizontalAlignment.Left);
-            Player2_Hands_zone.Columns.Add("생명력", 50, HorizontalAlignment.Left);
-            Player2_Hands_zone.Columns.Add("설명", 700, HorizontalAlignment.Left);
-
-
-
-            Player1_warZone_listview.Columns.Add("이름", 150, HorizontalAlignment.Left);
-            Player1_warZone_listview.Columns.Add("종류", 50, HorizontalAlignment.Left);
-            Player1_warZone_listview.Columns.Add("속성", 50, HorizontalAlignment.Left);
-            Player1_warZone_listview.Columns.Add("필요마나", 50, HorizontalAlignment.Left);
-            Player1_warZone_listview.Columns.Add("공격력", 50, HorizontalAlignment.Left);
-            Player1_warZone_listview.Columns.Add("생명력", 50, HorizontalAlignment.Left);
-            Player1_warZone_listview.Columns.Add("설명", 700, HorizontalAlignment.Left);
-
-            // 리스뷰를 Refresh하여 보여줌
-            Player1_Hands_zone.EndUpdate();
-            Player2_Hands_zone.EndUpdate();
-            Player1_warZone_listview.EndUpdate();
+            p2_hands_frame.Enabled = false;
+            p2_warZone_frame.Enabled = false;
+            p1_hands_frame.Enabled = true;
+            p1_warZone_frame.Enabled = true;
         }
 
-        private void Player1_Hands_zone_ColumnClick(object sender, ColumnClickEventArgs e)
+        private void Turn_btn_Click(object sender, EventArgs e)
         {
-            //this.Player1_Hands_zone.Sort();
-        }
-
-        private void Player1_Hands_zone_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            MessageBox.Show(Player1_Hands_zone.FocusedItem.Index+"");
-
-            if (game.thisturn)
-            {
-                game.gb.P1_WarZone.Add(game.gb.P1_HandsZone[Player1_Hands_zone.FocusedItem.Index]);
-                game.gb.P1_HandsZone.RemoveAt(Player1_Hands_zone.FocusedItem.Index);
+            if(GM.thisturn){
+                GM.thisturn = false;
+                p1_hands_frame.Enabled = false;
+                p1_warZone_frame.Enabled = false;
+                p2_hands_frame.Enabled = true;
+                p2_warZone_frame.Enabled = true;
             }
             else
             {
-                game.gb.P2_WarZone.Add(game.gb.P2_HandsZone[Player1_Hands_zone.FocusedItem.Index]);
-                game.gb.P2_HandsZone.RemoveAt(Player1_Hands_zone.FocusedItem.Index);
+                GM.thisturn = true;
+                p2_hands_frame.Enabled = false;
+                p2_warZone_frame.Enabled = false;
+                p1_hands_frame.Enabled = true;
+                p1_warZone_frame.Enabled = true;
             }
+            GM.distribute();
+        }
 
-            Player1_Hands_zone.EndUpdate();
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Abort your Server?", "Notice", MessageBoxButtons.YesNo);
+
+            // MessageBox 의 [예] 버튼 클릭시 발생하는 이벤트
+            if (result == DialogResult.Yes)
+            {
+                //t1.Interrupt();
+                //runnable_refresh = false;
+                Application.ExitThread();
+                Environment.Exit(0);
+            }
+            // MessageBox 의 [아니오] 버튼이 클릭되었을 경우 - 이벤트 취소
+            e.Cancel = (result == DialogResult.No);
         }
 
     }

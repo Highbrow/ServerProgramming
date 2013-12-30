@@ -20,7 +20,6 @@ namespace TestConsoleClient
                 Console.WriteLine("Open");
             };
             ws.Connect();
-            startClient();
 
             ws.OnMessage += (sender, e) =>
             {
@@ -32,44 +31,6 @@ namespace TestConsoleClient
                 
             };
         }
-
-        void test2()
-        {
-
-        }
-
-
-        bool test = true;
-
-        void startClient()
-        {
-            switch (menu())
-            {
-                case "1":
-                    Console.WriteLine("i'm Ready...");
-                    break;
-                case "2":
-                    break;
-                case "3":
-                    break;
-
-            }
-        }
-
-
-        string menu()
-        {
-            Console.WriteLine("==============================");
-            Console.WriteLine("|  < Client >                |");
-            Console.WriteLine("| 1. readyGame               |");
-            Console.WriteLine("| 2. Cancel Ready Game       |");
-            Console.WriteLine("| 3. exit                    |");
-            Console.WriteLine("==============================");
-            Console.WriteLine("=>>  ");
-
-            return Console.ReadLine();
-        }
-
        
     }
 }
