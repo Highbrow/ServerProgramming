@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WarLord_Server_GUI.GameLogic_A
 {
-    class Card : Character
+    class Card
     {
         public string Name { get; set; }
         public string Attribute { get; set; }

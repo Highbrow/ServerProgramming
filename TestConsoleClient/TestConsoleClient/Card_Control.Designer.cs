@@ -48,6 +48,8 @@
             this.lb_name.Size = new System.Drawing.Size(29, 12);
             this.lb_name.TabIndex = 1;
             this.lb_name.Text = "이름";
+            this.lb_name.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
+            this.lb_name.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
             // lb_information
             // 
@@ -60,6 +62,7 @@
             this.lb_information.Size = new System.Drawing.Size(126, 77);
             this.lb_information.TabIndex = 3;
             this.lb_information.Text = "설명";
+            this.lb_information.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
             this.lb_information.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
             // attribute_layout
@@ -73,6 +76,8 @@
             this.attribute_layout.Name = "attribute_layout";
             this.attribute_layout.Size = new System.Drawing.Size(52, 20);
             this.attribute_layout.TabIndex = 5;
+            this.attribute_layout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
+            this.attribute_layout.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
             // pb_image
             // 
@@ -81,6 +86,7 @@
             this.pb_image.Size = new System.Drawing.Size(126, 67);
             this.pb_image.TabIndex = 4;
             this.pb_image.TabStop = false;
+            this.pb_image.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
             this.pb_image.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
             // lb_type
@@ -93,6 +99,8 @@
             this.lb_type.TabIndex = 6;
             this.lb_type.Text = "타입";
             this.lb_type.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lb_type.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
+            this.lb_type.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
             // lb_aphp
             // 
@@ -105,6 +113,8 @@
             this.lb_aphp.TabIndex = 7;
             this.lb_aphp.Text = "공격력/생명력";
             this.lb_aphp.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.lb_aphp.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
+            this.lb_aphp.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
             // Card_Control
             // 

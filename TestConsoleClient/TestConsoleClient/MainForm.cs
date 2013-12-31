@@ -32,6 +32,10 @@ namespace TestConsoleClient
             GM.mainForm = this;
             GB = GameBoard.Instance;
             InitializeComponent();
+
+            GM.inputCard();
+            GM.firstDistribute();
+            GM.distribute();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -48,59 +52,21 @@ namespace TestConsoleClient
 
         private void GameDefaultSetting()
         {
-            foreach (Card card in GameBoard.P1_HandsZone)
+            foreach (Card_Control card in GameBoard.P1_HandsZone)
             {
-                p1_hands_frame.Controls.Add(new Card_Control(this)
-                {
-                    card_Name = card.Name,
-                    card_type = card.Type,
-                    card_Species = card.Species,
-                    card_Attribute = card.Attribute,
-                    card_Consumption = card.Consumption,
-                    card_Ap = card.Ap,
-                    card_Hp = card.Hp,
-                    card_Information = card.Information,
-                });
+                p1_hands_frame.Controls.Add(card);
             }
             foreach (var card in GameBoard.P2_HandsZone)
             {
-                p2_hands_frame.Controls.Add(new Card_Control(this)
-                {
-                    card_Name = card.Name,
-                    card_type = card.Type,
-                    card_Species = card.Species,
-                    card_Attribute = card.Attribute,
-                    card_Consumption = card.Consumption,
-                    card_Ap = card.Ap,
-                    card_Hp = card.Hp,
-                    card_Information = card.Information,
-                });
+                p2_hands_frame.Controls.Add(card);
             }
-
-            p2_hands_frame.Enabled = false;
-            p2_warZone_frame.Enabled = false;
-            p1_hands_frame.Enabled = true;
-            p1_warZone_frame.Enabled = true;
+            GM.InitFlag();
+            GM.turnFlag();
         }
 
         private void Turn_btn_Click(object sender, EventArgs e)
         {
-            if(GM.thisturn){
-                GM.thisturn = false;
-                p1_hands_frame.Enabled = false;
-                p1_warZone_frame.Enabled = false;
-                p2_hands_frame.Enabled = true;
-                p2_warZone_frame.Enabled = true;
-            }
-            else
-            {
-                GM.thisturn = true;
-                p2_hands_frame.Enabled = false;
-                p2_warZone_frame.Enabled = false;
-                p1_hands_frame.Enabled = true;
-                p1_warZone_frame.Enabled = true;
-            }
-            GM.distribute();
+            GM.EndOfTurn();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

@@ -10,33 +10,32 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using WarLord_Server_GUI.GameLogic_A;
 using WarLord_Server_GUI.GameLogic_B;
+using System.Threading;
 
 namespace TestConsoleClient
 {
     public partial class Card_Control : UserControl
     {
-        public string card_Name { get; set; }
-        public string card_type { get; set; }
-        public string card_Attribute { get; set; }
-        public string card_Consumption { get; set; }
-        public int card_Ap { get; set; }
-        public int card_Hp { get; set; }
-        public string card_Information { get; set; }
-        public string card_Species { get; set; }
+        internal Card card { get; set; }
+        internal int position { get; set; }
 
-        private MainForm mainForm;
+        internal bool activatable = true;
 
-        public Card_Control(MainForm mainForm)
+        public Card_Control()
         {
-            // TODO: Complete member initialization
-            this.mainForm = mainForm;
             InitializeComponent();
+        }
+
+        public void Card_refresh()
+        {
+            this.lb_name.Text = card.Name;  //카드 이름 부여
+            this.lb_aphp.Text = card.Ap + " / " + card.Hp;
         }
 
         private void Card_Control_Load(object sender, EventArgs e)
         {
-            this.lb_name.Text = card_Name;  //카드 이름 부여
-            string[] s_con = card_Consumption.Split(';');
+            this.lb_name.Text = card.Name;  //카드 이름 부여
+            string[] s_con = card.Consumption.Split(';');
 
             if (Convert.ToInt32(s_con[0]) > 0)  //불
             {
@@ -88,96 +87,38 @@ namespace TestConsoleClient
 
             this.pb_image.Image = global::TestConsoleClient.Properties.Resources.ghost;
             this.pb_image.SizeMode = PictureBoxSizeMode.StretchImage;
-            this.lb_type.Text = card_type + "-" + card_Species; //종류 및 세부종류
-            this.lb_information.Text = card_Information;    //설명
-            this.lb_aphp.Text = card_Ap + " / " + card_Hp;
+            this.lb_type.Text = card.Type + "-" + card.Species; //종류 및 세부종류
+            this.lb_information.Text = card.Information;    //설명
+            this.lb_aphp.Text = card.Ap + " / " + card.Hp;
         }
 
+        //=====[더블 클릭 이벤트]=====
         private void Card_Control_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            //======[ 핸드 존일 경우 처리 ]=====
+            if (this.position == GamePlayManager.PLAYER1_HANDSZONE || this.position == GamePlayManager.PLAYER2_HANDSZONE)
             {
-                if (GamePlayManager.Instance.thisturn)
+                if (e.Button == MouseButtons.Right) //마우스 오른쪽 더블 클릭
                 {
-                    Card c = GameBoard.P1_HandsZone[mainForm.p1_hands_frame.Controls.IndexOf(this)];
-                    GameBoard.P1_HandsZone.Remove(c);   //데이터 저장 공간 이동
-                    GameBoard.P1_ManaZone.Add(c);    //데이터 저장 공간 이동
-
-                    mainForm.p1_hands_frame.Controls.Remove(this);
-
-                    if (card_Attribute.Equals("암흑"))
-                    {
-                        mainForm.p1_cnt_dark.Text = (Convert.ToInt32(mainForm.p1_cnt_dark.Text) + 1).ToString();
-                    }
-                    else if (card_Attribute.Equals("불"))
-                    {
-                        mainForm.p1_cnt_fire.Text = (Convert.ToInt32(mainForm.p1_cnt_fire.Text) + 1).ToString();
-                    }
+                    GamePlayManager.Instance.makeMana(this);    //마나생성
+                    GamePlayManager.Instance.canMakeMana = false;   //한턴에 한번만 가능하도록
                 }
-                else
+                else  //마우스 왼쪽 더블 클릭
                 {
-                    Card c = GameBoard.P2_HandsZone[mainForm.p2_hands_frame.Controls.IndexOf(this)];
-                    GameBoard.P2_HandsZone.Remove(c);   //데이터 저장 공간 이동
-                    GameBoard.P2_ManaZone.Add(c);    //데이터 저장 공간 이동
-
-                    mainForm.p2_hands_frame.Controls.Remove(this);
-
-                    if (card_Attribute.Equals("암흑"))
-                    {
-                        mainForm.p2_cnt_dark.Text = (Convert.ToInt32(mainForm.p2_cnt_dark.Text) + 1).ToString();
-                    }
-                    else if (card_Attribute.Equals("불"))
-                    {
-                        mainForm.p2_cnt_fire.Text = (Convert.ToInt32(mainForm.p2_cnt_fire.Text) + 1).ToString();
-                    }
+                    GamePlayManager.Instance.popCard(this); //카드내기
                 }
             }
-            else
-            {
-                if (GamePlayManager.Instance.thisturn)
-                {
-                    //string[] s_con = card_Consumption.Split(';');
-                    Card c = GameBoard.P1_HandsZone[mainForm.p1_hands_frame.Controls.IndexOf(this)];
-                    GameBoard.P1_HandsZone.Remove(c);   //데이터 저장 공간 이동
-                    GameBoard.P1_WarZone.Add(c);    //데이터 저장 공간 이동
 
-                    mainForm.p1_hands_frame.Controls.Remove(this);
-                    mainForm.p1_warZone_frame.Controls.Add(this);
-                }
-                else
-                {
-                    Card c = GameBoard.P2_HandsZone[mainForm.p2_hands_frame.Controls.IndexOf(this)];
-                    GameBoard.P2_HandsZone.Remove(c);   //데이터 저장 공간 이동
-                    GameBoard.P2_WarZone.Add(c);    //데이터 저장 공간 이동
-
-                    mainForm.p2_hands_frame.Controls.Remove(this);
-                    mainForm.p2_warZone_frame.Controls.Add(this);
-                }
-            }
+            //=====카드 선택 초기화(null)전달
+            GamePlayManager.Instance.CardSelectProc(null);
         }
 
-        Card selectCard = null;
-        Card targetCard = null;
-        Color defaultColor;
 
+        //=====[클릭 이벤트]=====
         private void Card_Control_MouseClick(object sender, MouseEventArgs e)
         {
-            if (selectCard == null)
-            {
-                defaultColor = this.BackColor;
-                this.BackColor = Color.FromArgb(139, 159, 221);
-                selectCard = GameBoard.P2_HandsZone[mainForm.p2_hands_frame.Controls.IndexOf(this)];
-            }
-            else if(selectCard != null && targetCard == null)
-            {
-                defaultColor = this.BackColor;
-                this.BackColor = Color.FromArgb(139, 159, 221);
-                targetCard = GameBoard.P2_HandsZone[mainForm.p2_hands_frame.Controls.IndexOf(this)];
-
-                //====처리해주고 ==
-                selectCard = null;
-                targetCard = null;
-            }
+            GamePlayManager.Instance.CardSelectProc(this);
         }
+
     }
 }

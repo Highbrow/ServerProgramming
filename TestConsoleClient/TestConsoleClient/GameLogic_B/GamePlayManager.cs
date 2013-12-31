@@ -2,35 +2,285 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using TestConsoleClient;
 using WarLord_Server_GUI.GameLogic_A;
 
 namespace WarLord_Server_GUI.GameLogic_B
 {
     class GamePlayManager
     {
+        public const int PLAYER1_CARDDECK = 1;
+        public const int PLAYER2_CARDDECK = 2;
+        public const int PLAYER1_HANDSZONE = 3;
+        public const int PLAYER2_HANDSZONE = 4;
+        public const int PLAYER1_WARZONE = 5;
+        public const int PLAYER2_WARZONE = 6;
+        public const int PLAYER1_MANAZONE = 7;
+        public const int PLAYER2_MANAZONE = 8;
+        public const int PLAYER1_TOMBZONE = 9;
+        public const int PLAYER2_TOMBZONE = 10;
+
         public TestConsoleClient.MainForm mainForm { get; set; }
         public bool program_run = true;
         public bool thisturn = true; // true : 1,  false : 2
 
         public GamePlayManager()
         {
-            inputCard();
-            firstDistribute();
-            distribute();
         }
-        //=====[ Match ]=====
-        public int[] MatchCard(Card selectCard, Card tagetCard)
+
+
+        //=====[ 턴 종료 ]=====
+        public bool EndOfTurn()
         {
-            int[] result = new int[2];
-            result[0] = selectCard.Hp -= tagetCard.Ap;  // 본인 생명력
-            result[1] = tagetCard.Hp -= selectCard.Ap;  // 대상 생명력
-
-            return result;  // 0 : 본인 생명력, 1: 대상 생명력
+            InitFlag(); //flag 초기화
+            if (thisturn)
+            {
+                thisturn = false;
+            }
+            else
+            {
+                thisturn = true;
+            }
+            distribute();   //패돌리기
+            turnFlag();
+            return thisturn;
         }
 
+        //=====[ flag 관련 ]=====
+        public bool canMakeMana = true; //마나 생성 가능 유무
+
+        public void InitFlag()
+        {
+            //====[재 활성화 ]======
+            foreach (Card_Control card in GameBoard.P1_HandsZone)
+            {
+                card.activatable = true;
+                card.Enabled = true;
+            }
+            foreach (Card_Control card in GameBoard.P2_HandsZone)
+            {
+                card.activatable = true;
+                card.Enabled = true;
+            }
+            foreach (Card_Control card in GameBoard.P1_WarZone)
+            {
+                card.activatable = true;
+                card.Enabled = true;
+            }
+            foreach (Card_Control card in GameBoard.P2_WarZone)
+            {
+                card.activatable = true;
+                card.Enabled = true;
+            }
+            //====[마나 생성 가능하도록]=====
+            canMakeMana = true;
+        }
+
+        public void turnFlag()
+        {
+            if (thisturn)
+            {
+                foreach (Card_Control card in GameBoard.P1_HandsZone)
+                {
+                    card.activatable = true;
+                    card.Enabled = true;
+                }
+                foreach (Card_Control card in GameBoard.P2_HandsZone)
+                {
+                    card.activatable = false;
+                    card.Enabled = false;
+                }
+            }
+            else
+            {
+                foreach (Card_Control card in GameBoard.P1_HandsZone)
+                {
+                    card.activatable = false;
+                    card.Enabled = false;
+                }
+                foreach (Card_Control card in GameBoard.P2_HandsZone)
+                {
+                    card.activatable = true;
+                    card.Enabled = true;
+                }
+            }
+
+
+        }
+
+        //=====[ 마나 생성 ]=====
+        public void makeMana(Card_Control card_con)
+        {
+            if (GamePlayManager.Instance.canMakeMana)   //마나생성이 가능할 경우
+            {
+                if (GamePlayManager.Instance.thisturn)
+                {
+                    moveZone(card_con, PLAYER1_MANAZONE);   //마나존으로 이동
+                    if (card_con.card.Attribute.Equals("암흑"))
+                    {
+                        mainForm.p1_cnt_dark.Text = (Convert.ToInt32(mainForm.p1_cnt_dark.Text) + 1).ToString();
+                    }
+                    else if (card_con.card.Attribute.Equals("불"))
+                    {
+                        mainForm.p1_cnt_fire.Text = (Convert.ToInt32(mainForm.p1_cnt_fire.Text) + 1).ToString();
+                    }
+                }
+                else
+                {
+                    moveZone(card_con, PLAYER2_MANAZONE);   //마나존으로 이동
+                    if (card_con.card.Attribute.Equals("암흑"))
+                    {
+                        mainForm.p2_cnt_dark.Text = (Convert.ToInt32(mainForm.p2_cnt_dark.Text) + 1).ToString();
+                    }
+                    else if (card_con.card.Attribute.Equals("불"))
+                    {
+                        mainForm.p2_cnt_fire.Text = (Convert.ToInt32(mainForm.p2_cnt_fire.Text) + 1).ToString();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("이번 턴에는 마나를 더 이상 생성 할 수 없습니다.");
+            }
+        }
+
+        //=====[ 카드 내기 ]=====
+        public void popCard(Card_Control card_con)
+        {
+            string[] consump = card_con.card.Consumption.Split(';');
+            int dark = Convert.ToInt32(mainForm.p1_cnt_dark);   //현재 암흑 마나
+            int need_dark = Convert.ToInt32(consump[1]);    //필요 암흑 마나
+            int fire = Convert.ToInt32(mainForm.p1_cnt_fire);   //현재 불 마나
+            int need_fire = Convert.ToInt32(consump[0]);
+            int need_all = Convert.ToInt32(consump[2]);
+            int all = 
+            //===내기위한 마나 처리
+            if (dark >= 0)
+            {
+                mainForm.p1_cnt_dark.Text = dark+"";
+            }
+
+            if (thisturn)
+            {
+                
+                moveZone(card_con, PLAYER1_WARZONE);
+            }
+            else
+            {
+                moveZone(card_con, PLAYER2_WARZONE);
+            }
+        }
+
+        //=====[ 카드 선택 관련 ]=====
+        Card_Control selectCard = null;
+        Card_Control targetCard = null;
+        public void CardSelectProc(Card_Control card_con)
+        {
+            //====[초기화]====
+            if (card_con == null)
+            {
+                if (selectCard != null)
+                {
+                    selectCard.BackgroundImage = global::TestConsoleClient.Properties.Resources.backimg;
+                }
+                if (targetCard != null)
+                {
+                    targetCard.BackgroundImage = global::TestConsoleClient.Properties.Resources.backimg;
+                }
+                selectCard = null;
+                targetCard = null;
+            }//===============================
+            else
+            {//=====[ 동작 ]=====
+                card_con.BackgroundImage = global::TestConsoleClient.Properties.Resources.backimg_select;
+                if (selectCard == null)
+                {
+                    selectCard = card_con;
+                }
+                else if (selectCard.Equals(card_con))
+                {
+                    selectCard.BackgroundImage = global::TestConsoleClient.Properties.Resources.backimg;
+                    selectCard = null;
+                    targetCard = null;
+                }
+                else
+                {
+                    targetCard = card_con;
+                    //=====[처리 메소드 추가]=====
+                    canMatchCheck(selectCard, targetCard);  //매치 가능여부 체크 후 매치
+                    ///////////////////////////////////
+                    selectCard.BackgroundImage = global::TestConsoleClient.Properties.Resources.backimg;
+                    targetCard.BackgroundImage = global::TestConsoleClient.Properties.Resources.backimg;
+                    selectCard = null;
+                    targetCard = null;
+                }
+            }
+        }
+
+        public void canMatchCheck(Card_Control selectCard, Card_Control targetCard)
+        {
+            if (thisturn)
+            {
+                if (GameBoard.P1_WarZone.Contains(selectCard) && GameBoard.P2_WarZone.Contains(targetCard))
+                {
+                    MatchCard(selectCard, targetCard);
+                }
+                else
+                {
+                    MessageBox.Show("그렇겐 안됨. 룰도 모름?? -_-");
+                }
+            }
+            else
+            {
+                if (GameBoard.P2_WarZone.Contains(selectCard) && GameBoard.P1_WarZone.Contains(targetCard))
+                {
+                    MatchCard(selectCard, targetCard);
+                }
+                else
+                {
+                    MessageBox.Show("그렇겐 안됨. 룰도 모름?? -_-");
+                }
+            }
+        }
+
+        //=====[ Match ]=====
+        public void MatchCard(Card_Control selectCard, Card_Control targetCard)
+        {
+            if (thisturn)
+            {
+                if ((selectCard.card.Hp -= targetCard.card.Ap) <= 0)
+                {
+                    moveZone(selectCard, PLAYER1_TOMBZONE);
+                }
+                if ((targetCard.card.Hp -= selectCard.card.Ap) <= 0)
+                {
+                    moveZone(targetCard, PLAYER2_TOMBZONE);
+                }
+            }
+            else
+            {
+                if ((selectCard.card.Hp -= targetCard.card.Ap) <= 0)
+                {
+                    moveZone(selectCard, PLAYER2_TOMBZONE);
+                }
+                if ((targetCard.card.Hp -= selectCard.card.Ap) <= 0)
+                {
+                    moveZone(targetCard, PLAYER1_TOMBZONE);
+                }
+            }
+            selectCard.Card_refresh();
+            targetCard.Card_refresh();
+            selectCard.activatable = false;
+            selectCard.Enabled = false;
+        }
+
+        //=====[카드 불러오기]=====
         public void inputCard()
         {
             string strExcelFile = @"D:\Highbrow\GitHub\Warlord\ServerProgramming\TestConsoleClient\TestConsoleClient\res\card.xlsx";
@@ -46,41 +296,47 @@ namespace WarLord_Server_GUI.GameLogic_B
             DataSet ds = new DataSet();
             adpt.Fill(ds);
 
-
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 for (int i = 0; i < Convert.ToInt32(dr[10]); i++)
                 {
-                    GameBoard.P1_CardDeck.Add(new Card()
+                    moveZone(new Card_Control()
                     {
-                        Name = dr[1].ToString(),
-                        Attribute = dr[2].ToString(),
-                        Type = dr[3].ToString(),
-                        Class = dr[4].ToString(),
-                        Species = dr[5].ToString(),
-                        Consumption = dr[6].ToString(),
-                        Ap = Convert.ToInt32(dr[7]),
-                        Hp = Convert.ToInt32(dr[8]),
-                        Rp = Convert.ToInt32(dr[9]),
-                        Limited_amount = Convert.ToInt32(dr[10]),
-                        Skill = dr[11].ToString(),
-                        Information = dr[12].ToString(),
-                    });
-                    GameBoard.P2_CardDeck.Add(new Card()
+                        card = new Card()
+                        {
+                            Name = dr[1].ToString(),
+                            Attribute = dr[2].ToString(),
+                            Type = dr[3].ToString(),
+                            Class = dr[4].ToString(),
+                            Species = dr[5].ToString(),
+                            Consumption = dr[6].ToString(),
+                            Ap = Convert.ToInt32(dr[7]),
+                            Hp = Convert.ToInt32(dr[8]),
+                            Rp = Convert.ToInt32(dr[9]),
+                            Limited_amount = Convert.ToInt32(dr[10]),
+                            Skill = dr[11].ToString(),
+                            Information = dr[12].ToString(),
+                        }
+                    }, PLAYER1_CARDDECK);
+
+                    moveZone(new Card_Control()
                     {
-                        Name = dr[1].ToString(),
-                        Attribute = dr[2].ToString(),
-                        Type = dr[3].ToString(),
-                        Class = dr[4].ToString(),
-                        Species = dr[5].ToString(),
-                        Consumption = dr[6].ToString(),
-                        Ap = Convert.ToInt32(dr[7]),
-                        Hp = Convert.ToInt32(dr[8]),
-                        Rp = Convert.ToInt32(dr[9]),
-                        Limited_amount = Convert.ToInt32(dr[10]),
-                        Skill = dr[11].ToString(),
-                        Information = dr[12].ToString(),
-                    });
+                        card = new Card()
+                        {
+                            Name = dr[1].ToString(),
+                            Attribute = dr[2].ToString(),
+                            Type = dr[3].ToString(),
+                            Class = dr[4].ToString(),
+                            Species = dr[5].ToString(),
+                            Consumption = dr[6].ToString(),
+                            Ap = Convert.ToInt32(dr[7]),
+                            Hp = Convert.ToInt32(dr[8]),
+                            Rp = Convert.ToInt32(dr[9]),
+                            Limited_amount = Convert.ToInt32(dr[10]),
+                            Skill = dr[11].ToString(),
+                            Information = dr[12].ToString(),
+                        }
+                    }, PLAYER2_CARDDECK);
                 }
             }
 
@@ -93,9 +349,9 @@ namespace WarLord_Server_GUI.GameLogic_B
         //=====[ 카드 섞기 ]=====
         private static Random _rnd = new Random();
 
-        public void shuffle(List<Card> cardDeckShuffle, int numberOfTimesToShuffle)
+        public void shuffle(List<Card_Control> cardDeckShuffle, int numberOfTimesToShuffle)
         {
-            List<Card> newList = new List<Card>();
+            List<Card_Control> newList = new List<Card_Control>();
             for (int i = 0; i < numberOfTimesToShuffle; i++)
             {
                 while (cardDeckShuffle.Count > 0)
@@ -109,37 +365,26 @@ namespace WarLord_Server_GUI.GameLogic_B
             }
         }
 
-
         //=====[ 처음 카드 지급 ]=====
-        private void firstDistribute()
+        public void firstDistribute()
         {
-            GameBoard.P1_HandsZone.Add(GameBoard.P1_CardDeck[0]);
-            GameBoard.P1_CardDeck.RemoveAt(0);
-            GameBoard.P1_HandsZone.Add(GameBoard.P1_CardDeck[0]);
-            GameBoard.P1_CardDeck.RemoveAt(0);
-            GameBoard.P1_HandsZone.Add(GameBoard.P1_CardDeck[0]);
-            GameBoard.P1_CardDeck.RemoveAt(0);
+            moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
+            moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
+            moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
 
-            GameBoard.P2_HandsZone.Add(GameBoard.P2_CardDeck[0]);
-            GameBoard.P2_CardDeck.RemoveAt(0);
-            GameBoard.P2_HandsZone.Add(GameBoard.P2_CardDeck[0]);
-            GameBoard.P2_CardDeck.RemoveAt(0);
-            GameBoard.P2_HandsZone.Add(GameBoard.P2_CardDeck[0]);
-            GameBoard.P2_CardDeck.RemoveAt(0);
+            moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+            moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+            moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
 
             if (thisturn)
             {
-                GameBoard.P2_HandsZone.Add(GameBoard.P2_CardDeck[0]);
-                GameBoard.P2_CardDeck.RemoveAt(0);
-                GameBoard.P2_HandsZone.Add(GameBoard.P2_CardDeck[0]);
-                GameBoard.P2_CardDeck.RemoveAt(0);
+                moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+                moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
             }
             else
             {
-                GameBoard.P1_HandsZone.Add(GameBoard.P1_CardDeck[0]);
-                GameBoard.P1_CardDeck.RemoveAt(0);
-                GameBoard.P1_HandsZone.Add(GameBoard.P1_CardDeck[0]);
-                GameBoard.P1_CardDeck.RemoveAt(0);
+                moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
+                moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
             }
         }
 
@@ -148,17 +393,168 @@ namespace WarLord_Server_GUI.GameLogic_B
         {
             if (thisturn)
             {
-                GameBoard.P1_HandsZone.Add(GameBoard.P1_CardDeck[0]);
-                GameBoard.P1_CardDeck.RemoveAt(0);
-                GameBoard.P1_HandsZone.Add(GameBoard.P1_CardDeck[0]);
-                GameBoard.P1_CardDeck.RemoveAt(0);
+                moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
+                moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
             }
             else
             {
-                GameBoard.P2_HandsZone.Add(GameBoard.P2_CardDeck[0]);
-                GameBoard.P2_CardDeck.RemoveAt(0);
-                GameBoard.P2_HandsZone.Add(GameBoard.P2_CardDeck[0]);
-                GameBoard.P2_CardDeck.RemoveAt(0);
+                moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+                moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+            }
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
+        //======[카드 존 이동]========
+        private void moveZone(Card_Control card_con, int position)
+        {
+            //=====[기존 리스트 탐색]=====
+            int pre_position = 0;
+
+            if (GameBoard.P1_CardDeck.Contains(card_con))
+            {
+                pre_position = PLAYER1_CARDDECK;
+            }
+            else if (GameBoard.P2_CardDeck.Contains(card_con))
+            {
+                pre_position = PLAYER2_CARDDECK;
+            }
+            else if (GameBoard.P1_HandsZone.Contains(card_con))
+            {
+                pre_position = PLAYER1_HANDSZONE;
+            }
+            else if (GameBoard.P2_HandsZone.Contains(card_con))
+            {
+                pre_position = PLAYER2_HANDSZONE;
+            }
+            else if (GameBoard.P1_WarZone.Contains(card_con))
+            {
+                pre_position = PLAYER1_WARZONE;
+            }
+            else if (GameBoard.P2_WarZone.Contains(card_con))
+            {
+                pre_position = PLAYER2_WARZONE;
+            }
+            else if (GameBoard.P1_ManaZone.Contains(card_con))
+            {
+                pre_position = PLAYER1_MANAZONE;
+            }
+            else if (GameBoard.P2_ManaZone.Contains(card_con))
+            {
+                pre_position = PLAYER2_MANAZONE;
+            }
+            else if (GameBoard.P1_TombZone.Contains(card_con))
+            {
+                pre_position = PLAYER1_TOMBZONE;
+            }
+            else if (GameBoard.P2_TombZone.Contains(card_con))
+            {
+                pre_position = PLAYER2_TOMBZONE;
+            }
+            else
+            {
+                pre_position = 0;
+            }
+
+            //=====[기본 리스트에서 삭제]=====
+            switch (pre_position)
+            {
+                case PLAYER1_CARDDECK:
+                    GameBoard.P1_CardDeck.Remove(card_con);
+                    break;
+                case PLAYER2_CARDDECK:
+                    GameBoard.P2_CardDeck.Remove(card_con);
+                    break;
+                case PLAYER1_HANDSZONE:
+                    GameBoard.P1_HandsZone.Remove(card_con);
+                    mainForm.p1_hands_frame.Controls.Remove(card_con);
+                    break;
+                case PLAYER2_HANDSZONE:
+                    GameBoard.P2_HandsZone.Remove(card_con);
+                    mainForm.p2_hands_frame.Controls.Remove(card_con);
+                    break;
+                case PLAYER1_WARZONE:
+                    GameBoard.P1_WarZone.Remove(card_con);
+                    mainForm.p1_warZone_frame.Controls.Remove(card_con);
+                    break;
+                case PLAYER2_WARZONE:
+                    GameBoard.P2_WarZone.Remove(card_con);
+                    mainForm.p2_warZone_frame.Controls.Remove(card_con);
+                    break;
+                case PLAYER1_MANAZONE:
+                    GameBoard.P1_ManaZone.Remove(card_con);
+                    mainForm.p1_Mana_frame.Controls.Remove(card_con);
+                    break;
+                case PLAYER2_MANAZONE:
+                    GameBoard.P2_ManaZone.Remove(card_con);
+                    mainForm.p2_Mana_frame.Controls.Remove(card_con);
+                    break;
+                case PLAYER1_TOMBZONE:
+                    GameBoard.P1_TombZone.Remove(card_con);
+                    break;
+                case PLAYER2_TOMBZONE:
+                    GameBoard.P2_TombZone.Remove(card_con);
+                    break;
+            }
+            //=====[새로운 포지션 배치]=====
+            card_con.position = position;
+            switch (position)
+            {
+                case PLAYER1_CARDDECK:
+                    GameBoard.P1_CardDeck.Add(card_con);
+                    break;
+                case PLAYER2_CARDDECK:
+                    GameBoard.P2_CardDeck.Add(card_con);
+                    break;
+                case PLAYER1_HANDSZONE:
+                    GameBoard.P1_HandsZone.Add(card_con);
+                    mainForm.p1_hands_frame.Controls.Add(card_con);
+                    card_con.activatable = true;
+                    card_con.Enabled = true;
+                    break;
+                case PLAYER2_HANDSZONE:
+                    GameBoard.P2_HandsZone.Add(card_con);
+                    mainForm.p2_hands_frame.Controls.Add(card_con);
+                    card_con.activatable = true;
+                    card_con.Enabled = true;
+                    break;
+                case PLAYER1_WARZONE:
+                    GameBoard.P1_WarZone.Add(card_con);
+                    mainForm.p1_warZone_frame.Controls.Add(card_con);
+                    card_con.activatable = false;
+                    card_con.Enabled = false;
+                    break;
+                case PLAYER2_WARZONE:
+                    GameBoard.P2_WarZone.Add(card_con);
+                    mainForm.p2_warZone_frame.Controls.Add(card_con);
+                    card_con.activatable = false;
+                    card_con.Enabled = false;
+                    break;
+                case PLAYER1_MANAZONE:
+                    GameBoard.P1_ManaZone.Add(card_con);
+                    mainForm.p1_Mana_frame.Controls.Add(card_con);
+                    card_con.activatable = false;
+                    card_con.Enabled = false;
+                    break;
+                case PLAYER2_MANAZONE:
+                    GameBoard.P2_ManaZone.Add(card_con);
+                    mainForm.p2_Mana_frame.Controls.Add(card_con);
+                    card_con.activatable = false;
+                    card_con.Enabled = false;
+                    break;
+                case PLAYER1_TOMBZONE:
+                    GameBoard.P1_TombZone.Add(card_con);
+                    mainForm.p1_Tomb_frame.Controls.Add(card_con);
+                    card_con.activatable = false;
+                    card_con.Enabled = false;
+                    break;
+                case PLAYER2_TOMBZONE:
+                    GameBoard.P2_TombZone.Add(card_con);
+                    mainForm.p2_Tomb_frame.Controls.Add(card_con);
+                    card_con.activatable = false;
+                    card_con.Enabled = false;
+                    break;
             }
         }
 
@@ -183,6 +579,6 @@ namespace WarLord_Server_GUI.GameLogic_B
             }
         }
 
-        
+
     }
 }
