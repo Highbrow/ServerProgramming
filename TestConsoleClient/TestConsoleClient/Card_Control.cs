@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using WarLord_Server_GUI.GameLogic_A;
 using WarLord_Server_GUI.GameLogic_B;
 using System.Threading;
+using System.Reflection;
 
 namespace TestConsoleClient
 {

@@ -17,6 +17,7 @@ namespace TestConsoleClient
 {
     public partial class MainForm : Form
     {
+        [STAThread]
         static void Main(string[] args)
         {
             Application.Run(new MainForm());

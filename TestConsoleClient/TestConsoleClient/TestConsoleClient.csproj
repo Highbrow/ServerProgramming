@@ -62,23 +62,28 @@
     <Compile Include="GameLogic_A\Card.cs" />
     <Compile Include="GameLogic_A\GameBoard.cs" />
     <Compile Include="GameLogic_B\GamePlayManager.cs" />
+    <Compile Include="GameLogic_B\GameSkillManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="zoneForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="zoneForm.Designer.cs">
+      <DependentUpon>zoneForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="res\card.xls" />
     <None Include="res\card.xlsx" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +97,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="zoneForm.resx">
+      <DependentUpon>zoneForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ghost.jpg" />
@@ -99,9 +107,11 @@
   <ItemGroup>
     <Content Include="Resources\backimg.png" />
     <Content Include="Resources\backimg_select.png" />
+    <Content Include="Resources\bg.jpg" />
     <Content Include="Resources\dark.png" />
     <Content Include="Resources\fire.png" />
     <Content Include="Resources\ground.png" />
+    <None Include="Resources\hands_back.png" />
     <Content Include="Resources\light.png" />
     <Content Include="Resources\nothing.png" />
     <Content Include="Resources\water.png" />
