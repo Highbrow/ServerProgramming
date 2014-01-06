@@ -111,8 +111,8 @@ namespace TestConsoleClient.GameLogic_B
         protected void skill_9_vamfire(Card_Control card_con)
         {
             if (GamePlayManager.Instance.thisturn){
-                int cnt = 0;
-                List<int> idx = new List<int>();
+
+                List<Card_Control> die_CardControl = new List<Card_Control>();
                 foreach (Card_Control cc in GameBoard.P2_WarZone)
                 {
                     int hp = cc.card.Hp - 3;
@@ -120,18 +120,17 @@ namespace TestConsoleClient.GameLogic_B
 
                     if (hp <= 0)
                     {
-                        GamePlayManager.Instance.moveZone(cc, PLAYER2_TOMBZONE);
+                        die_CardControl.Add(cc);
                     }
                 }
-                foreach (int i in idx)
+                foreach (Card_Control card_c in die_CardControl)
                 {
-                    GamePlayManager.Instance.moveZone(GameBoard.P2_WarZone[i], PLAYER2_TOMBZONE);
+                    GamePlayManager.Instance.moveZone(card_c, PLAYER2_TOMBZONE);
                 }
             }
             else
             {
-                int cnt = 0;
-                List<int> idx = new List<int>();
+                List<Card_Control> die_CardControl = new List<Card_Control>();
                 foreach (Card_Control cc in GameBoard.P1_WarZone)
                 {
                     int hp = cc.card.Hp - 3;
@@ -139,13 +138,12 @@ namespace TestConsoleClient.GameLogic_B
 
                     if (hp <= 0)
                     {
-                        idx.Add(cnt);                       
+                        die_CardControl.Add(cc);
                     }
-                    cnt++;
                 }
-                foreach (int i in idx)
+                foreach (Card_Control card_c in die_CardControl)
                 {
-                    GamePlayManager.Instance.moveZone(GameBoard.P1_WarZone[i], PLAYER1_TOMBZONE);
+                    GamePlayManager.Instance.moveZone(card_c, PLAYER1_TOMBZONE);
                 }
             }
         }

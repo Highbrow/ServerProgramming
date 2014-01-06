@@ -13,6 +13,7 @@ using WarLord_Server_GUI.GameLogic_B;
 using System.Threading;
 using System.Reflection;
 using TestConsoleClient.GameLogic_B;
+using TestConsoleClient.CardLibrary;
 
 namespace TestConsoleClient
 {
@@ -139,6 +140,7 @@ namespace TestConsoleClient
                         else if (this.card.Skill.Equals("9"))
                         {
                             GamePlayManager.Instance.gameSkill("9", this);
+                            GamePlayManager.Instance.popCard(this);
                         }
                         else if (this.card.Skill.Equals("16"))
                         {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarLord_Server_GUI.GameLogic_A
+namespace TestConsoleClient.CardLibrary
 {
     class Card
     {
@@ -20,13 +20,17 @@ namespace WarLord_Server_GUI.GameLogic_A
         public int Limited_amount { get; set; }
         public string Skill { get; set; }
         public string Information { get; set; }
+        public int thisTurnHP { get; set; }
+        public int thisTurnAP { get; set; }
 
-        public void Attack(){
+        public void Attack(ref Card target_Card)
+        {
 
-        }  //공격
-        public void UnderAttack(){
+        }
+        public void UnderAttack()
+        {
 
-        } //공격 받음
+        }
 
     }
 }

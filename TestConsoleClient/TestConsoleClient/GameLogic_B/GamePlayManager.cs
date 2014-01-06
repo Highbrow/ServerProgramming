@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestConsoleClient;
+using TestConsoleClient.CardLibrary;
 using TestConsoleClient.GameLogic_B;
 using WarLord_Server_GUI.GameLogic_A;
 
@@ -199,6 +200,8 @@ namespace WarLord_Server_GUI.GameLogic_B
         int p1_remain_fire = 0;
         int p2_remain_dark = 0;
         int p2_remain_fire = 0;
+
+        //====[마나 확인]====
         public bool canPopCard(Card_Control card_con)
         {
             string[] consump = card_con.card.Consumption.Split(';');
@@ -385,30 +388,30 @@ namespace WarLord_Server_GUI.GameLogic_B
         //=====[ Match ]=====
         public void MatchCard(Card_Control selectCard, Card_Control targetCard)
         {
-            int s_hp = selectCard.card.Hp - targetCard.card.Ap;
-            int t_hp = targetCard.card.Hp - selectCard.card.Ap;
+            selectCard.card.thisTurnHP -= targetCard.card.thisTurnAP;
+            targetCard.card.thisTurnHP -= selectCard.card.thisTurnAP;
 
-            selectCard.lb_aphp.Text = selectCard.card.Ap + " / " + s_hp;
-            targetCard.lb_aphp.Text = targetCard.card.Ap + " / " + t_hp;
+            selectCard.lb_aphp.Text = selectCard.card.Ap + " / " + selectCard.card.thisTurnHP;
+            targetCard.lb_aphp.Text = targetCard.card.Ap + " / " + targetCard.card.thisTurnHP;
 
             if (thisturn)
             {
-                if (s_hp <= 0)
+                if (selectCard.card.thisTurnHP <= 0)
                 {
                     moveZone(selectCard, PLAYER1_TOMBZONE);
                 }
-                if (t_hp <= 0)
+                if (targetCard.card.thisTurnHP <= 0)
                 {
                     moveZone(targetCard, PLAYER2_TOMBZONE);
                 }
             }
             else
             {
-                if (s_hp <= 0)
+                if (selectCard.card.thisTurnHP <= 0)
                 {
                     moveZone(selectCard, PLAYER2_TOMBZONE);
                 }
-                if (t_hp <= 0)
+                if (targetCard.card.thisTurnHP <= 0)
                 {
                     moveZone(targetCard, PLAYER1_TOMBZONE);
                 }
@@ -420,7 +423,7 @@ namespace WarLord_Server_GUI.GameLogic_B
         //=====[카드 불러오기]=====
         public void inputCard()
         {
-            string strExcelFile = @"D:\Highbrow\GitHub\Warlord\ServerProgramming\TestConsoleClient\TestConsoleClient\res\card.xlsx";
+            string strExcelFile = @"D:\Work\github\ServerProgramming\TestConsoleClient\TestConsoleClient\res\card.xlsx";
             string strConnStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="
                                      + strExcelFile
                                      + ";Extended Properties='Excel 8.0;HDR=YES'";
@@ -453,6 +456,8 @@ namespace WarLord_Server_GUI.GameLogic_B
                             Limited_amount = Convert.ToInt32(dr[10]),
                             Skill = dr[11].ToString(),
                             Information = dr[12].ToString(),
+                            thisTurnAP = Convert.ToInt32(dr[7]),
+                            thisTurnHP = Convert.ToInt32(dr[8]),
                         }
                     }, PLAYER1_CARDDECK);
 
@@ -472,6 +477,8 @@ namespace WarLord_Server_GUI.GameLogic_B
                             Limited_amount = Convert.ToInt32(dr[10]),
                             Skill = dr[11].ToString(),
                             Information = dr[12].ToString(),
+                            thisTurnAP = Convert.ToInt32(dr[7]),
+                            thisTurnHP = Convert.ToInt32(dr[8]),
                         }
                     }, PLAYER2_CARDDECK);
                 }
@@ -505,6 +512,8 @@ namespace WarLord_Server_GUI.GameLogic_B
                     Limited_amount = 1,
                     Skill = "",
                     Information = "노코멘트",
+                    thisTurnAP = 0,
+                    thisTurnHP = 30,
                 }
             };
             Card_Control player2 = new Card_Control()
@@ -523,6 +532,8 @@ namespace WarLord_Server_GUI.GameLogic_B
                     Limited_amount = 1,
                     Skill = "",
                     Information = "노코멘트",
+                    thisTurnAP = 0,
+                    thisTurnHP = 30,
                 }
             };
             GameBoard.P1_PlayerZone = player1;

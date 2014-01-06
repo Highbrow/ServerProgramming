@@ -53,13 +53,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardLibrary\BlackQueenHatchling_Card.cs" />
     <Compile Include="Card_Control.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Card_Control.Designer.cs">
       <DependentUpon>Card_Control.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameLogic_A\Card.cs" />
+    <Compile Include="CardLibrary\Card.cs" />
     <Compile Include="GameLogic_A\GameBoard.cs" />
     <Compile Include="GameLogic_B\GamePlayManager.cs" />
     <Compile Include="GameLogic_B\GameSkillManager.cs" />
