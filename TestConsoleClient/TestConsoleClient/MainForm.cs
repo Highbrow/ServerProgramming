@@ -33,10 +33,10 @@ namespace TestConsoleClient
             GM.mainForm = this;
             GB = GameBoard.Instance;
             InitializeComponent();
-
-            GM.inputCard();
-            GM.firstDistribute();
-            GM.distribute();
+            GM.makeMainPlayer();   //메인 캐릭터 생성
+            GM.inputCard();     //데이터 베이스의 카드 호출
+            GM.firstDistribute();   //첫 카드 지급
+            GM.distribute();    //턴마다 카드 배급 관련
         }
         private void Form1_Load(object sender, EventArgs e)
         {

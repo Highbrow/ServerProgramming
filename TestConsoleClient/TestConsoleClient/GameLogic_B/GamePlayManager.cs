@@ -33,11 +33,6 @@ namespace WarLord_Server_GUI.GameLogic_B
         public bool program_run = true;
         public bool thisturn = true; // true : 1,  false : 2
 
-        public GamePlayManager()
-        {
-        }
-
-
         //=====[ 턴 종료 ]=====
         public bool EndOfTurn()
         {
@@ -196,14 +191,15 @@ namespace WarLord_Server_GUI.GameLogic_B
             refreshMana();//마나 새로고침
         }
 
-        //=====[ 카드 내기 ]=====
+        #region 카드 내는 행동
+
         int all_count = 0;
 
         int p1_remain_dark = 0;
         int p1_remain_fire = 0;
         int p2_remain_dark = 0;
         int p2_remain_fire = 0;
-        public void popCard(Card_Control card_con)
+        public bool canPopCard(Card_Control card_con)
         {
             string[] consump = card_con.card.Consumption.Split(';');
             int need_dark = Convert.ToInt32(consump[1]);    //필요 암흑 마나
@@ -215,27 +211,11 @@ namespace WarLord_Server_GUI.GameLogic_B
                 //===내기위한 마나 처리
                 if (p1_remain_dark >= need_dark && p1_remain_fire >= need_fire && (((p1_remain_dark - need_dark) + (p1_remain_fire - need_fire)) - all_count) >= need_all)
                 {
-                    //----[마나 연산]----
-                    p1_remain_dark -= need_dark;
-                    p1_remain_fire -= need_fire;
-                    all_count += need_all;
-
-                    refreshMana();//마나 새로고침
-                    if (card_con.card.Type.Equals("마법"))
-                    {
-
-                        moveZone(card_con, PLAYER1_TOMBZONE);//카드 내기
-                    }
-                    else
-                    {
-                        moveZone(card_con, PLAYER1_WARZONE);//카드 내기
-                    }
-                    
-                    gameSkill(card_con);
+                    return true;
                 }
                 else
                 {
-                    MessageBox.Show("마나가 부족합니다.");
+                    return false;
                 }
             }
             else
@@ -243,34 +223,98 @@ namespace WarLord_Server_GUI.GameLogic_B
                 //===내기위한 마나 처리
                 if (p2_remain_dark >= need_dark && p2_remain_fire >= need_fire && (((p2_remain_dark - need_dark) + (p2_remain_fire - need_fire)) - all_count) >= need_all)
                 {
-                    //----[마나 연산]----
-                    p2_remain_dark -= need_dark;
-                    p2_remain_fire -= need_fire;
-                    all_count += need_all;
-                    
-                    refreshMana();//마나 새로고침
-                    if (card_con.card.Type.Equals("마법"))
-                    {
-                        moveZone(card_con, PLAYER2_TOMBZONE);//카드 내기
-                    }
-                    else
-                    {
-                        moveZone(card_con, PLAYER2_WARZONE);//카드 내기
-                    }
-                    gameSkill(card_con);
+                    return true;
                 }
                 else
-                {
-                    MessageBox.Show("마나가 부족합니다.");
+                {                    
+                    return false;
                 }
             }
         }
 
+        internal void procMana(Card_Control card_con)
+        {
+            string[] consump = card_con.card.Consumption.Split(';');
+            int need_dark = Convert.ToInt32(consump[1]);    //필요 암흑 마나
+            int need_fire = Convert.ToInt32(consump[0]);    //필요 불 마나
+            int need_all = Convert.ToInt32(consump[2]);     //필요 아무 마나
+
+            if (thisturn)
+            {
+                //----[마나 연산]----
+                p1_remain_dark -= need_dark;
+                p1_remain_fire -= need_fire;
+                all_count += need_all;
+                refreshMana();//마나 새로고침
+            }
+            else
+            {
+                //----[마나 연산]----
+                p2_remain_dark -= need_dark;
+                p2_remain_fire -= need_fire;
+                all_count += need_all;
+
+                refreshMana();//마나 새로고침
+            }
+            
+        }
+
+        internal void popCard(Card_Control card_con)
+        {
+            if (thisturn)
+            {
+                if (card_con.card.Type.Equals("마법"))
+                {
+                    procMana(card_con);
+                    moveZone(card_con, PLAYER1_TOMBZONE);//카드 내기
+                }
+                else if (card_con.card.Type.Equals("미니언"))
+                {
+                    procMana(card_con);
+                    moveZone(card_con, PLAYER1_WARZONE);//카드 내기
+                }
+                else if (card_con.card.Type.Equals("드래곤"))
+                {
+                    procMana(card_con);
+                    moveZone(card_con, PLAYER1_WARZONE);//카드 내기
+                }
+                else
+                {
+                    MessageBox.Show("잘못된 카드입니다.");
+                }
+            }
+            else
+            {
+                if (card_con.card.Type.Equals("마법"))
+                {
+                    procMana(card_con);
+                    moveZone(card_con, PLAYER2_TOMBZONE);//카드 내기
+                }
+                else if (card_con.card.Type.Equals("미니언"))
+                {
+                    procMana(card_con);
+                    moveZone(card_con, PLAYER2_WARZONE);//카드 내기
+                }
+                else if (card_con.card.Type.Equals("드래곤"))
+                {
+                    procMana(card_con);
+                    moveZone(card_con, PLAYER2_WARZONE);//카드 내기
+                }
+                else
+                {
+                    MessageBox.Show("잘못된 카드입니다.");
+                }
+            }
+        }
+
+
+        #endregion 카드 내는 행동
+
         //=====[게임 스킬 관련]=====
-        private void gameSkill(Card_Control card_con)
+        public void gameSkill(String skill, Card_Control card_con)
         {
             Delegate dg;
-            GameSkillManager.Instance.SkillDictionary.TryGetValue(card_con.card.Skill.ToString(), out dg);
+            GameSkillManager.Instance.SkillDictionary.TryGetValue(skill, out dg);
             dg.DynamicInvoke(card_con);
         }
 
@@ -328,20 +372,12 @@ namespace WarLord_Server_GUI.GameLogic_B
                 {
                     MatchCard(selectCard, targetCard);
                 }
-                else
-                {
-                    //MessageBox.Show("그렇겐 안됨. 룰도 모름?? -_-");
-                }
             }
             else
             {
                 if (GameBoard.P2_WarZone.Contains(selectCard) && (GameBoard.P1_WarZone.Contains(targetCard) || GameBoard.P1_PlayerZone.Equals(targetCard)))
                 {
                     MatchCard(selectCard, targetCard);
-                }
-                else
-                {
-                    //MessageBox.Show("그렇겐 안됨. 룰도 모름?? -_-");
                 }
             }
         }
@@ -368,11 +404,11 @@ namespace WarLord_Server_GUI.GameLogic_B
             }
             else
             {
-                if ((selectCard.card.Hp -= targetCard.card.Ap) <= 0)
+                if (s_hp <= 0)
                 {
                     moveZone(selectCard, PLAYER2_TOMBZONE);
                 }
-                if ((targetCard.card.Hp -= selectCard.card.Ap) <= 0)
+                if (t_hp <= 0)
                 {
                     moveZone(targetCard, PLAYER1_TOMBZONE);
                 }
@@ -441,7 +477,7 @@ namespace WarLord_Server_GUI.GameLogic_B
                 }
             }
 
-            makeMainPlayer();   //메인 캐릭터 생성
+            
 
             conn.Close();
 
@@ -451,7 +487,7 @@ namespace WarLord_Server_GUI.GameLogic_B
         }
 
         //=====[ 플레이어 생성 ]=====
-        private void makeMainPlayer()
+        public void makeMainPlayer()
         {
             Card_Control player1 = new Card_Control()
             {
@@ -561,10 +597,10 @@ namespace WarLord_Server_GUI.GameLogic_B
             MessageBox.Show("["+winner+"] 님이 승리하셨습니다.");
             Application.Restart();
         }
-
+        public Card_Control tombCard;
 
         //======[카드 존 이동]========
-        private void moveZone(Card_Control card_con, int position)
+        public void moveZone(Card_Control card_con, int position)
         {
             //=====[기존 리스트 탐색]=====
             int pre_position = 0;
@@ -714,12 +750,45 @@ namespace WarLord_Server_GUI.GameLogic_B
                     card_con.Enabled = false;
                     break;
                 case PLAYER1_TOMBZONE:
+                    if(card_con.Equals(tombCard)){
+                        GameSkillManager.Instance.skill_8_p1 = false;
+                    }else{
+                        if (GameSkillManager.Instance.skill_8_p1)
+                        {
+                            GameBoard.P1_PlayerZone.card.Hp++;
+                            GameBoard.P1_PlayerZone.lb_aphp.Text = GameBoard.P1_PlayerZone.card.Ap + " / " + GameBoard.P1_PlayerZone.card.Hp;
+                        }
+                        if (GameSkillManager.Instance.skill_8_p2)
+                        {
+                            GameBoard.P2_PlayerZone.card.Hp++;
+                            GameBoard.P2_PlayerZone.lb_aphp.Text = GameBoard.P2_PlayerZone.card.Ap + " / " + GameBoard.P2_PlayerZone.card.Hp;
+                        }
+                    }
+                    
                     GameBoard.P1_TombZone.Add(card_con);
                     mainForm.p1_Tomb_frame.Controls.Add(card_con);
                     card_con.activatable = false;
                     card_con.Enabled = false;
                     break;
                 case PLAYER2_TOMBZONE:
+                    if (card_con.Equals(tombCard))
+                    {
+                        GameSkillManager.Instance.skill_8_p2 = false;
+                    }
+                    else
+                    {
+                        if (GameSkillManager.Instance.skill_8_p1)
+                        {
+                            GameBoard.P1_PlayerZone.card.Hp++;
+                            GameBoard.P1_PlayerZone.lb_aphp.Text = GameBoard.P1_PlayerZone.card.Ap + " / " + GameBoard.P1_PlayerZone.card.Hp;
+                        }
+                        if (GameSkillManager.Instance.skill_8_p2)
+                        {
+                            GameBoard.P2_PlayerZone.card.Hp++;
+                            GameBoard.P2_PlayerZone.lb_aphp.Text = GameBoard.P2_PlayerZone.card.Ap + " / " + GameBoard.P2_PlayerZone.card.Hp;
+                        }
+                    }
+                    
                     GameBoard.P2_TombZone.Add(card_con);
                     mainForm.p2_Tomb_frame.Controls.Add(card_con);
                     card_con.activatable = false;
@@ -749,6 +818,6 @@ namespace WarLord_Server_GUI.GameLogic_B
             }
         }
 
-
+        
     }
 }

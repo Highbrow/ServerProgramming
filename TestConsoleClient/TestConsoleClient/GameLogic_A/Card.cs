@@ -21,5 +21,12 @@ namespace WarLord_Server_GUI.GameLogic_A
         public string Skill { get; set; }
         public string Information { get; set; }
 
+        public void Attack(){
+
+        }  //공격
+        public void UnderAttack(){
+
+        } //공격 받음
+
     }
 }

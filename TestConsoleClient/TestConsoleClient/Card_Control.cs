@@ -12,6 +12,7 @@ using WarLord_Server_GUI.GameLogic_A;
 using WarLord_Server_GUI.GameLogic_B;
 using System.Threading;
 using System.Reflection;
+using TestConsoleClient.GameLogic_B;
 
 namespace TestConsoleClient
 {
@@ -106,7 +107,57 @@ namespace TestConsoleClient
                 }
                 else  //마우스 왼쪽 더블 클릭
                 {
-                    GamePlayManager.Instance.popCard(this); //카드내기
+                    if (GamePlayManager.Instance.canPopCard(this))
+                    {
+                        
+                        if (this.card.Skill.Equals("1"))
+                        {
+                            GamePlayManager.Instance.popCard(this);
+                        }
+                        else if (this.card.Skill.Equals("2"))
+                        {
+                            GamePlayManager.Instance.popCard(this);
+                        }
+                        else if (this.card.Skill.Equals("3"))
+                        {
+                            GamePlayManager.Instance.gameSkill("3", this);
+                            GamePlayManager.Instance.popCard(this);
+                        }
+                        else if (this.card.Skill.Equals("4"))
+                        {
+                            GamePlayManager.Instance.popCard(this);
+                        }
+                        else if (this.card.Skill.Equals("5"))
+                        {
+                            GamePlayManager.Instance.popCard(this);
+                        }
+                        else if (this.card.Skill.Equals("8"))
+                        {
+                            GamePlayManager.Instance.gameSkill("8", this);
+                            GamePlayManager.Instance.popCard(this);
+                        }
+                        else if (this.card.Skill.Equals("9"))
+                        {
+                            GamePlayManager.Instance.gameSkill("9", this);
+                        }
+                        else if (this.card.Skill.Equals("16"))
+                        {
+                            GameSkillManager.Instance.skill_card = this;    //자신 등록
+                            GamePlayManager.Instance.gameSkill("16",this);
+                        }
+                        else if (this.card.Skill.Equals("21"))
+                        {
+                            GameSkillManager.Instance.skill_card = this;    //자신 등록
+                            GamePlayManager.Instance.gameSkill("21", this);
+                        }else
+                        {
+                            GamePlayManager.Instance.popCard(this);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("마나가 부족합니다.");
+                    }
                 }
             }
 
@@ -116,9 +167,21 @@ namespace TestConsoleClient
 
 
         //=====[클릭 이벤트]=====
-        private void Card_Control_MouseClick(object sender, MouseEventArgs e)
+        public void Card_Control_MouseClick(object sender, MouseEventArgs e)
         {
-            GamePlayManager.Instance.CardSelectProc(this);
+            if (GameSkillManager.Instance.skill_16)
+            {
+                GamePlayManager.Instance.gameSkill("16",this);
+            }
+            else if (GameSkillManager.Instance.skill_21)
+            {
+                GamePlayManager.Instance.gameSkill("21", this);
+            }
+            else
+            {
+                GamePlayManager.Instance.CardSelectProc(this);
+            }
+            
         }
 
     }
