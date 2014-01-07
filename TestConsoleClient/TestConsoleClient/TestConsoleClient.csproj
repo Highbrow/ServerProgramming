@@ -61,6 +61,7 @@
       <DependentUpon>Card_Control.cs</DependentUpon>
     </Compile>
     <Compile Include="CardLibrary\Card.cs" />
+    <Compile Include="eventManager.cs" />
     <Compile Include="GameLogic_A\GameBoard.cs" />
     <Compile Include="GameLogic_B\GamePlayManager.cs" />
     <Compile Include="GameLogic_B\GameSkillManager.cs" />
@@ -111,6 +112,7 @@
     <Content Include="Resources\backimg.png" />
     <Content Include="Resources\backimg_select.png" />
     <Content Include="Resources\bg.jpg" />
+    <None Include="Resources\can_backimg_select.png" />
     <Content Include="Resources\dark.png" />
     <Content Include="Resources\fire.png" />
     <Content Include="Resources\ground.png" />

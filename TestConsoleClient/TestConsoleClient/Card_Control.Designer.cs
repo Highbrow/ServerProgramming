@@ -42,12 +42,13 @@ namespace TestConsoleClient
             // lb_name
             // 
             this.lb_name.AutoSize = true;
-            this.lb_name.BackColor = System.Drawing.Color.Black;
-            this.lb_name.Font = new System.Drawing.Font("새굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lb_name.BackColor = System.Drawing.Color.MidnightBlue;
+            this.lb_name.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lb_name.Font = new System.Drawing.Font("나눔바른고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lb_name.ForeColor = System.Drawing.Color.Yellow;
-            this.lb_name.Location = new System.Drawing.Point(3, 3);
+            this.lb_name.Location = new System.Drawing.Point(0, 0);
             this.lb_name.Name = "lb_name";
-            this.lb_name.Size = new System.Drawing.Size(29, 12);
+            this.lb_name.Size = new System.Drawing.Size(31, 15);
             this.lb_name.TabIndex = 1;
             this.lb_name.Text = "이름";
             this.lb_name.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
@@ -57,24 +58,25 @@ namespace TestConsoleClient
             // 
             this.lb_information.AutoEllipsis = true;
             this.lb_information.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lb_information.Font = new System.Drawing.Font("새굴림", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lb_information.ForeColor = System.Drawing.Color.SaddleBrown;
+            this.lb_information.Font = new System.Drawing.Font("나눔바른고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lb_information.ForeColor = System.Drawing.Color.OrangeRed;
             this.lb_information.Location = new System.Drawing.Point(5, 108);
             this.lb_information.Name = "lb_information";
             this.lb_information.Size = new System.Drawing.Size(132, 88);
             this.lb_information.TabIndex = 3;
             this.lb_information.Text = "설명";
+            this.lb_information.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lb_information.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
             this.lb_information.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
             // attribute_layout
             // 
-            this.attribute_layout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.attribute_layout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.attribute_layout.AutoSize = true;
-            this.attribute_layout.BackColor = System.Drawing.Color.DarkCyan;
+            this.attribute_layout.BackColor = System.Drawing.Color.White;
             this.attribute_layout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.attribute_layout.Font = new System.Drawing.Font("새굴림", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.attribute_layout.Location = new System.Drawing.Point(127, 19);
+            this.attribute_layout.Font = new System.Drawing.Font("새굴림", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.attribute_layout.Location = new System.Drawing.Point(131, 22);
             this.attribute_layout.Name = "attribute_layout";
             this.attribute_layout.Size = new System.Drawing.Size(10, 20);
             this.attribute_layout.TabIndex = 5;
@@ -83,9 +85,9 @@ namespace TestConsoleClient
             // 
             // pb_image
             // 
-            this.pb_image.Location = new System.Drawing.Point(5, 19);
+            this.pb_image.Location = new System.Drawing.Point(5, 3);
             this.pb_image.Name = "pb_image";
-            this.pb_image.Size = new System.Drawing.Size(129, 99);
+            this.pb_image.Size = new System.Drawing.Size(129, 115);
             this.pb_image.TabIndex = 4;
             this.pb_image.TabStop = false;
             this.pb_image.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
@@ -94,10 +96,12 @@ namespace TestConsoleClient
             // lb_type
             // 
             this.lb_type.AutoSize = true;
-            this.lb_type.Font = new System.Drawing.Font("새굴림", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lb_type.BackColor = System.Drawing.Color.Maroon;
+            this.lb_type.Font = new System.Drawing.Font("나눔바른고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lb_type.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.lb_type.Location = new System.Drawing.Point(8, 91);
             this.lb_type.Name = "lb_type";
-            this.lb_type.Size = new System.Drawing.Size(27, 11);
+            this.lb_type.Size = new System.Drawing.Size(31, 15);
             this.lb_type.TabIndex = 6;
             this.lb_type.Text = "타입";
             this.lb_type.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -106,17 +110,19 @@ namespace TestConsoleClient
             // 
             // lb_aphp
             // 
-            this.lb_aphp.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.lb_aphp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lb_aphp.AutoSize = true;
             this.lb_aphp.BackColor = System.Drawing.Color.Transparent;
-            this.lb_aphp.Font = new System.Drawing.Font("새굴림", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lb_aphp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lb_aphp.Location = new System.Drawing.Point(20, 196);
+            this.lb_aphp.Font = new System.Drawing.Font("나눔바른고딕", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lb_aphp.ForeColor = System.Drawing.Color.Yellow;
+            this.lb_aphp.Location = new System.Drawing.Point(3, 194);
             this.lb_aphp.Name = "lb_aphp";
-            this.lb_aphp.Size = new System.Drawing.Size(117, 16);
+            this.lb_aphp.Size = new System.Drawing.Size(85, 15);
             this.lb_aphp.TabIndex = 7;
             this.lb_aphp.Text = "공격력/생명력";
-            this.lb_aphp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lb_aphp.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.lb_aphp.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
             this.lb_aphp.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
@@ -124,6 +130,7 @@ namespace TestConsoleClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.BackgroundImage = global::TestConsoleClient.Properties.Resources.backimg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -133,6 +140,7 @@ namespace TestConsoleClient
             this.Controls.Add(this.lb_type);
             this.Controls.Add(this.attribute_layout);
             this.Controls.Add(this.pb_image);
+            this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DoubleBuffered = true;
             this.Name = "Card_Control";
             this.Size = new System.Drawing.Size(140, 213);

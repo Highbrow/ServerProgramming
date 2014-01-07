@@ -49,12 +49,5 @@ namespace WarLord_Server_GUI.GameLogic_A
                 }
             }
         }
-
-
-
-
-
-
-      
     }
 }
