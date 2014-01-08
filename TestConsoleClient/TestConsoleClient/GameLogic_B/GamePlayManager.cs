@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
@@ -587,6 +588,94 @@ namespace WarLord_Server_GUI.GameLogic_B
             selectCard.Enabled = false;
         }
 
+
+        //=====[카드 불러오기]=====
+        private string strConn = "Server=14.63.170.220;Database=dragonwarlord;Uid=haeggong2;Pwd=Rhdtm11;";
+        public MySqlConnection conn;
+        public MySqlCommand cmd;
+        private string query = "select * from user where _id = '1'";
+
+
+        public void inputCard()
+        {
+            conn = new MySqlConnection(strConn);
+            conn.Open();
+
+            createCard();
+            conn.Close();
+
+            shuffle(GameBoard.P1_CardDeck, 10);
+            shuffle(GameBoard.P2_CardDeck, 10);
+
+        }
+
+        public void createCard()
+        {
+            query = "select * from card";
+            cmd = new MySqlCommand(query);
+
+            cmd.Connection = conn;
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.GetInt16(10); i++)
+                    {
+                        moveZone(new Card_Control()
+                        {
+                            card = new Card()
+                            {
+                                Name = reader.GetString(1),
+                                Attribute = reader.GetString(2),
+                                Type = reader.GetString(3),
+                                Class = reader.GetString(4),
+                                Species = (reader.IsDBNull(5)) ? "" : reader.GetString(5),
+                                Consumption = reader.GetString(6),
+                                Ap = reader.GetInt16(7),
+                                Hp = reader.GetInt16(8),
+                                Rp = reader.GetInt16(9),
+                                Limited_amount = reader.GetInt16(10),
+                                Skill = reader.GetString(11),
+                                Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
+                                thisTurnAP = reader.GetInt16(7),
+                                thisTurnHP = reader.GetInt16(8),
+                            }
+                        }, PLAYER1_CARDDECK);
+
+                        moveZone(new Card_Control()
+                        {
+                            card = new Card()
+                            {
+                                Name = reader.GetString(1),
+                                Attribute = reader.GetString(2),
+                                Type = reader.GetString(3),
+                                Class = reader.GetString(4),
+                                Species = (reader.IsDBNull(5)) ? "" : reader.GetString(5),
+                                Consumption = reader.GetString(6),
+                                Ap = reader.GetInt16(7),
+                                Hp = reader.GetInt16(8),
+                                Rp = reader.GetInt16(9),
+                                Limited_amount = reader.GetInt16(10),
+                                Skill = reader.GetString(11),
+                                Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
+                                thisTurnAP = reader.GetInt16(7),
+                                thisTurnHP = reader.GetInt16(8),
+                            }
+                        }, PLAYER2_CARDDECK);
+
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message.ToString());
+            }
+
+        }
+        /*
         //=====[카드 불러오기]=====
         public void inputCard()
         {
@@ -659,7 +748,7 @@ namespace WarLord_Server_GUI.GameLogic_B
             shuffle(GameBoard.P2_CardDeck, 10);
 
         }
-
+        */
         //=====[ 플레이어 생성 ]=====
         public void makeMainPlayer()
         {
