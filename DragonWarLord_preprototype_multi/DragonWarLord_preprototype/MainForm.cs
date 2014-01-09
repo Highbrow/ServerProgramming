@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarLord_Server_GUI.GameLogic_A;
 using WarLord_Server_GUI.GameLogic_B;
+using WebSocketSharp;
 
 namespace DragonWarLord_preprototype
 {
@@ -29,6 +30,14 @@ namespace DragonWarLord_preprototype
 
         public MainForm()
         {
+            WebSocket ws = new WebSocket("ws://127.0.0.1:9001");
+            ws.OnOpen += (object sender, System.EventArgs e) =>
+            {
+                MessageBox.Show("open");
+            };
+            ws.Connect();
+            ws.Send("test");
+
             GM = GamePlayManager.Instance;
             GM.mainForm = this;
             GB = GameBoard.Instance;

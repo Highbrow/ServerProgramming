@@ -121,6 +121,7 @@
     <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
+    <None Include="res\card.xlsx" />
     <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <ItemGroup>
