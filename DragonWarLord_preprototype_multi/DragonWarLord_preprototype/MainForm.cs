@@ -21,32 +21,492 @@ namespace DragonWarLord_preprototype
         [STAThread]
         static void Main(string[] args)
         {
+            
             Application.Run(new MainForm());
         }
-
-        //========================
-        GamePlayManager GM;
         GameBoard GB;
-
         public MainForm()
         {
-            WebSocket ws = new WebSocket("ws://127.0.0.1:9001");
-            ws.OnOpen += (object sender, System.EventArgs e) =>
-            {
-                MessageBox.Show("open");
-            };
-            ws.Connect();
-            ws.Send("test");
-
-            GM = GamePlayManager.Instance;
-            GM.mainForm = this;
+            GamePlayManager.Instance.mainForm = this;
             GB = GameBoard.Instance;
+            
             InitializeComponent();
-            GM.inputCard();     //데이터 베이스의 카드 호출
-            GM.makeMainPlayer();   //메인 캐릭터 생성
-            GM.firstDistribute();   //첫 카드 지급
-            GM.distribute();    //턴마다 카드 배급 관련
+            NetworkManager.Instance.start();
         }
+
+        #region GUI 컨트롤을 위한 Invoke 집합
+        delegate void invokeProc();     //쓰레드로부터 안전한 처리를 위한 invoke delegate
+        delegate void invokeProcCardControl(Card_Control card_con);     //쓰레드로부터 안전한 처리를 위한 invoke delegate
+        delegate void invokeProctext(string text);  //쓰레드로부터 안전한 처리를 위한 invoke delegate
+
+        #region 플레이어1 존 UI 컨트롤 Invoke
+        /// <summary>
+        /// 플레이어1 존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P1_Player(Card_Control card_con)
+        {
+            if (p1_Player.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P1_Player);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_Player.Controls.Add(card_con);
+            }
+        }
+        public void remove_P1_Player(Card_Control card_con)
+        {
+            if (p1_Player.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P1_Player);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_Player.Controls.Remove(card_con);
+            }
+        }
+
+        /// <summary>
+        /// 플레이어1 핸드존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P1_Hands(Card_Control card_con)
+        {
+            if (p1_hands_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P1_Hands);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_hands_frame.Controls.Add(card_con);
+            }
+        }
+        public void remove_P1_Hands(Card_Control card_con)
+        {
+            if (p1_hands_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P1_Hands);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_hands_frame.Controls.Remove(card_con);
+            }
+        }
+        /// <summary>
+        /// 플레이어1 전투존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P1_WarZone(Card_Control card_con)
+        {
+            if (p1_warZone_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P1_WarZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_warZone_frame.Controls.Add(card_con);
+            }
+        }
+        public void remove_P1_WarZone(Card_Control card_con)
+        {
+            if (p1_warZone_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P1_WarZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_warZone_frame.Controls.Remove(card_con);
+            }
+        }
+        /// <summary>
+        /// 플레이어1 무덤존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P1_TombZone(Card_Control card_con)
+        {
+            if (p1_Tomb_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P1_TombZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_Tomb_frame.Controls.Add(card_con);
+            }
+        }
+        public void remove_P1_TombZone(Card_Control card_con)
+        {
+            if (p1_Tomb_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P1_TombZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_Tomb_frame.Controls.Remove(card_con);
+            }
+        }
+        /// <summary>
+        /// 플레이어1 마나존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P1_ManaZone(Card_Control card_con)
+        {
+            if (p1_Mana_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P1_ManaZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_Mana_frame.Controls.Add(card_con);
+            }
+        }
+        public void remove_P1_ManaZone(Card_Control card_con)
+        {
+            if (p1_Mana_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P1_ManaZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p1_Mana_frame.Controls.Remove(card_con);
+            }
+        }
+        #endregion
+
+        #region 플레이어1 코스트 UI 컨트롤 Invoke
+        /// <summary>
+        /// 남은 암흑 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p1_remain_dark(string str)
+        {
+            if (p1_remain_dark.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p1_remain_dark);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p1_remain_dark.Text = str;
+            }
+        }
+        /// <summary>
+        /// 남은 불 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p1_remain_fire(string str)
+        {
+            if (p1_remain_fire.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p1_remain_fire);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p1_remain_fire.Text = str;
+            }
+        }
+        /// <summary>
+        /// 사용한 아무 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p1_use_all(string str)
+        {
+            if (p1_use_all.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p1_use_all);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p1_use_all.Text = str;
+            }
+        }
+
+        /// <summary>
+        /// 보유 암흑 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p1_cnt_dark(string str)
+        {
+            if (p1_cnt_dark.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p1_cnt_dark);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p1_cnt_dark.Text = str;
+            }
+        }
+
+        /// <summary>
+        /// 보유 불 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p1_cnt_fire(string str)
+        {
+            if (p1_cnt_fire.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p1_cnt_fire);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p1_cnt_fire.Text = str;
+            }
+        }
+
+        #endregion
+
+        #region 플레이어2 존 UI 컨트롤 Invoke
+        /// <summary>
+        /// 플레이어2 존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P2_Player(Card_Control card_con)
+        {
+            if (p2_Player.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P2_Player);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_Player.Controls.Add(card_con);
+            }
+        }
+        public void remove_P2_Player(Card_Control card_con)
+        {
+            if (p2_Player.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P2_Player);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_Player.Controls.Remove(card_con);
+            }
+        }
+        /// <summary>
+        /// 플레이어2 핸드존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P2_Hands(Card_Control card_con)
+        {
+            if (p2_hands_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P2_Hands);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_hands_frame.Controls.Add(card_con);
+            }
+        }
+        public void remove_P2_Hands(Card_Control card_con)
+        {
+            if (p2_hands_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P2_Hands);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_hands_frame.Controls.Remove(card_con);
+            }
+        }
+        /// <summary>
+        /// 플레이어2 전투존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P2_WarZone(Card_Control card_con)
+        {
+            if (p2_warZone_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P2_WarZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_warZone_frame.Controls.Add(card_con);
+            }
+        }
+        public void remove_P2_WarZone(Card_Control card_con)
+        {
+            if (p2_warZone_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P2_WarZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_warZone_frame.Controls.Remove(card_con);
+            }
+        }
+        /// <summary>
+        /// 플레이어2 무덤존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P2_TombZone(Card_Control card_con)
+        {
+            if (p2_Tomb_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P2_TombZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_Tomb_frame.Controls.Add(card_con);
+            }
+        }
+        public void remove_P2_TombZone(Card_Control card_con)
+        {
+            if (p2_Tomb_frame.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P2_TombZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_Tomb_frame.Controls.Remove(card_con);
+            }
+        }
+        /// <summary>
+        /// 플레이어1 마나존
+        /// </summary>
+        /// <param name="card_con"></param>
+        public void add_P2_ManaZone(Card_Control card_con)
+        {
+            if (p2_Player.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(add_P2_ManaZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_Mana_frame.Controls.Add(card_con);
+            }
+        }
+        public void remove_P2_ManaZone(Card_Control card_con)
+        {
+            if (p2_Player.InvokeRequired)
+            {
+                invokeProcCardControl call = new invokeProcCardControl(remove_P2_ManaZone);
+                this.Invoke(call, card_con);
+            }
+            else
+            {
+                this.p2_Mana_frame.Controls.Remove(card_con);
+            }
+        }
+
+        #endregion
+
+        #region 플레이어2 코스트 UI 컨트롤 Invoke
+        /// <summary>
+        /// 남은 암흑 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p2_remain_dark(string str)
+        {
+            if (p2_remain_dark.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p2_remain_dark);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p2_remain_dark.Text = str;
+            }
+        }
+        /// <summary>
+        /// 남은 불 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p2_remain_fire(string str)
+        {
+            if (p2_remain_fire.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p2_remain_fire);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p2_remain_fire.Text = str;
+            }
+        }
+        /// <summary>
+        /// 사용한 아무 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p2_use_all(string str)
+        {
+            if (p2_use_all.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p2_use_all);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p2_use_all.Text = str;
+            }
+        }
+
+        /// <summary>
+        /// 보유 암흑 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p2_cnt_dark(string str)
+        {
+            if (p2_cnt_dark.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p2_cnt_dark);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p2_cnt_dark.Text = str;
+            }
+        }
+
+        /// <summary>
+        /// 보유 불 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_p2_cnt_fire(string str)
+        {
+            if (p2_cnt_fire.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_p2_cnt_fire);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.p2_cnt_fire.Text = str;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+
+        private void Turn_btn_Click(object sender, EventArgs e)
+        {
+            GamePlayManager.Instance.EndOfTurn();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             int scrW = Screen.PrimaryScreen.WorkingArea.Width;
@@ -56,27 +516,6 @@ namespace DragonWarLord_preprototype
             int centerW = (scrW - thisW) / 2;
             int centerH = (scrH - thisH) / 2;
             this.DesktopLocation = new Point(centerW, centerH);
-            
-            GameDefaultSetting();   //게임 기본 셋팅
-        }
-
-        private void GameDefaultSetting()
-        {
-            foreach (Card_Control card in GameBoard.P1_HandsZone)
-            {
-                p1_hands_frame.Controls.Add(card);
-            }
-            foreach (var card in GameBoard.P2_HandsZone)
-            {
-                p2_hands_frame.Controls.Add(card);
-            }
-            GM.InitFlag();
-            GM.turnFlag();
-        }
-
-        private void Turn_btn_Click(object sender, EventArgs e)
-        {
-            GM.EndOfTurn();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -88,6 +527,10 @@ namespace DragonWarLord_preprototype
             {
                 //t1.Interrupt();
                 //runnable_refresh = false;
+                if (NetworkManager.ws.IsAlive)
+                {
+                    NetworkManager.ws.Close();
+                }
                 Application.ExitThread();
                 Environment.Exit(0);
             }

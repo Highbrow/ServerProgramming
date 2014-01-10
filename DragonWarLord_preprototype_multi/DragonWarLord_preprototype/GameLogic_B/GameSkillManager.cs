@@ -84,36 +84,6 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
         #endregion
 
-
-
-
-
-        public bool canTargetSkill21(Card_Control card_con)
-        {
-            if (GamePlayManager.Instance.thisturn)
-            {
-                if (GameBoard.P2_WarZone.Contains(card_con))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                if (GameBoard.P1_WarZone.Contains(card_con))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
         #region 스킬 7 : 모든아군에게 +1/+1
         /// <summary>
         /// 스킬 7 : 모든아군에게 +1/+1
@@ -195,10 +165,10 @@ namespace DragonWarLord_preprototype.GameLogic_B
         /// 스킬 8 : 전장에서 카드가 하나 파괴 될 때마다 플레이어의 생명력이 +1 된다. 
         /// 이효과는 이 카드가 파괴 될때까지 지속 되며 자기 자신의 파괴는 포함하지 않는다.
         /// </summary>
-
+        public Card_Control tombCard;
         protected void skill_8_BigDevil(Card_Control card_con)
         {
-            GamePlayManager.Instance.tombCard = card_con;
+            tombCard = card_con;
             if (GamePlayManager.Instance.thisturn)
             {
                 skill_8_p1 = true;
@@ -257,7 +227,6 @@ namespace DragonWarLord_preprototype.GameLogic_B
         }
         #endregion
 
-
         #region 스킬 11 : 거대 좀비가 전장에 입장한 턴 동안에는 상대방 마나 덱에 있는 마력을 마음 껏 사용할 수 있다.
         /// <summary>
         /// 스킬 11 : 거대 좀비가 전장에 입장한 턴 동안에는 상대방 마나 덱에 있는 마력을 마음 껏 사용할 수 있다.
@@ -300,8 +269,6 @@ namespace DragonWarLord_preprototype.GameLogic_B
         }
 
         #endregion
-
-
 
         #region 스킬 16 : 적에게 피해를 2준다.
         /// <summary>
@@ -407,8 +374,6 @@ namespace DragonWarLord_preprototype.GameLogic_B
         }
 
         #endregion
-
-
 
         #region 스킬 17 : 적에게 피해를 2준다.
         /// <summary>
@@ -560,8 +525,6 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
         #endregion
 
-
-
         #region 스킬 18 : 플레이어는 이 마법이 걸린 전사가 일으키는 피해만큼의 생명력을 회복한다.
         /// <summary>
         /// 스킬 18 : 플레이어는 이 마법이 걸린 전사가 일으키는 피해만큼의 생명력을 회복한다.
@@ -648,8 +611,6 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
         #endregion
 
-
-
         #region 스킬 19 : 이 마법에 걸린 전사는 전투 시 자기 자신과 함께 상대를 파괴한다.
         /// <summary>
         /// 스킬 19 : 이 마법에 걸린 전사는 전투 시 자기 자신과 함께 상대를 파괴한다.
@@ -731,7 +692,6 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
 
         #endregion
-
 
         #region 스킬 20 : 마력 카드를 1장 파괴해 원하는 상대에게 5의 데미지를 준다. 단, 파괴 될 마력 카드는 이 카드를 시동하기 위해 사용 될 수 없다.
         /// <summary>
@@ -873,8 +833,11 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
         #endregion
 
-
-
+        #region 스킬 21 : 전장에 나와 있는 적군 중 하나를 아군으로 만든다.
+        /// <summary>
+        /// 스킬21 : 전장에 나와 있는 적군 중 하나를 아군으로 만든다.
+        /// </summary>
+        /// <param name="card_con"></param>
         protected void skill_21_succubus(Card_Control card_con)
         {
             if (skill_21)
@@ -905,6 +868,32 @@ namespace DragonWarLord_preprototype.GameLogic_B
                 skill_21 = true;
             }
         }
+        public bool canTargetSkill21(Card_Control card_con)
+        {
+            if (GamePlayManager.Instance.thisturn)
+            {
+                if (GameBoard.P2_WarZone.Contains(card_con))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (GameBoard.P1_WarZone.Contains(card_con))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
 
         public GameSkillManager()
         {

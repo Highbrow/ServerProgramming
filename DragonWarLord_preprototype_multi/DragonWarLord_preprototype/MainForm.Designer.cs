@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.p2_hands_frame = new System.Windows.Forms.FlowLayoutPanel();
             this.Turn_btn = new System.Windows.Forms.Button();
             this.p2_warZone_frame = new System.Windows.Forms.FlowLayoutPanel();
@@ -577,7 +578,12 @@
             this.Controls.Add(this.p2_warZone_frame);
             this.Controls.Add(this.p2_hands_frame);
             this.Controls.Add(this.p1_warZone_frame);
+            this.DoubleBuffered = true;
+            this.HelpButton = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Warlord";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);

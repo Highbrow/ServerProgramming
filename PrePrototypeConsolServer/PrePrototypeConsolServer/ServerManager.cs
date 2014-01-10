@@ -2,6 +2,7 @@
 using Alchemy.Classes;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
@@ -16,7 +17,6 @@ namespace PrePrototypeConsolServer
     {
         public WebSocketServer _wServer;
         public static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
-
 
         public ServerManager(){
             try
@@ -45,6 +45,21 @@ namespace PrePrototypeConsolServer
             Console.WriteLine("Client Connected From : " + aContext.ClientAddress.ToString());
             var conn= new Connection {Context=aContext};
             OnlineConnections.TryAdd(aContext.ClientAddress.ToString(), conn);
+            CheckCanPlay(ref aContext);
+        }
+
+        /// <summary>
+        /// 플레이어 두명 접속 확인
+        /// </summary>
+        /// <param name="aContext"></param>
+        private static void CheckCanPlay(ref UserContext aContext)
+        {
+            if (OnlineConnections.Count >= 2)
+            {
+                foreach(KeyValuePair<string, Connection> kv in OnlineConnections){
+                    kv.Value.Context.Send("ready");
+                }
+            }
         }
 
         public static void OnReceive(UserContext aContext)

@@ -1,20 +1,10 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.OleDb;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using DragonWarLord_preprototype;
-using DragonWarLord_preprototype.CardLibrary;
-using DragonWarLord_preprototype.GameLogic_B;
-using WarLord_Server_GUI.GameLogic_A;
 
-namespace WarLord_Server_GUI.GameLogic_B
+namespace PrePrototypeConsolServer
 {
     class GamePlayManager
     {
@@ -31,18 +21,17 @@ namespace WarLord_Server_GUI.GameLogic_B
         public const int PLAYER1_PLAYERZONE = 100;
         public const int PLAYER2_PLAYERZONE = 200;
 
-        public delegate void dchangeStatus(Card_Control card_con);
+        //public delegate void dchangeStatus(Card_Control card_con);
 
-        public event dchangeStatus cardPop;
-        public event dchangeStatus endturn;
-
-        public event dchangeStatus cardDestruction;
+        //public event dchangeStatus cardPop;
+        //public event dchangeStatus endturn;
+        //public event dchangeStatus cardDestruction;
 
         private GamePlayManager()
         {
-            cardPop = new dchangeStatus(cardPop_EventProc);
-            endturn = new dchangeStatus(endturn_EventProc);
-            cardDestruction = new dchangeStatus(destruction_EventProc);
+            //cardPop = new dchangeStatus(cardPop_EventProc);
+            //endturn = new dchangeStatus(endturn_EventProc);
+            //cardDestruction = new dchangeStatus(destruction_EventProc);
         }
 
         /// <summary>
