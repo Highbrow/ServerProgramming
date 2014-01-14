@@ -10,24 +10,37 @@ namespace WarLord_Server_GUI.GameLogic_A
 {
     class GameBoard
     {
+        public const int MY_CARDDECK = 1;
+        public const int OPPONENT_CARDDECK = 2;
+        public const int MY_HANDSZONE = 3;
+        public const int OPPONENT_HANDSZONE = 4;
+        public const int MY_WARZONE = 5;
+        public const int OPPONENT_WARZONE = 6;
+        public const int MY_MANAZONE = 7;
+        public const int OPPONENT_MANAZONE = 8;
+        public const int MY_TOMBZONE = 9;
+        public const int OPPONENT_TOMBZONE = 10;
+        public const int MY_PLAYERZONE = 100;
+        public const int OPPONENT_PLAYERZONE = 200;
+
         //=====[ 카드 덱 ]=====
-        public static List<Card_Control> P1_CardDeck = new List<Card_Control>();
-        public static List<Card_Control> P2_CardDeck = new List<Card_Control>();
+        public static List<Card_Control> My_CardDeck = new List<Card_Control>();
+        public static List<Card_Control> Opponent_CardDeck = new List<Card_Control>();
         //=====[플레이어]=====
-        public static Card_Control P1_PlayerZone = new Card_Control();
-        public static Card_Control P2_PlayerZone = new Card_Control();
+        public static Card_Control My_PlayerZone = new Card_Control();
+        public static Card_Control Opponent_PlayerZone = new Card_Control();
         //=====[ 플레이어 핸드 존]=====
-        public static List<Card_Control> P1_HandsZone = new List<Card_Control>();
-        public static List<Card_Control> P2_HandsZone = new List<Card_Control>();
+        public static List<Card_Control> My_HandsZone = new List<Card_Control>();
+        public static List<Card_Control> Opponent_HandsZone = new List<Card_Control>();
         //=====[ 전장 ]=====
-        public static List<Card_Control> P1_WarZone = new List<Card_Control>();
-        public static List<Card_Control> P2_WarZone = new List<Card_Control>();
+        public static List<Card_Control> My_WarZone = new List<Card_Control>();
+        public static List<Card_Control> Opponent_WarZone = new List<Card_Control>();
         //=====[ 마나 존 ]=====
-        public static List<Card_Control> P1_ManaZone = new List<Card_Control>();
-        public static List<Card_Control> P2_ManaZone = new List<Card_Control>();
+        public static List<Card_Control> My_ManaZone = new List<Card_Control>();
+        public static List<Card_Control> Opponent_ManaZone = new List<Card_Control>();
         //=====[ 무덤 존 ]=====
-        public static List<Card_Control> P1_TombZone = new List<Card_Control>();
-        public static List<Card_Control> P2_TombZone = new List<Card_Control>();
+        public static List<Card_Control> My_TombZone = new List<Card_Control>();
+        public static List<Card_Control> Opponent_TombZone = new List<Card_Control>();
 
 
 

@@ -13,6 +13,20 @@ namespace PrePrototypeConsolServer
 {
     class CardDealer
     {
+        //====[Client Zone index]=====
+        public const int MY_CARDDECK = 1;
+        public const int OPPONENT_CARDDECK = 2;
+        public const int MY_HANDSZONE = 3;
+        public const int OPPONENT_HANDSZONE = 4;
+        public const int MY_WARZONE = 5;
+        public const int OPPONENT_WARZONE = 6;
+        public const int MY_MANAZONE = 7;
+        public const int OPPONENT_MANAZONE = 8;
+        public const int MY_TOMBZONE = 9;
+        public const int OPPONENT_TOMBZONE = 10;
+        public const int MY_PLAYERZONE = 100;
+        public const int OPPONENT_PLAYERZONE = 200;
+
         public GameBoard gameBoard;
         private GameRoom gameRoom;
         private ServerCommandProc SCP;
@@ -20,6 +34,9 @@ namespace PrePrototypeConsolServer
         private OnEventDelegate _OnReceive_Player2;
         public UserContext player1;
         public UserContext player2;
+
+        public TurnManager tm;
+
 
         public CardDealer(GameRoom gameRoom, ref GameBoard _GameBoard, ref ServerCommandProc SCP)
         {
@@ -201,14 +218,69 @@ namespace PrePrototypeConsolServer
         /// <param name="aContext"></param>
         /// <param name="command"></param>
         public void StartTheGame(UserContext aContext, string command)
-        {
+        {           
             if (aContext.Equals(player1) && player2_ReadyForStart)
             {
-                gameRoom.broadCasting("StartGame;");
+                Random rn = new Random();
+                int number = rn.Next(0, 1000);
+                if (number % 2 == 0)
+                {
+                    sendPacket_P1("Message;" + "상대방이 당신에게 우선권을 주었습니다. 시작하십시오!");
+                    sendPacket_P2("Message;" + "당신은 너그러운 마음으로 상대방에게 우선권을 주었습니다.");
+                    tm = new TurnManager()
+                    {
+                        Player1 = player1,
+                        Player2 = player2,
+                        Turn = player1
+                    };
+                    sendPacket_P1("YourTurn;");
+                    sendPacket_P2("OpponentTurn;");
+                }
+                else
+                {
+                    sendPacket_P2("Message;" + "상대방이 당신에게 우선권을 주었습니다. 시작하십시오!");
+                    sendPacket_P1("Message;" + "당신은 너그러운 마음으로 상대방에게 우선권을 주었습니다.");
+                    tm = new TurnManager()
+                    {
+                        Player1 = player1,
+                        Player2 = player2,
+                        Turn = player2
+                    };
+                    sendPacket_P2("YourTurn;");
+                    sendPacket_P1("OpponentTurn;");
+                }
+                
             }
             else if ((aContext.Equals(player2) && player1_ReadyForStart))
             {
-                gameRoom.broadCasting("StartGame;");
+                Random rn = new Random();
+                int number = rn.Next(0, 1000);
+                if (number % 2 == 0)
+                {
+                    sendPacket_P1("Message;" + "상대방이 당신에게 우선권을 주었습니다. 시작하십시오!");
+                    sendPacket_P2("Message;" + "당신은 너그러운 마음으로 상대방에게 우선권을 주었습니다.");
+                    tm = new TurnManager()
+                    {
+                        Player1 = player1,
+                        Player2 = player2,
+                        Turn = player1
+                    };
+                    sendPacket_P1("YourTurn;");
+                    sendPacket_P2("OpponentTurn;");
+                }
+                else
+                {
+                    sendPacket_P2("Message;" + "상대방이 당신에게 우선권을 주었습니다. 시작하십시오!");
+                    sendPacket_P1("Message;" + "당신은 너그러운 마음으로 상대방에게 우선권을 주었습니다.");
+                    tm = new TurnManager()
+                    {
+                        Player1 = player1,
+                        Player2 = player2,
+                        Turn = player2
+                    };
+                    sendPacket_P2("YourTurn;");
+                    sendPacket_P1("OpponentTurn;");
+                }
             }
             else
             {
@@ -222,6 +294,52 @@ namespace PrePrototypeConsolServer
                     player2_ReadyForStart = true;
                     sendPacket_P2("Message;" + "레디! 상대방이 준비를 마치길 기다리는 중..");
                 }
+            }
+        }
+
+        public void changeTurn(UserContext aContext, string command)
+        {
+            if (aContext.Equals(player1))
+            {
+                tm.Turn = player2;
+                sendPacket_P2("Message;"+"당신의 턴입니다.");
+                sendPacket_P2("YourTurn;");
+                sendPacket_P1("OpponentTurn;");
+            }
+            else if (aContext.Equals(player2))
+            {
+                tm.Turn = player1;
+                sendPacket_P1("Message;" + "당신의 턴입니다.");
+                sendPacket_P1("YourTurn;");
+                sendPacket_P2("OpponentTurn;");
+            }
+        }
+
+        public void firstDistribute(UserContext aContext, string command)
+        {
+            if (aContext.Equals(player1))
+            {
+                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
+                sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
+                sendPacket_P1("MoveCard;" + MY_CARDDECK+";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
+                sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+            }
+            else if (aContext.Equals(player2))
+            {
+                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
+                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
+                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
+                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
             }
         }
 
@@ -378,9 +496,6 @@ namespace PrePrototypeConsolServer
                     gameBoard.P2_TombZone.Add(card);
                     break;
             }
-
-            sendPacket_P1("movecard;" + card.Id + ";" + card.position + ";");
-            sendPacket_P2("movecard;" + card.Id + ";" + card.position + ";");
         }
 
         //======[게임 승패 결정]=====

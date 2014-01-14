@@ -131,6 +131,7 @@
     <Compile Include="StartForm.Designer.cs">
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TurnManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

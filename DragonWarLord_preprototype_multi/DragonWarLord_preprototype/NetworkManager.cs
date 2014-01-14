@@ -42,13 +42,6 @@ namespace DragonWarLord_preprototype
             Delegate dg;
             ClientCommandProc.CommandDic.TryGetValue(command[0], out dg);
             dg.DynamicInvoke(data);
-
-            MessageBox.Show(command[0]);    //입력 받은 커맨드 (DEBUG)
-            /*
-            CardDealer.Instance.makeMainPlayer();   //메인 캐릭터 생성
-            CardDealer.Instance.firstDistribute();   //첫 카드 지급
-            CardDealer.Instance.distribute();    //턴마다 카드 배급 관련
-            CardDealer.Instance.GameDefaultSetting();*/
         }
 
         #region 싱글톤

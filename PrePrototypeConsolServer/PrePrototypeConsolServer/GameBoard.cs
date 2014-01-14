@@ -8,6 +8,7 @@ namespace PrePrototypeConsolServer
 {
     class GameBoard
     {
+        //====[ZONE index]====
         public const int PLAYER1_CARDDECK = 1;
         public const int PLAYER2_CARDDECK = 2;
         public const int PLAYER1_HANDSZONE = 3;

@@ -40,12 +40,18 @@ namespace PrePrototypeConsolServer
 
         protected override void cmdF_OpponentCardDeck_OK(UserContext aContext, string command)
         {
-            dealer.StartTheGame(aContext, command);
+            dealer.firstDistribute(aContext, command);
+            dealer.StartTheGame(aContext, command); //이렇게 넣으면 안되는데 일단 ㄱㄱ -0-;;;;;
         }
 
         protected override void cmdF_StartGame_OK(UserContext aContext, string command)
         {
-            Console.WriteLine("GAMESTART");//DEBUG
+            dealer.StartTheGame(aContext, command);
+        }
+
+        protected override void cmdF_EndTurn(UserContext aContext, string command)
+        {
+            dealer.changeTurn(aContext, command);
         }
     }
 }

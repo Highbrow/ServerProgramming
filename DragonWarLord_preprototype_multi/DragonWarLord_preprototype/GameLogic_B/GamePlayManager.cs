@@ -17,18 +17,18 @@ namespace WarLord_Server_GUI.GameLogic_B
 {
     class GamePlayManager
     {
-        public const int PLAYER1_CARDDECK = 1;
-        public const int PLAYER2_CARDDECK = 2;
-        public const int PLAYER1_HANDSZONE = 3;
-        public const int PLAYER2_HANDSZONE = 4;
-        public const int PLAYER1_WARZONE = 5;
-        public const int PLAYER2_WARZONE = 6;
-        public const int PLAYER1_MANAZONE = 7;
-        public const int PLAYER2_MANAZONE = 8;
-        public const int PLAYER1_TOMBZONE = 9;
-        public const int PLAYER2_TOMBZONE = 10;
-        public const int PLAYER1_PLAYERZONE = 100;
-        public const int PLAYER2_PLAYERZONE = 200;
+        public const int MY_CARDDECK = 1;
+        public const int OPPONENT_CARDDECK = 2;
+        public const int MY_HANDSZONE = 3;
+        public const int OPPONENT_HANDSZONE = 4;
+        public const int MY_WARZONE = 5;
+        public const int OPPONENT_WARZONE = 6;
+        public const int MY_MANAZONE = 7;
+        public const int OPPONENT_MANAZONE = 8;
+        public const int MY_TOMBZONE = 9;
+        public const int OPPONENT_TOMBZONE = 10;
+        public const int MY_PLAYERZONE = 100;
+        public const int OPPONENT_PLAYERZONE = 200;
 
         public delegate void dchangeStatus(Card_Control card_con);
 
@@ -49,13 +49,13 @@ namespace WarLord_Server_GUI.GameLogic_B
         /// </summary>
         public void GameDefaultSetting()
         {
-            foreach (Card_Control card in GameBoard.P1_HandsZone)
+            foreach (Card_Control card in GameBoard.My_HandsZone)
             {
-                mainForm.add_P1_Hands(card);
+                mainForm.add_My_Hands(card);
             }
-            foreach (var card in GameBoard.P2_HandsZone)
+            foreach (var card in GameBoard.Opponent_HandsZone)
             {
-                mainForm.add_P2_Hands(card);
+                mainForm.add_Opponent_Hands(card);
             }
             InitFlag();
             turnFlag();
@@ -140,25 +140,25 @@ namespace WarLord_Server_GUI.GameLogic_B
         public void InitFlag()
         {
             //====[재 활성화 ]======
-            foreach (Card_Control card in GameBoard.P1_HandsZone)
+            foreach (Card_Control card in GameBoard.My_HandsZone)
             {
                 card.activatable = true;
                 card.Enabled = true;
                 card.Card_refresh();
             }
-            foreach (Card_Control card in GameBoard.P2_HandsZone)
+            foreach (Card_Control card in GameBoard.Opponent_HandsZone)
             {
                 card.activatable = true;
                 card.Enabled = true;
                 card.Card_refresh();
             }
-            foreach (Card_Control card in GameBoard.P1_WarZone)
+            foreach (Card_Control card in GameBoard.My_WarZone)
             {
                 card.activatable = true;
                 card.Enabled = true;
                 card.Card_refresh();
             }
-            foreach (Card_Control card in GameBoard.P2_WarZone)
+            foreach (Card_Control card in GameBoard.Opponent_WarZone)
             {
                 card.activatable = true;
                 card.Enabled = true;
@@ -172,13 +172,13 @@ namespace WarLord_Server_GUI.GameLogic_B
         {
             if (thisturn)
             {
-                foreach (Card_Control card in GameBoard.P1_HandsZone)
+                foreach (Card_Control card in GameBoard.My_HandsZone)
                 {
                     card.activatable = true;
                     card.Enabled = true;
                     card.Card_refresh();
                 }
-                foreach (Card_Control card in GameBoard.P2_HandsZone)
+                foreach (Card_Control card in GameBoard.Opponent_HandsZone)
                 {
                     card.activatable = false;
                     card.Enabled = false;
@@ -187,13 +187,13 @@ namespace WarLord_Server_GUI.GameLogic_B
             }
             else
             {
-                foreach (Card_Control card in GameBoard.P1_HandsZone)
+                foreach (Card_Control card in GameBoard.My_HandsZone)
                 {
                     card.activatable = false;
                     card.Enabled = false;
                     card.Card_refresh();
                 }
-                foreach (Card_Control card in GameBoard.P2_HandsZone)
+                foreach (Card_Control card in GameBoard.Opponent_HandsZone)
                 {
                     card.activatable = true;
                     card.Enabled = true;
@@ -212,22 +212,22 @@ namespace WarLord_Server_GUI.GameLogic_B
                 GameSkillManager.Instance.list_skill11 = false;
             }
             all_count = 0;  //아무 마나 카운터 초기화
-            p1_remain_dark = Convert.ToInt32(mainForm.p1_cnt_dark.Text);   //현재 암흑 마나
-            p1_remain_fire = Convert.ToInt32(mainForm.p1_cnt_fire.Text);   //현재 불 마나
-            p2_remain_dark = Convert.ToInt32(mainForm.p2_cnt_dark.Text);   //현재 암흑 마나
-            p2_remain_fire = Convert.ToInt32(mainForm.p2_cnt_fire.Text);   //현재 불 마나
+            p1_remain_dark = Convert.ToInt32(mainForm.My_cnt_dark.Text);   //현재 암흑 마나
+            p1_remain_fire = Convert.ToInt32(mainForm.My_cnt_fire.Text);   //현재 불 마나
+            p2_remain_dark = Convert.ToInt32(mainForm.Opponent_cnt_dark.Text);   //현재 암흑 마나
+            p2_remain_fire = Convert.ToInt32(mainForm.Opponent_cnt_fire.Text);   //현재 불 마나
             refreshMana();
         }
         //=====[마나 새로고침]=====
         private void refreshMana()
         {
-            mainForm.setText_p1_remain_dark(p1_remain_dark.ToString());
-            mainForm.setText_p1_remain_fire(p1_remain_fire.ToString());
-            mainForm.setText_p1_use_all(all_count.ToString());
+            mainForm.setText_My_remain_dark(p1_remain_dark.ToString());
+            mainForm.setText_My_remain_fire(p1_remain_fire.ToString());
+            mainForm.setText_My_use_all(all_count.ToString());
 
-            mainForm.setText_p2_remain_dark(p2_remain_dark.ToString());
-            mainForm.setText_p2_remain_fire(p2_remain_fire.ToString());
-            mainForm.setText_p2_use_all(all_count.ToString());
+            mainForm.setText_Opponent_remain_dark(p2_remain_dark.ToString());
+            mainForm.setText_Opponent_remain_fire(p2_remain_fire.ToString());
+            mainForm.setText_Opponent_use_all(all_count.ToString());
         }
 
         /// <summary>
@@ -240,29 +240,29 @@ namespace WarLord_Server_GUI.GameLogic_B
             {
                 if (GamePlayManager.Instance.thisturn)
                 {
-                    moveZone(card_con, PLAYER1_MANAZONE);   //마나존으로 이동
+                    moveZone(card_con, MY_MANAZONE);   //마나존으로 이동
                     if (card_con.card.Attribute.Equals("암흑"))
                     {
-                        mainForm.setText_p1_cnt_dark((Convert.ToInt32(mainForm.p1_cnt_dark.Text) + 1).ToString());
+                        mainForm.setText_My_cnt_dark((Convert.ToInt32(mainForm.My_cnt_dark.Text) + 1).ToString());
                         p1_remain_dark++;
                     }
                     else if (card_con.card.Attribute.Equals("불"))
                     {
-                        mainForm.setText_p1_cnt_fire((Convert.ToInt32(mainForm.p1_cnt_fire.Text) + 1).ToString());
+                        mainForm.setText_My_cnt_fire((Convert.ToInt32(mainForm.My_cnt_fire.Text) + 1).ToString());
                         p1_remain_fire++;
                     }
                 }
                 else
                 {
-                    moveZone(card_con, PLAYER2_MANAZONE);   //마나존으로 이동
+                    moveZone(card_con, OPPONENT_MANAZONE);   //마나존으로 이동
                     if (card_con.card.Attribute.Equals("암흑"))
                     {
-                        mainForm.setText_p2_cnt_dark((Convert.ToInt32(mainForm.p2_cnt_dark.Text) + 1).ToString());
+                        mainForm.setText_Opponent_cnt_dark((Convert.ToInt32(mainForm.Opponent_cnt_dark.Text) + 1).ToString());
                         p2_remain_dark++;
                     }
                     else if (card_con.card.Attribute.Equals("불"))
                     {
-                        mainForm.setText_p2_cnt_fire((Convert.ToInt32(mainForm.p2_cnt_fire.Text) + 1).ToString());
+                        mainForm.setText_Opponent_cnt_fire((Convert.ToInt32(mainForm.Opponent_cnt_fire.Text) + 1).ToString());
                         p2_remain_fire++;
                     }
                 }
@@ -385,17 +385,17 @@ namespace WarLord_Server_GUI.GameLogic_B
                 if (card_con.card.Type.Equals("마법"))
                 {
                     procMana(card_con);
-                    moveZone(card_con, PLAYER1_TOMBZONE);//카드 내기
+                    moveZone(card_con, MY_TOMBZONE);//카드 내기
                 }
                 else if (card_con.card.Type.Equals("미니언"))
                 {
                     procMana(card_con);
-                    moveZone(card_con, PLAYER1_WARZONE);//카드 내기
+                    moveZone(card_con, MY_WARZONE);//카드 내기
                 }
                 else if (card_con.card.Type.Equals("드래곤"))
                 {
                     procMana(card_con);
-                    moveZone(card_con, PLAYER1_WARZONE);//카드 내기
+                    moveZone(card_con, MY_WARZONE);//카드 내기
                 }
                 else
                 {
@@ -407,17 +407,17 @@ namespace WarLord_Server_GUI.GameLogic_B
                 if (card_con.card.Type.Equals("마법"))
                 {
                     procMana(card_con);
-                    moveZone(card_con, PLAYER2_TOMBZONE);//카드 내기
+                    moveZone(card_con, OPPONENT_TOMBZONE);//카드 내기
                 }
                 else if (card_con.card.Type.Equals("미니언"))
                 {
                     procMana(card_con);
-                    moveZone(card_con, PLAYER2_WARZONE);//카드 내기
+                    moveZone(card_con, OPPONENT_WARZONE);//카드 내기
                 }
                 else if (card_con.card.Type.Equals("드래곤"))
                 {
                     procMana(card_con);
-                    moveZone(card_con, PLAYER2_WARZONE);//카드 내기
+                    moveZone(card_con, OPPONENT_WARZONE);//카드 내기
                 }
                 else
                 {
@@ -488,14 +488,14 @@ namespace WarLord_Server_GUI.GameLogic_B
         {
             if (thisturn)
             {
-                if (GameBoard.P1_WarZone.Contains(selectCard) && (GameBoard.P2_WarZone.Contains(targetCard) || GameBoard.P2_PlayerZone.Equals(targetCard)))
+                if (GameBoard.My_WarZone.Contains(selectCard) && (GameBoard.Opponent_WarZone.Contains(targetCard) || GameBoard.Opponent_PlayerZone.Equals(targetCard)))
                 {
                     MatchCard(selectCard, targetCard);
                 }
             }
             else
             {
-                if (GameBoard.P2_WarZone.Contains(selectCard) && (GameBoard.P1_WarZone.Contains(targetCard) || GameBoard.P1_PlayerZone.Equals(targetCard)))
+                if (GameBoard.Opponent_WarZone.Contains(selectCard) && (GameBoard.My_WarZone.Contains(targetCard) || GameBoard.My_PlayerZone.Equals(targetCard)))
                 {
                     MatchCard(selectCard, targetCard);
                 }
@@ -509,13 +509,13 @@ namespace WarLord_Server_GUI.GameLogic_B
             {
                 if (thisturn)
                 {
-                    moveZone(selectCard, PLAYER1_TOMBZONE);
-                    moveZone(targetCard, PLAYER2_TOMBZONE);
+                    moveZone(selectCard, MY_TOMBZONE);
+                    moveZone(targetCard, OPPONENT_TOMBZONE);
                 }
                 else
                 {
-                    moveZone(selectCard, PLAYER2_TOMBZONE);
-                    moveZone(targetCard, PLAYER1_TOMBZONE);
+                    moveZone(selectCard, OPPONENT_TOMBZONE);
+                    moveZone(targetCard, MY_TOMBZONE);
                 }
             }
             else
@@ -548,28 +548,28 @@ namespace WarLord_Server_GUI.GameLogic_B
             {
                 if (GameSkillManager.Instance.list_skill18.Contains(selectCard))
                 {
-                    GameBoard.P1_PlayerZone.card.thisTurnHP += selectCard.card.thisTurnAP;
+                    GameBoard.My_PlayerZone.card.thisTurnHP += selectCard.card.thisTurnAP;
                 }
                 if (GameSkillManager.Instance.list_skill18.Contains(targetCard))
                 {
-                    GameBoard.P2_PlayerZone.card.thisTurnHP += targetCard.card.thisTurnAP;
+                    GameBoard.Opponent_PlayerZone.card.thisTurnHP += targetCard.card.thisTurnAP;
                 }
             }
             else
             {
                 if (GameSkillManager.Instance.list_skill18.Contains(selectCard))
                 {
-                    GameBoard.P2_PlayerZone.card.thisTurnHP += selectCard.card.thisTurnAP;
+                    GameBoard.Opponent_PlayerZone.card.thisTurnHP += selectCard.card.thisTurnAP;
                 }
                 if (GameSkillManager.Instance.list_skill18.Contains(targetCard))
                 {
-                    GameBoard.P1_PlayerZone.card.thisTurnHP += targetCard.card.thisTurnAP;
+                    GameBoard.My_PlayerZone.card.thisTurnHP += targetCard.card.thisTurnAP;
                 }
             }
 
 
-            GameBoard.P1_PlayerZone.lb_aphp.Text = GameBoard.P1_PlayerZone.card.thisTurnAP + " / " + GameBoard.P1_PlayerZone.card.thisTurnHP;
-            GameBoard.P2_PlayerZone.lb_aphp.Text = GameBoard.P2_PlayerZone.card.thisTurnAP + " / " + GameBoard.P2_PlayerZone.card.thisTurnHP;
+            GameBoard.My_PlayerZone.lb_aphp.Text = GameBoard.My_PlayerZone.card.thisTurnAP + " / " + GameBoard.My_PlayerZone.card.thisTurnHP;
+            GameBoard.Opponent_PlayerZone.lb_aphp.Text = GameBoard.Opponent_PlayerZone.card.thisTurnAP + " / " + GameBoard.Opponent_PlayerZone.card.thisTurnHP;
             selectCard.lb_aphp.Text = selectCard.card.thisTurnAP + " / " + selectCard.card.thisTurnHP;
             targetCard.lb_aphp.Text = targetCard.card.thisTurnAP + " / " + targetCard.card.thisTurnHP;
 
@@ -577,22 +577,22 @@ namespace WarLord_Server_GUI.GameLogic_B
             {
                 if (selectCard.card.thisTurnHP <= 0)
                 {
-                    moveZone(selectCard, PLAYER1_TOMBZONE);
+                    moveZone(selectCard, MY_TOMBZONE);
                 }
                 if (targetCard.card.thisTurnHP <= 0)
                 {
-                    moveZone(targetCard, PLAYER2_TOMBZONE);
+                    moveZone(targetCard, OPPONENT_TOMBZONE);
                 }
             }
             else
             {
                 if (selectCard.card.thisTurnHP <= 0)
                 {
-                    moveZone(selectCard, PLAYER2_TOMBZONE);
+                    moveZone(selectCard, OPPONENT_TOMBZONE);
                 }
                 if (targetCard.card.thisTurnHP <= 0)
                 {
-                    moveZone(targetCard, PLAYER1_TOMBZONE);
+                    moveZone(targetCard, MY_TOMBZONE);
                 }
             }
             selectCard.activatable = false;
@@ -601,23 +601,23 @@ namespace WarLord_Server_GUI.GameLogic_B
         //=====[ 처음 카드 지급 ]=====
         public void firstDistribute()
         {
-            moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
-            moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
-            moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
+            moveZone(GameBoard.My_CardDeck[0], MY_HANDSZONE);
+            moveZone(GameBoard.My_CardDeck[0], MY_HANDSZONE);
+            moveZone(GameBoard.My_CardDeck[0], MY_HANDSZONE);
 
-            //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
-            //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
-            //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+            //moveZone(GameBoard.Opponent_CardDeck[0], OPPONENT_HANDSZONE);
+            //moveZone(GameBoard.Opponent_CardDeck[0], OPPONENT_HANDSZONE);
+            //moveZone(GameBoard.Opponent_CardDeck[0], OPPONENT_HANDSZONE);
 
             if (thisturn)
             {
-                //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
-                //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+                //moveZone(GameBoard.Opponent_CardDeck[0], OPPONENT_HANDSZONE);
+                //moveZone(GameBoard.Opponent_CardDeck[0], OPPONENT_HANDSZONE);
             }
             else
             {
-                moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
-                moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
+                moveZone(GameBoard.My_CardDeck[0], MY_HANDSZONE);
+                moveZone(GameBoard.My_CardDeck[0], MY_HANDSZONE);
             }
         }
 
@@ -626,13 +626,13 @@ namespace WarLord_Server_GUI.GameLogic_B
         {
             if (thisturn)
             {
-                moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
-                moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
+                moveZone(GameBoard.My_CardDeck[0], MY_HANDSZONE);
+                moveZone(GameBoard.My_CardDeck[0], MY_HANDSZONE);
             }
             else
             {
-                //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
-                //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+                //moveZone(GameBoard.Opponent_CardDeck[0], OPPONENT_HANDSZONE);
+                //moveZone(GameBoard.Opponent_CardDeck[0], OPPONENT_HANDSZONE);
             }
         }
 
@@ -648,53 +648,53 @@ namespace WarLord_Server_GUI.GameLogic_B
             //=====[기존 리스트 탐색]=====
             int pre_position = 0;
 
-            if (GameBoard.P1_CardDeck.Contains(card_con))
+            if (GameBoard.My_CardDeck.Contains(card_con))
             {
-                pre_position = PLAYER1_CARDDECK;
+                pre_position = MY_CARDDECK;
             }
-            else if (GameBoard.P2_CardDeck.Contains(card_con))
+            else if (GameBoard.Opponent_CardDeck.Contains(card_con))
             {
-                pre_position = PLAYER2_CARDDECK;
+                pre_position = OPPONENT_CARDDECK;
             }
-            else if (GameBoard.P1_HandsZone.Contains(card_con))
+            else if (GameBoard.My_HandsZone.Contains(card_con))
             {
-                pre_position = PLAYER1_HANDSZONE;
+                pre_position = MY_HANDSZONE;
             }
-            else if (GameBoard.P2_HandsZone.Contains(card_con))
+            else if (GameBoard.Opponent_HandsZone.Contains(card_con))
             {
-                pre_position = PLAYER2_HANDSZONE;
+                pre_position = OPPONENT_HANDSZONE;
             }
-            else if (GameBoard.P1_WarZone.Contains(card_con))
+            else if (GameBoard.My_WarZone.Contains(card_con))
             {
-                pre_position = PLAYER1_WARZONE;
+                pre_position = MY_WARZONE;
             }
-            else if (GameBoard.P2_WarZone.Contains(card_con))
+            else if (GameBoard.Opponent_WarZone.Contains(card_con))
             {
-                pre_position = PLAYER2_WARZONE;
+                pre_position = OPPONENT_WARZONE;
             }
-            else if (GameBoard.P1_ManaZone.Contains(card_con))
+            else if (GameBoard.My_ManaZone.Contains(card_con))
             {
-                pre_position = PLAYER1_MANAZONE;
+                pre_position = MY_MANAZONE;
             }
-            else if (GameBoard.P2_ManaZone.Contains(card_con))
+            else if (GameBoard.Opponent_ManaZone.Contains(card_con))
             {
-                pre_position = PLAYER2_MANAZONE;
+                pre_position = OPPONENT_MANAZONE;
             }
-            else if (GameBoard.P1_TombZone.Contains(card_con))
+            else if (GameBoard.My_TombZone.Contains(card_con))
             {
-                pre_position = PLAYER1_TOMBZONE;
+                pre_position = MY_TOMBZONE;
             }
-            else if (GameBoard.P2_TombZone.Contains(card_con))
+            else if (GameBoard.Opponent_TombZone.Contains(card_con))
             {
-                pre_position = PLAYER2_TOMBZONE;
+                pre_position = OPPONENT_TOMBZONE;
             }
-            else if (GameBoard.P1_PlayerZone.Equals(card_con))
+            else if (GameBoard.My_PlayerZone.Equals(card_con))
             {
-                pre_position = PLAYER1_PLAYERZONE;
+                pre_position = MY_PLAYERZONE;
             }
-            else if (GameBoard.P2_PlayerZone.Equals(card_con))
+            else if (GameBoard.Opponent_PlayerZone.Equals(card_con))
             {
-                pre_position = PLAYER2_PLAYERZONE;
+                pre_position = OPPONENT_PLAYERZONE;
             }
             else
             {
@@ -704,94 +704,94 @@ namespace WarLord_Server_GUI.GameLogic_B
             //=====[기본 리스트에서 삭제]=====
             switch (pre_position)
             {
-                case PLAYER1_CARDDECK:
-                    GameBoard.P1_CardDeck.Remove(card_con);
+                case MY_CARDDECK:
+                    GameBoard.My_CardDeck.Remove(card_con);
                     break;
-                case PLAYER2_CARDDECK:
-                    GameBoard.P2_CardDeck.Remove(card_con);
+                case OPPONENT_CARDDECK:
+                    GameBoard.Opponent_CardDeck.Remove(card_con);
                     break;
-                case PLAYER1_HANDSZONE:
-                    GameBoard.P1_HandsZone.Remove(card_con);
-                    mainForm.remove_P1_Hands(card_con);
+                case MY_HANDSZONE:
+                    GameBoard.My_HandsZone.Remove(card_con);
+                    mainForm.remove_My_Hands(card_con);
                     break;
-                case PLAYER2_HANDSZONE:
-                    GameBoard.P2_HandsZone.Remove(card_con);
-                    mainForm.remove_P2_Hands(card_con);
+                case OPPONENT_HANDSZONE:
+                    GameBoard.Opponent_HandsZone.Remove(card_con);
+                    mainForm.remove_Opponent_Hands(card_con);
                     break;
-                case PLAYER1_WARZONE:
-                    GameBoard.P1_WarZone.Remove(card_con);
-                    mainForm.remove_P1_WarZone(card_con);
+                case MY_WARZONE:
+                    GameBoard.My_WarZone.Remove(card_con);
+                    mainForm.remove_My_WarZone(card_con);
                     break;
-                case PLAYER2_WARZONE:
-                    GameBoard.P2_WarZone.Remove(card_con);
-                    mainForm.remove_P2_WarZone(card_con);
+                case OPPONENT_WARZONE:
+                    GameBoard.Opponent_WarZone.Remove(card_con);
+                    mainForm.remove_Opponent_WarZone(card_con);
                     break;
-                case PLAYER1_MANAZONE:
-                    GameBoard.P1_ManaZone.Remove(card_con);
-                    mainForm.remove_P1_ManaZone(card_con);
+                case MY_MANAZONE:
+                    GameBoard.My_ManaZone.Remove(card_con);
+                    mainForm.remove_My_ManaZone(card_con);
                     break;
-                case PLAYER2_MANAZONE:
-                    GameBoard.P2_ManaZone.Remove(card_con);
-                    mainForm.remove_P2_ManaZone(card_con);
+                case OPPONENT_MANAZONE:
+                    GameBoard.Opponent_ManaZone.Remove(card_con);
+                    mainForm.remove_Opponent_ManaZone(card_con);
                     break;
-                case PLAYER1_TOMBZONE:
-                    GameBoard.P1_TombZone.Remove(card_con);
+                case MY_TOMBZONE:
+                    GameBoard.My_TombZone.Remove(card_con);
                     break;
-                case PLAYER2_TOMBZONE:
-                    GameBoard.P2_TombZone.Remove(card_con);
+                case OPPONENT_TOMBZONE:
+                    GameBoard.Opponent_TombZone.Remove(card_con);
                     break;
-                case PLAYER1_PLAYERZONE:
+                case MY_PLAYERZONE:
                     break;
-                case PLAYER2_PLAYERZONE:                   
+                case OPPONENT_PLAYERZONE:                   
                     break;
             }
             //=====[새로운 포지션 배치]=====
             card_con.position = position;
             switch (position)
             {
-                case PLAYER1_CARDDECK:
-                    GameBoard.P1_CardDeck.Add(card_con);
+                case MY_CARDDECK:
+                    GameBoard.My_CardDeck.Add(card_con);
                     break;
-                case PLAYER2_CARDDECK:
-                    GameBoard.P2_CardDeck.Add(card_con);
+                case OPPONENT_CARDDECK:
+                    GameBoard.Opponent_CardDeck.Add(card_con);
                     break;
-                case PLAYER1_HANDSZONE:
-                    GameBoard.P1_HandsZone.Add(card_con);
-                    mainForm.add_P1_Hands(card_con);
+                case MY_HANDSZONE:
+                    GameBoard.My_HandsZone.Add(card_con);
+                    mainForm.add_My_Hands(card_con);
                     card_con.activatable = true;
                     card_con.Enabled = true;
                     break;
-                case PLAYER2_HANDSZONE:
-                    GameBoard.P2_HandsZone.Add(card_con);
-                    mainForm.add_P2_Hands(card_con);
+                case OPPONENT_HANDSZONE:
+                    GameBoard.Opponent_HandsZone.Add(card_con);
+                    mainForm.add_Opponent_Hands(card_con);
                     card_con.activatable = true;
                     card_con.Enabled = true;
                     break;
-                case PLAYER1_WARZONE:
-                    GameBoard.P1_WarZone.Add(card_con);
-                    mainForm.add_P1_WarZone(card_con);
+                case MY_WARZONE:
+                    GameBoard.My_WarZone.Add(card_con);
+                    mainForm.add_My_WarZone(card_con);
                     card_con.activatable = false;
                     card_con.Enabled = false;
                     break;
-                case PLAYER2_WARZONE:
-                    GameBoard.P2_WarZone.Add(card_con);
-                    mainForm.add_P2_WarZone(card_con);
+                case OPPONENT_WARZONE:
+                    GameBoard.Opponent_WarZone.Add(card_con);
+                    mainForm.add_Opponent_WarZone(card_con);
                     card_con.activatable = false;
                     card_con.Enabled = false;
                     break;
-                case PLAYER1_MANAZONE:
-                    GameBoard.P1_ManaZone.Add(card_con);
-                    mainForm.add_P1_ManaZone(card_con);
+                case MY_MANAZONE:
+                    GameBoard.My_ManaZone.Add(card_con);
+                    mainForm.add_My_ManaZone(card_con);
                     card_con.activatable = false;
                     card_con.Enabled = false;
                     break;
-                case PLAYER2_MANAZONE:
-                    GameBoard.P2_ManaZone.Add(card_con);
-                    mainForm.add_P2_ManaZone(card_con);
+                case OPPONENT_MANAZONE:
+                    GameBoard.Opponent_ManaZone.Add(card_con);
+                    mainForm.add_Opponent_ManaZone(card_con);
                     card_con.activatable = false;
                     card_con.Enabled = false;
                     break;
-                case PLAYER1_TOMBZONE:
+                case MY_TOMBZONE:
                     if (card_con.Equals(GameSkillManager.Instance.tombCard))
                     {
                         GameSkillManager.Instance.skill_8_p1 = false;
@@ -800,25 +800,25 @@ namespace WarLord_Server_GUI.GameLogic_B
                     {
                         if (GameSkillManager.Instance.skill_8_p1)
                         {
-                            GameBoard.P1_PlayerZone.card.Hp++;
-                            GameBoard.P1_PlayerZone.lb_aphp.Text = GameBoard.P1_PlayerZone.card.Ap + " / " + GameBoard.P1_PlayerZone.card.Hp;
+                            GameBoard.My_PlayerZone.card.Hp++;
+                            GameBoard.My_PlayerZone.lb_aphp.Text = GameBoard.My_PlayerZone.card.Ap + " / " + GameBoard.My_PlayerZone.card.Hp;
                         }
                         if (GameSkillManager.Instance.skill_8_p2)
                         {
-                            GameBoard.P2_PlayerZone.card.Hp++;
-                            GameBoard.P2_PlayerZone.lb_aphp.Text = GameBoard.P2_PlayerZone.card.Ap + " / " + GameBoard.P2_PlayerZone.card.Hp;
+                            GameBoard.Opponent_PlayerZone.card.Hp++;
+                            GameBoard.Opponent_PlayerZone.lb_aphp.Text = GameBoard.Opponent_PlayerZone.card.Ap + " / " + GameBoard.Opponent_PlayerZone.card.Hp;
                         }
                     }
 
-                    GameBoard.P1_TombZone.Add(card_con);
-                    mainForm.add_P1_TombZone(card_con);
+                    GameBoard.My_TombZone.Add(card_con);
+                    mainForm.add_My_TombZone(card_con);
                     card_con.activatable = false;
                     card_con.Enabled = false;
 
                     cardDestruction(card_con);//=====[카드 파괴 이벤트 호출]=====
 
                     break;
-                case PLAYER2_TOMBZONE:
+                case OPPONENT_TOMBZONE:
                     if (card_con.Equals(GameSkillManager.Instance.tombCard))
                     {
                         GameSkillManager.Instance.skill_8_p2 = false;
@@ -827,18 +827,18 @@ namespace WarLord_Server_GUI.GameLogic_B
                     {
                         if (GameSkillManager.Instance.skill_8_p1)
                         {
-                            GameBoard.P1_PlayerZone.card.Hp++;
-                            GameBoard.P1_PlayerZone.lb_aphp.Text = GameBoard.P1_PlayerZone.card.Ap + " / " + GameBoard.P1_PlayerZone.card.Hp;
+                            GameBoard.My_PlayerZone.card.Hp++;
+                            GameBoard.My_PlayerZone.lb_aphp.Text = GameBoard.My_PlayerZone.card.Ap + " / " + GameBoard.My_PlayerZone.card.Hp;
                         }
                         if (GameSkillManager.Instance.skill_8_p2)
                         {
-                            GameBoard.P2_PlayerZone.card.Hp++;
-                            GameBoard.P2_PlayerZone.lb_aphp.Text = GameBoard.P2_PlayerZone.card.Ap + " / " + GameBoard.P2_PlayerZone.card.Hp;
+                            GameBoard.Opponent_PlayerZone.card.Hp++;
+                            GameBoard.Opponent_PlayerZone.lb_aphp.Text = GameBoard.Opponent_PlayerZone.card.Ap + " / " + GameBoard.Opponent_PlayerZone.card.Hp;
                         }
                     }
 
-                    GameBoard.P2_TombZone.Add(card_con);
-                    mainForm.add_P2_TombZone(card_con);
+                    GameBoard.Opponent_TombZone.Add(card_con);
+                    mainForm.add_Opponent_TombZone(card_con);
                     card_con.activatable = false;
                     card_con.Enabled = false;
 

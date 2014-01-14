@@ -13,6 +13,15 @@ namespace PrePrototypeConsolServer
         public ConcurrentDictionary<string, Delegate> CommandDic = new ConcurrentDictionary<string, Delegate>();
         public delegate void cmdDelegate(UserContext aContext, string command);
 
+
+
+        #region 공통 부분
+        private readonly string cmd_EndTurn = "EndTurn";    //턴 종료 합니다.
+        abstract protected void cmdF_EndTurn(UserContext aContext, string command);
+        #endregion 공통 부분
+
+        #region 게임 준비 과정 부분
+
         private readonly string cmd_GameReady = "GameReady";    //대전 신청합니다.
         abstract protected void cmdF_GameReady(UserContext aContext, string command);
 
@@ -40,9 +49,14 @@ namespace PrePrototypeConsolServer
         private readonly string cmd_StartGame_OK = "StartGame_OK";    //게임 시작 해주십시오.
         abstract protected void cmdF_StartGame_OK(UserContext aContext, string command);
 
+        #endregion 게임 준비 과정 부분
 
         public ServerCommandLibrary()
         {
+            #region 공통 부분
+            CommandDic.TryAdd(cmd_EndTurn, new cmdDelegate(cmdF_EndTurn));  //EndTurn
+            #endregion 공통 부분
+            #region 게임 준비 과정 부분
             CommandDic.TryAdd(cmd_GameReady, new cmdDelegate(cmdF_GameReady));  //GameReady
             CommandDic.TryAdd(cmd_CreatedRoom_OK, new cmdDelegate(cmdF_CreatedRoom_OK));  //CreatedRoom_OK
             CommandDic.TryAdd(cmd_YourCharacter_OK, new cmdDelegate(cmdF_YourCharacter_OK));  //YourCharacter_OK
@@ -50,6 +64,7 @@ namespace PrePrototypeConsolServer
             CommandDic.TryAdd(cmd_YourCardDeck_OK, new cmdDelegate(cmdF_YourCardDeck_OK));  //YourCardDeck_OK
             CommandDic.TryAdd(cmd_OpponentCardDeck_OK, new cmdDelegate(cmdF_OpponentCardDeck_OK));  //OpponentCardDeck_OK
             CommandDic.TryAdd(cmd_StartGame_OK, new cmdDelegate(cmdF_StartGame_OK));  //StartGame_OK
+            #endregion 게임 준비 과정 부분
         }
     }
 }

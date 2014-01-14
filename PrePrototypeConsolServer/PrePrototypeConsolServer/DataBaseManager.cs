@@ -68,7 +68,7 @@ namespace PrePrototypeConsolServer
                         Skill = reader.GetString(11),
                         Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
                         Image_file = reader.GetString(13),
-                        position = GameBoard.PLAYER1_PLAYERZONE,
+                        position = 0,
                         thisTurnAP = reader.GetInt16(7),
                         thisTurnHP = reader.GetInt16(8),
                     };
@@ -111,7 +111,7 @@ namespace PrePrototypeConsolServer
                         Skill = reader2.GetString(11),
                         Information = (reader2.IsDBNull(12)) ? "" : reader2.GetString(12),
                         Image_file = reader2.GetString(13),
-                        position = GameBoard.PLAYER2_PLAYERZONE,
+                        position = 0,
                         thisTurnAP = reader2.GetInt16(7),
                         thisTurnHP = reader2.GetInt16(8),
                     };
@@ -158,7 +158,7 @@ namespace PrePrototypeConsolServer
                                         Skill = reader.GetString(11),
                                         Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
                                         Image_file = reader.GetString(13),
-                                        position = GameBoard.PLAYER1_CARDDECK,
+                                        position = 0,
                                         thisTurnAP = reader.GetInt16(7),
                                         thisTurnHP = reader.GetInt16(8),
                                     }
@@ -179,7 +179,7 @@ namespace PrePrototypeConsolServer
                                 Skill = reader.GetString(11),
                                 Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
                                 Image_file = reader.GetString(13),
-                                position = GameBoard.PLAYER2_CARDDECK,
+                                position = 0,
                                 thisTurnAP = reader.GetInt16(7),
                                 thisTurnHP = reader.GetInt16(8),
                             });

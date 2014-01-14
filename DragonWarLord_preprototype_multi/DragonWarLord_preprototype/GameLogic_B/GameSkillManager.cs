@@ -97,9 +97,9 @@ namespace DragonWarLord_preprototype.GameLogic_B
         }
         public void skill_7_proc(Card_Control card_con)
         {
-            if (GameBoard.P1_WarZone.Contains(card_con))
+            if (GameBoard.My_WarZone.Contains(card_con))
             {
-                foreach (Card_Control c in GameBoard.P1_WarZone)
+                foreach (Card_Control c in GameBoard.My_WarZone)
                 {
                     if (!c.Equals(card_con))
                     {
@@ -110,9 +110,9 @@ namespace DragonWarLord_preprototype.GameLogic_B
                 }
             }
 
-            if (GameBoard.P2_WarZone.Contains(card_con))
+            if (GameBoard.Opponent_WarZone.Contains(card_con))
             {
-                foreach (Card_Control c in GameBoard.P2_WarZone)
+                foreach (Card_Control c in GameBoard.Opponent_WarZone)
                 {
                     if (!c.Equals(card_con))
                     {
@@ -133,7 +133,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
             if (card_con.position == PLAYER1_TOMBZONE)
             {
-                foreach (Card_Control c in GameBoard.P1_WarZone)
+                foreach (Card_Control c in GameBoard.My_WarZone)
                 {
                     if (!c.Equals(card_con))
                     {
@@ -145,7 +145,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
             }
             if (card_con.position == PLAYER2_TOMBZONE)
             {
-                foreach (Card_Control c in GameBoard.P2_WarZone)
+                foreach (Card_Control c in GameBoard.Opponent_WarZone)
                 {
                     if (!c.Equals(card_con))
                     {
@@ -191,7 +191,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
             if (GamePlayManager.Instance.thisturn){
 
                 List<Card_Control> die_CardControl = new List<Card_Control>();
-                foreach (Card_Control cc in GameBoard.P2_WarZone)
+                foreach (Card_Control cc in GameBoard.Opponent_WarZone)
                 {
                     cc.card.thisTurnHP -= 3;
                     cc.lb_aphp.Text = cc.card.thisTurnAP + " / " + cc.card.thisTurnHP;
@@ -209,7 +209,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
             else
             {
                 List<Card_Control> die_CardControl = new List<Card_Control>();
-                foreach (Card_Control cc in GameBoard.P1_WarZone)
+                foreach (Card_Control cc in GameBoard.My_WarZone)
                 {
                     cc.card.thisTurnHP -= 3;
                     cc.lb_aphp.Text = cc.card.thisTurnAP + " / " + cc.card.thisTurnHP;
@@ -241,15 +241,15 @@ namespace DragonWarLord_preprototype.GameLogic_B
                 //mana_fire = GamePlayManager.Instance.p1_remain_fire;
                 GamePlayManager.Instance.p1_remain_dark += GamePlayManager.Instance.p2_remain_dark;
                 GamePlayManager.Instance.p1_remain_fire += GamePlayManager.Instance.p2_remain_fire;
-                GamePlayManager.Instance.mainForm.p1_remain_dark.Text = GamePlayManager.Instance.p1_remain_dark.ToString();
-                GamePlayManager.Instance.mainForm.p1_remain_fire.Text = GamePlayManager.Instance.p1_remain_fire.ToString();
+                GamePlayManager.Instance.mainForm.My_remain_dark.Text = GamePlayManager.Instance.p1_remain_dark.ToString();
+                GamePlayManager.Instance.mainForm.My_remain_fire.Text = GamePlayManager.Instance.p1_remain_fire.ToString();
             }else{
                 //mana_dark = GamePlayManager.Instance.p2_remain_dark;
                 //mana_fire = GamePlayManager.Instance.p2_remain_fire;
                 GamePlayManager.Instance.p2_remain_dark += GamePlayManager.Instance.p1_remain_dark;
                 GamePlayManager.Instance.p2_remain_fire += GamePlayManager.Instance.p1_remain_fire;
-                GamePlayManager.Instance.mainForm.p1_remain_dark.Text = GamePlayManager.Instance.p2_remain_dark.ToString();
-                GamePlayManager.Instance.mainForm.p1_remain_fire.Text = GamePlayManager.Instance.p2_remain_fire.ToString();
+                GamePlayManager.Instance.mainForm.My_remain_dark.Text = GamePlayManager.Instance.p2_remain_dark.ToString();
+                GamePlayManager.Instance.mainForm.My_remain_fire.Text = GamePlayManager.Instance.p2_remain_fire.ToString();
             }
             
             list_skill11 = true;
@@ -317,19 +317,19 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
                 if (GamePlayManager.Instance.thisturn)
                 {
-                    foreach (Card_Control item in GameBoard.P2_WarZone)
+                    foreach (Card_Control item in GameBoard.Opponent_WarZone)
                     {
                         item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                     }
-                    GameBoard.P2_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
+                    GameBoard.Opponent_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                 }
                 else
                 {
-                    foreach (Card_Control item in GameBoard.P1_WarZone)
+                    foreach (Card_Control item in GameBoard.My_WarZone)
                     {
                         item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                     }
-                    GameBoard.P1_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
+                    GameBoard.My_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
 
                 }
 
@@ -337,21 +337,21 @@ namespace DragonWarLord_preprototype.GameLogic_B
         }
         public bool canTargetSkill16(Card_Control card_con)
         {
-            foreach (Card_Control item in GameBoard.P2_WarZone)
+            foreach (Card_Control item in GameBoard.Opponent_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
-            GameBoard.P2_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
-            foreach (Card_Control item in GameBoard.P1_WarZone)
+            GameBoard.Opponent_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
+            foreach (Card_Control item in GameBoard.My_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
-            GameBoard.P1_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
+            GameBoard.My_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
 
 
             if (GamePlayManager.Instance.thisturn)
             {
-                if (GameBoard.P2_WarZone.Contains(card_con) || GameBoard.P2_PlayerZone.Equals(card_con))
+                if (GameBoard.Opponent_WarZone.Contains(card_con) || GameBoard.Opponent_PlayerZone.Equals(card_con))
                 {
                     return true;
                 }
@@ -362,7 +362,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
             }
             else
             {
-                if (GameBoard.P1_WarZone.Contains(card_con) || GameBoard.P1_PlayerZone.Equals(card_con))
+                if (GameBoard.My_WarZone.Contains(card_con) || GameBoard.My_PlayerZone.Equals(card_con))
                 {
                     return true;
                 }
@@ -441,14 +441,14 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
                         if (GamePlayManager.Instance.thisturn)
                         {
-                            foreach (Card_Control item in GameBoard.P1_WarZone)
+                            foreach (Card_Control item in GameBoard.My_WarZone)
                             {
                                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                             }
                         }
                         else
                         {
-                            foreach (Card_Control item in GameBoard.P2_WarZone)
+                            foreach (Card_Control item in GameBoard.Opponent_WarZone)
                             {
                                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                             }
@@ -471,14 +471,14 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
                     if (GamePlayManager.Instance.thisturn)
                     {
-                        foreach (Card_Control item in GameBoard.P1_WarZone)
+                        foreach (Card_Control item in GameBoard.My_WarZone)
                         {
                             item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                         }
                     }
                     else
                     {
-                        foreach (Card_Control item in GameBoard.P2_WarZone)
+                        foreach (Card_Control item in GameBoard.Opponent_WarZone)
                         {
                             item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                         }
@@ -490,18 +490,18 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
         public bool canTargetSkill17(Card_Control card_con)
         {
-            foreach (Card_Control item in GameBoard.P1_WarZone)
+            foreach (Card_Control item in GameBoard.My_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
-            foreach (Card_Control item in GameBoard.P2_WarZone)
+            foreach (Card_Control item in GameBoard.Opponent_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
 
             if (GamePlayManager.Instance.thisturn)
             {
-                if (GameBoard.P1_WarZone.Contains(card_con))
+                if (GameBoard.My_WarZone.Contains(card_con))
                 {
                     return true;
                 }
@@ -512,7 +512,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
             }
             else
             {
-                if (GameBoard.P2_WarZone.Contains(card_con))
+                if (GameBoard.Opponent_WarZone.Contains(card_con))
                 {
                     return true;
                 }
@@ -556,14 +556,14 @@ namespace DragonWarLord_preprototype.GameLogic_B
                 skill_18 = true;
                 if (GamePlayManager.Instance.thisturn)
                 {
-                    foreach (Card_Control item in GameBoard.P1_WarZone)
+                    foreach (Card_Control item in GameBoard.My_WarZone)
                     {
                         item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                     }
                 }
                 else
                 {
-                    foreach (Card_Control item in GameBoard.P2_WarZone)
+                    foreach (Card_Control item in GameBoard.Opponent_WarZone)
                     {
                         item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                     }
@@ -575,18 +575,18 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
         public bool canTargetSkill18(Card_Control card_con)
         {
-            foreach (Card_Control item in GameBoard.P1_WarZone)
+            foreach (Card_Control item in GameBoard.My_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
-            foreach (Card_Control item in GameBoard.P2_WarZone)
+            foreach (Card_Control item in GameBoard.Opponent_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
 
             if (GamePlayManager.Instance.thisturn)
             {
-                if (GameBoard.P1_WarZone.Contains(card_con))
+                if (GameBoard.My_WarZone.Contains(card_con))
                 {
                     return true;
                 }
@@ -597,7 +597,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
             }
             else
             {
-                if (GameBoard.P2_WarZone.Contains(card_con))
+                if (GameBoard.Opponent_WarZone.Contains(card_con))
                 {
                     return true;
                 }
@@ -641,11 +641,11 @@ namespace DragonWarLord_preprototype.GameLogic_B
                 MessageBox.Show("마법대상을 선택하세요");
                 skill_19 = true;
                 if(GamePlayManager.Instance.thisturn){
-                    foreach(Card_Control item in GameBoard.P1_WarZone){
+                    foreach(Card_Control item in GameBoard.My_WarZone){
                         item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                     }
                 }else{
-                    foreach (Card_Control item in GameBoard.P2_WarZone)
+                    foreach (Card_Control item in GameBoard.Opponent_WarZone)
                     {
                         item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                     }
@@ -657,18 +657,18 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
         public bool canTargetSkill19(Card_Control card_con)
         {
-            foreach (Card_Control item in GameBoard.P1_WarZone)
+            foreach (Card_Control item in GameBoard.My_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
-            foreach (Card_Control item in GameBoard.P2_WarZone)
+            foreach (Card_Control item in GameBoard.Opponent_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
 
             if (GamePlayManager.Instance.thisturn)
             {
-                if (GameBoard.P1_WarZone.Contains(card_con))
+                if (GameBoard.My_WarZone.Contains(card_con))
                 {
                     return true;
                 }
@@ -679,7 +679,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
             }
             else
             {
-                if (GameBoard.P2_WarZone.Contains(card_con))
+                if (GameBoard.Opponent_WarZone.Contains(card_con))
                 {
                     return true;
                 }
@@ -728,16 +728,16 @@ namespace DragonWarLord_preprototype.GameLogic_B
                         if (GamePlayManager.Instance.p1_remain_dark >= GamePlayManager.Instance.p1_remain_fire)
                         {
                             GamePlayManager.Instance.p1_remain_dark -= 1;
-                            int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.p1_cnt_dark.Text);
+                            int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.My_cnt_dark.Text);
                             result -= 1;
-                            GamePlayManager.Instance.mainForm.p1_cnt_dark.Text = result.ToString();
+                            GamePlayManager.Instance.mainForm.My_cnt_dark.Text = result.ToString();
                         }
                         else
                         {
                             GamePlayManager.Instance.p1_remain_fire -= 1;
-                            int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.p1_cnt_fire.Text);
+                            int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.My_cnt_fire.Text);
                             result -= 1;
-                            GamePlayManager.Instance.mainForm.p1_cnt_fire.Text = result.ToString();
+                            GamePlayManager.Instance.mainForm.My_cnt_fire.Text = result.ToString();
                         }
                     }
                     else
@@ -745,16 +745,16 @@ namespace DragonWarLord_preprototype.GameLogic_B
                         if (GamePlayManager.Instance.p2_remain_dark >= GamePlayManager.Instance.p2_remain_fire)
                         {
                             GamePlayManager.Instance.p2_remain_dark -= 1;
-                            int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.p2_cnt_dark.Text);
+                            int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.Opponent_cnt_dark.Text);
                             result -= 1;
-                            GamePlayManager.Instance.mainForm.p2_cnt_dark.Text = result.ToString();
+                            GamePlayManager.Instance.mainForm.Opponent_cnt_dark.Text = result.ToString();
                         }
                         else
                         {
                             GamePlayManager.Instance.p2_remain_fire -= 1;
-                            int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.p2_cnt_fire.Text);
+                            int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.Opponent_cnt_fire.Text);
                             result -= 1;
-                            GamePlayManager.Instance.mainForm.p2_cnt_fire.Text = result.ToString();
+                            GamePlayManager.Instance.mainForm.Opponent_cnt_fire.Text = result.ToString();
                         }
                     }
 
@@ -774,19 +774,19 @@ namespace DragonWarLord_preprototype.GameLogic_B
 
                 if (GamePlayManager.Instance.thisturn)
                 {
-                    foreach (Card_Control item in GameBoard.P2_WarZone)
+                    foreach (Card_Control item in GameBoard.Opponent_WarZone)
                     {
                         item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                     }
-                    GameBoard.P2_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
+                    GameBoard.Opponent_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                 }
                 else
                 {
-                    foreach (Card_Control item in GameBoard.P1_WarZone)
+                    foreach (Card_Control item in GameBoard.My_WarZone)
                     {
                         item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
                     }
-                    GameBoard.P1_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
+                    GameBoard.My_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.can_backimg_select;
 
                 }
 
@@ -794,22 +794,22 @@ namespace DragonWarLord_preprototype.GameLogic_B
         }
         public bool canTargetSkill20(Card_Control card_con)
         {
-            foreach (Card_Control item in GameBoard.P2_WarZone)
+            foreach (Card_Control item in GameBoard.Opponent_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
-            GameBoard.P2_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
+            GameBoard.Opponent_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
 
-            foreach (Card_Control item in GameBoard.P1_WarZone)
+            foreach (Card_Control item in GameBoard.My_WarZone)
             {
                 item.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
             }
-            GameBoard.P1_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
+            GameBoard.My_PlayerZone.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
 
 
             if (GamePlayManager.Instance.thisturn)
             {
-                if (GameBoard.P2_WarZone.Contains(card_con) || GameBoard.P2_PlayerZone.Equals(card_con))
+                if (GameBoard.Opponent_WarZone.Contains(card_con) || GameBoard.Opponent_PlayerZone.Equals(card_con))
                 {
                     return true;
                 }
@@ -820,7 +820,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
             }
             else
             {
-                if (GameBoard.P1_WarZone.Contains(card_con) || GameBoard.P1_PlayerZone.Equals(card_con))
+                if (GameBoard.My_WarZone.Contains(card_con) || GameBoard.My_PlayerZone.Equals(card_con))
                 {
                     return true;
                 }
@@ -872,7 +872,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
         {
             if (GamePlayManager.Instance.thisturn)
             {
-                if (GameBoard.P2_WarZone.Contains(card_con))
+                if (GameBoard.Opponent_WarZone.Contains(card_con))
                 {
                     return true;
                 }
@@ -883,7 +883,7 @@ namespace DragonWarLord_preprototype.GameLogic_B
             }
             else
             {
-                if (GameBoard.P1_WarZone.Contains(card_con))
+                if (GameBoard.My_WarZone.Contains(card_con))
                 {
                     return true;
                 }

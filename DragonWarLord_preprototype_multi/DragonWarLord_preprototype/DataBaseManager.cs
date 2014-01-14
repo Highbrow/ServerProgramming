@@ -18,54 +18,101 @@ namespace DragonWarLord_preprototype
         public static MySqlCommand cmd;
         private static string query = "select * from user where _id = '1'";
 
-        public static List<Card_Control> inputCard(string[] card_list)
+        public static void inputCard(string[] card_list, bool my)
         {
-            List<Card_Control> cardDeck = new List<Card_Control>();
             conn = new MySqlConnection(strConn);
-
-            foreach (string q in card_list)
+            
+            if (my)
             {
-                conn.Open();
-                query = "select * from card where _id = '" + q + "'";
-                cmd = new MySqlCommand(query);
-
-                cmd.Connection = conn;
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                try
+                foreach (string q in card_list)
                 {
-                    while (reader.Read())
+                    conn.Open();
+                    query = "select * from card where _id = '" + q + "'";
+                    cmd = new MySqlCommand(query);
+
+                    cmd.Connection = conn;
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    try
                     {
-                        cardDeck.Add(new Card_Control()
+                        while (reader.Read())
                         {
-                            card = new Card()
+                            GameBoard.My_CardDeck.Add(new Card_Control()
                             {
-                                Name = reader.GetString(1),
-                                Attribute = reader.GetString(2),
-                                Type = reader.GetString(3),
-                                Class = reader.GetString(4),
-                                Species = (reader.IsDBNull(5)) ? "" : reader.GetString(5),
-                                Consumption = reader.GetString(6),
-                                Ap = reader.GetInt16(7),
-                                Hp = reader.GetInt16(8),
-                                Rp = reader.GetInt16(9),
-                                Limited_amount = reader.GetInt16(10),
-                                Skill = reader.GetString(11),
-                                Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
-                                Image_file = reader.GetString(13),
-                                thisTurnAP = reader.GetInt16(7),
-                                thisTurnHP = reader.GetInt16(8),
-                            }
-                        });
+                                card = new Card()
+                                {
+                                    Name = reader.GetString(1),
+                                    Attribute = reader.GetString(2),
+                                    Type = reader.GetString(3),
+                                    Class = reader.GetString(4),
+                                    Species = (reader.IsDBNull(5)) ? "" : reader.GetString(5),
+                                    Consumption = reader.GetString(6),
+                                    Ap = reader.GetInt16(7),
+                                    Hp = reader.GetInt16(8),
+                                    Rp = reader.GetInt16(9),
+                                    Limited_amount = reader.GetInt16(10),
+                                    Skill = reader.GetString(11),
+                                    Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
+                                    Image_file = reader.GetString(13),
+                                    thisTurnAP = reader.GetInt16(7),
+                                    thisTurnHP = reader.GetInt16(8),
+                                }
+                            });
+                        }
                     }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message.ToString());
+                    }
+                    conn.Close();
                 }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message.ToString());
-                }
-                conn.Close();
             }
-            return cardDeck;
+            else
+            {
+
+                foreach (string q in card_list)
+                {
+                    conn.Open();
+                    query = "select * from card where _id = '" + q + "'";
+                    cmd = new MySqlCommand(query);
+
+                    cmd.Connection = conn;
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    try
+                    {
+                        while (reader.Read())
+                        {
+                            GameBoard.Opponent_CardDeck.Add(new Card_Control()
+                            {
+                                card = new Card()
+                                {
+                                    Name = reader.GetString(1),
+                                    Attribute = reader.GetString(2),
+                                    Type = reader.GetString(3),
+                                    Class = reader.GetString(4),
+                                    Species = (reader.IsDBNull(5)) ? "" : reader.GetString(5),
+                                    Consumption = reader.GetString(6),
+                                    Ap = reader.GetInt16(7),
+                                    Hp = reader.GetInt16(8),
+                                    Rp = reader.GetInt16(9),
+                                    Limited_amount = reader.GetInt16(10),
+                                    Skill = reader.GetString(11),
+                                    Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
+                                    Image_file = reader.GetString(13),
+                                    thisTurnAP = reader.GetInt16(7),
+                                    thisTurnHP = reader.GetInt16(8),
+                                }
+                            });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message.ToString());
+                    }
+                    conn.Close();
+                }
+            }
         }
 
 
