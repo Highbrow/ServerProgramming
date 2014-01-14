@@ -1,17 +1,16 @@
-﻿using MySql.Data.MySqlClient;
+﻿using DragonWarLord_preprototype;
+using DragonWarLord_preprototype.CardLibrary;
+using DragonWarLord_preprototype.GameLogic_B;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DragonWarLord_preprototype;
-using DragonWarLord_preprototype.CardLibrary;
-using DragonWarLord_preprototype.GameLogic_B;
 using WarLord_Server_GUI.GameLogic_A;
 
 namespace WarLord_Server_GUI.GameLogic_B
@@ -599,240 +598,6 @@ namespace WarLord_Server_GUI.GameLogic_B
             selectCard.activatable = false;
             selectCard.Enabled = false;
         }
-
-
-        //=====[카드 불러오기]=====
-        private string strConn = "Server=14.63.170.220;Database=dragonwarlord;Uid=haeggong2;Pwd=Rhdtm11;";
-        public MySqlConnection conn;
-        public MySqlCommand cmd;
-        private string query = "select * from user where _id = '1'";
-
-
-        public void inputCard()
-        {
-            conn = new MySqlConnection(strConn);
-            conn.Open();
-
-            createCard();
-            conn.Close();
-
-            shuffle(GameBoard.P1_CardDeck, 10);
-            shuffle(GameBoard.P2_CardDeck, 10);
-
-        }
-
-        public void createCard()
-        {
-            query = "select * from card";
-            cmd = new MySqlCommand(query);
-
-            cmd.Connection = conn;
-            MySqlDataReader reader = cmd.ExecuteReader();
-
-            try
-            {
-                while (reader.Read())
-                {
-                    for (int i = 0; i < reader.GetInt16(10); i++)
-                    {
-                        moveZone(new Card_Control()
-                        {
-                            card = new Card()
-                            {
-                                Name = reader.GetString(1),
-                                Attribute = reader.GetString(2),
-                                Type = reader.GetString(3),
-                                Class = reader.GetString(4),
-                                Species = (reader.IsDBNull(5)) ? "" : reader.GetString(5),
-                                Consumption = reader.GetString(6),
-                                Ap = reader.GetInt16(7),
-                                Hp = reader.GetInt16(8),
-                                Rp = reader.GetInt16(9),
-                                Limited_amount = reader.GetInt16(10),
-                                Skill = reader.GetString(11),
-                                Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
-                                Image_file = reader.GetString(13),
-                                thisTurnAP = reader.GetInt16(7),
-                                thisTurnHP = reader.GetInt16(8),
-                            }
-                        }, PLAYER1_CARDDECK);
-
-                        moveZone(new Card_Control()
-                        {
-                            card = new Card()
-                            {
-                                Name = reader.GetString(1),
-                                Attribute = reader.GetString(2),
-                                Type = reader.GetString(3),
-                                Class = reader.GetString(4),
-                                Species = (reader.IsDBNull(5)) ? "" : reader.GetString(5),
-                                Consumption = reader.GetString(6),
-                                Ap = reader.GetInt16(7),
-                                Hp = reader.GetInt16(8),
-                                Rp = reader.GetInt16(9),
-                                Limited_amount = reader.GetInt16(10),
-                                Skill = reader.GetString(11),
-                                Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
-                                Image_file = reader.GetString(13),
-                                thisTurnAP = reader.GetInt16(7),
-                                thisTurnHP = reader.GetInt16(8),
-                            }
-                        }, PLAYER2_CARDDECK);
-
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message.ToString());
-            }
-
-        }
-        /*
-        //=====[카드 불러오기]=====
-        public void inputCard()
-        {
-            string strExcelFile = @"D:\Highbrow\GitHub\Warlord\ServerProgramming\DragonWarLord_preprototype\DragonWarLord_preprototype\res\card.xlsx";
-            string strConnStr = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="
-                                     + strExcelFile
-                                     + ";Extended Properties='Excel 8.0;HDR=YES'";
-            OleDbConnection conn = new OleDbConnection(strConnStr);
-            conn.Open();
-
-            // 엑셀로부터 데이타 읽기
-            OleDbCommand cmd = new OleDbCommand("SELECT * FROM [Sheet1$]", conn);
-            OleDbDataAdapter adpt = new OleDbDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            adpt.Fill(ds);
-
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                for (int i = 0; i < Convert.ToInt32(dr[10]); i++)
-                {
-                    moveZone(new Card_Control()
-                    {
-                        card = new Card()
-                        {
-                            Name = dr[1].ToString(),
-                            Attribute = dr[2].ToString(),
-                            Type = dr[3].ToString(),
-                            Class = dr[4].ToString(),
-                            Species = dr[5].ToString(),
-                            Consumption = dr[6].ToString(),
-                            Ap = Convert.ToInt32(dr[7]),
-                            Hp = Convert.ToInt32(dr[8]),
-                            Rp = Convert.ToInt32(dr[9]),
-                            Limited_amount = Convert.ToInt32(dr[10]),
-                            Skill = dr[11].ToString(),
-                            Information = dr[12].ToString(),
-                            thisTurnAP = Convert.ToInt32(dr[7]),
-                            thisTurnHP = Convert.ToInt32(dr[8]),
-                        }
-                    }, PLAYER1_CARDDECK);
-
-                    moveZone(new Card_Control()
-                    {
-                        card = new Card()
-                        {
-                            Name = dr[1].ToString(),
-                            Attribute = dr[2].ToString(),
-                            Type = dr[3].ToString(),
-                            Class = dr[4].ToString(),
-                            Species = dr[5].ToString(),
-                            Consumption = dr[6].ToString(),
-                            Ap = Convert.ToInt32(dr[7]),
-                            Hp = Convert.ToInt32(dr[8]),
-                            Rp = Convert.ToInt32(dr[9]),
-                            Limited_amount = Convert.ToInt32(dr[10]),
-                            Skill = dr[11].ToString(),
-                            Information = dr[12].ToString(),
-                            thisTurnAP = Convert.ToInt32(dr[7]),
-                            thisTurnHP = Convert.ToInt32(dr[8]),
-                        }
-                    }, PLAYER2_CARDDECK);
-                }
-            }
-
-
-
-            conn.Close();
-
-            shuffle(GameBoard.P1_CardDeck, 10);
-            shuffle(GameBoard.P2_CardDeck, 10);
-
-        }
-        */
-        //=====[ 플레이어 생성 ]=====
-        public void makeMainPlayer()
-        {
-            Card_Control player1 = new Card_Control()
-            {
-                card = new Card()
-                {
-                    Name = "장석이",
-                    Attribute = "",
-                    Type = "플레이어",
-                    Class = "플레이어",
-                    Species = "기획/개발",
-                    Consumption = "0;0;0",
-                    Ap = 0,
-                    Hp = 30,
-                    Rp = 100,
-                    Limited_amount = 1,
-                    Skill = "",
-                    Information = "노코멘트",
-                    Image_file = "jang",
-                    thisTurnAP = 0,
-                    thisTurnHP = 30,
-                }
-            };
-            Card_Control player2 = new Card_Control()
-            {
-                card = new Card()
-                {
-                    Name = "오테리",
-                    Attribute = "",
-                    Type = "플레이어",
-                    Class = "플레이어",
-                    Species = "기획자",
-                    Consumption = "0;0;0",
-                    Ap = 0,
-                    Hp = 30,
-                    Rp = 100,
-                    Limited_amount = 1,
-                    Skill = "",
-                    Information = "노코멘트",
-                    Image_file = "taelimoh",
-                    thisTurnAP = 0,
-                    thisTurnHP = 30,
-                }
-            };
-            GameBoard.P1_PlayerZone = player1;
-            GameBoard.P2_PlayerZone = player2;
-            mainForm.add_P1_Player(player1);
-            mainForm.add_P2_Player(player2);
-        }
-
-        //=====[ 카드 섞기 ]=====
-        private static Random _rnd = new Random();
-
-        public void shuffle(List<Card_Control> cardDeckShuffle, int numberOfTimesToShuffle)
-        {
-            List<Card_Control> newList = new List<Card_Control>();
-            for (int i = 0; i < numberOfTimesToShuffle; i++)
-            {
-                while (cardDeckShuffle.Count > 0)
-                {
-                    int index = _rnd.Next(cardDeckShuffle.Count);
-                    newList.Add(cardDeckShuffle[index]);
-                    cardDeckShuffle.RemoveAt(index);
-                }
-                cardDeckShuffle.AddRange(newList);
-                newList.Clear();
-            }
-        }
-
         //=====[ 처음 카드 지급 ]=====
         public void firstDistribute()
         {
@@ -840,14 +605,14 @@ namespace WarLord_Server_GUI.GameLogic_B
             moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
             moveZone(GameBoard.P1_CardDeck[0], PLAYER1_HANDSZONE);
 
-            moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
-            moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
-            moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+            //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+            //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+            //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
 
             if (thisturn)
             {
-                moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
-                moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+                //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+                //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
             }
             else
             {
@@ -866,20 +631,12 @@ namespace WarLord_Server_GUI.GameLogic_B
             }
             else
             {
-                moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
-                moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+                //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
+                //moveZone(GameBoard.P2_CardDeck[0], PLAYER2_HANDSZONE);
             }
         }
 
-
         /////////////////////////////////////////////////////////////////////////////////////////////
-
-        //======[게임 승패 결정]=====
-        private void judgment_Winner(String winner)
-        {
-            MessageBox.Show("[" + winner + "] 님이 승리하셨습니다.");
-            Application.Restart();
-        }
 
         /// <summary>
         /// 카드 존 이동
@@ -984,10 +741,8 @@ namespace WarLord_Server_GUI.GameLogic_B
                     GameBoard.P2_TombZone.Remove(card_con);
                     break;
                 case PLAYER1_PLAYERZONE:
-                    judgment_Winner("PLAYER2");
                     break;
-                case PLAYER2_PLAYERZONE:
-                    judgment_Winner("PLAYER1");
+                case PLAYER2_PLAYERZONE:                   
                     break;
             }
             //=====[새로운 포지션 배치]=====
@@ -1092,14 +847,12 @@ namespace WarLord_Server_GUI.GameLogic_B
                     break;
             }
         }
-
-
-        #region 싱글톤
+        /**********************************************
+      ***********[[ Singleton 적용 ]]****************
+      ***********************************************/
         static GamePlayManager GamePlayManagerInstance = null;
         static readonly object padlock = new object();
-        /// <summary>
-        /// Singleton 적용
-        /// </summary>
+
         public static GamePlayManager Instance
         {
             get
@@ -1115,6 +868,5 @@ namespace WarLord_Server_GUI.GameLogic_B
             }
         }
 
-        #endregion
     }
 }

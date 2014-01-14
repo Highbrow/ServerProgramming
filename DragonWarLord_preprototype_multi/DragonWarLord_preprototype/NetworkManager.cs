@@ -1,57 +1,64 @@
-﻿using System;
+﻿using DragonWarLord_preprototype.CommandLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WarLord_Server_GUI.GameLogic_B;
 using WebSocketSharp;
 
 namespace DragonWarLord_preprototype
 {
     class NetworkManager
     {
+        ClientCommandProc commandP;
         public static WebSocket ws;
+        public StartForm startForm;
+
+        
         public NetworkManager()
         {
-            try
-            {
-                ws = new WebSocket("ws://127.0.0.1:9001");
-                ws.OnOpen += (object sender, System.EventArgs e) =>
-                {
-                    MessageBox.Show("open");
-                };
-                ws.OnMessage += ws_OnMessage;
-                ws.Connect();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
+            commandP = new ClientCommandProc();
+            ws = new WebSocket("ws://127.0.0.1:9001");
+            ws.OnMessage += this.ws_OnMessage;
+            ws.OnOpen += this.ws_OnOpen;
+            ws.OnError += this.ws_OnError;
         }
-
-        public void start()
+        public void ws_OnOpen(object sender, EventArgs e)
         {
-            GamePlayManager.Instance.GameDefaultSetting();
+            startForm.setText_lb_status("Connected to Server.\n");
+            NetworkManager.ws.Send("GameReady;");
         }
-
-        void ws_OnMessage(object sender, MessageEventArgs e)
+        public void ws_OnError(object sender, ErrorEventArgs e)
         {
-            if (e.Data.Equals("ready"))
-            {
-                GamePlayManager.Instance.inputCard();     //데이터 베이스의 카드 호출
-                GamePlayManager.Instance.makeMainPlayer();   //메인 캐릭터 생성
-                GamePlayManager.Instance.firstDistribute();   //첫 카드 지급
-                GamePlayManager.Instance.distribute();    //턴마다 카드 배급 관련
-            }
+            MessageBox.Show("ERROR: " + e.Message);
+            startForm.setText_lb_status("You can not Connect.");
+            startForm.setEnabledButton(true);
+        }
+        public void ws_OnMessage(object sender, MessageEventArgs e)
+        {
+            string data = e.Data;
+            string[] command = data.Split(';');
+            Delegate dg;
+            ClientCommandProc.CommandDic.TryGetValue(command[0], out dg);
+            dg.DynamicInvoke(data);
+
+            MessageBox.Show(command[0]);    //입력 받은 커맨드 (DEBUG)
+            /*
+            CardDealer.Instance.makeMainPlayer();   //메인 캐릭터 생성
+            CardDealer.Instance.firstDistribute();   //첫 카드 지급
+            CardDealer.Instance.distribute();    //턴마다 카드 배급 관련
+            CardDealer.Instance.GameDefaultSetting();*/
         }
 
         #region 싱글톤
         static NetworkManager NetworkManagerInstance = null;
         static readonly object padlock = new object();
         /// <summary>
-        /// Singleton 적용
+        /// 싱글톤
         /// </summary>
+        /// <param name="startForm"></param>
+        /// <returns></returns>
         public static NetworkManager Instance
         {
             get
@@ -68,5 +75,7 @@ namespace DragonWarLord_preprototype
         }
 
         #endregion
+
+
     }
 }

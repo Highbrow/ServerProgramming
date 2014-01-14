@@ -29,9 +29,12 @@ namespace WarLord_Server_GUI.GameLogic_A
         public static List<Card_Control> P1_TombZone = new List<Card_Control>();
         public static List<Card_Control> P2_TombZone = new List<Card_Control>();
 
-        /**********************************************
-        ***********[[ Singleton 적용 ]]****************
-        ***********************************************/
+
+
+        #region 싱글톤
+        /// <summary>
+        /// 싱글톤
+        /// </summary>
         static GameBoard GameBoardInstance = null;
         static readonly object padlock = new object();
 
@@ -49,5 +52,6 @@ namespace WarLord_Server_GUI.GameLogic_A
                 }
             }
         }
+        #endregion 싱글톤
     }
 }

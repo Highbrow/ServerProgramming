@@ -22,6 +22,7 @@ namespace PrePrototypeConsolServer
             SM._wServer.Stop();
         }
 
+        [STAThread]
         static void Main(string[] args)
         {
             new Program();

@@ -17,6 +17,8 @@ namespace PrePrototypeConsolServer
     {
         public WebSocketServer _wServer;
         public static ConcurrentDictionary<string, Connection> OnlineConnections = new ConcurrentDictionary<string, Connection>();
+        static public Queue<UserContext> ReadyUser = new Queue<UserContext>();
+        static ServerCommandProc scp = new ServerCommandProc();    //삭제 예정 (dealer 오류)
 
         public ServerManager(){
             try
@@ -45,34 +47,37 @@ namespace PrePrototypeConsolServer
             Console.WriteLine("Client Connected From : " + aContext.ClientAddress.ToString());
             var conn= new Connection {Context=aContext};
             OnlineConnections.TryAdd(aContext.ClientAddress.ToString(), conn);
-            CheckCanPlay(ref aContext);
         }
 
+
+        static List<GameRoom> RoomList = new List<GameRoom>();
         /// <summary>
         /// 플레이어 두명 접속 확인
         /// </summary>
         /// <param name="aContext"></param>
-        private static void CheckCanPlay(ref UserContext aContext)
+        public static void CheckCanPlay()
         {
-            if (OnlineConnections.Count >= 2)
+            if (ReadyUser.Count >= 2)
             {
-                foreach(KeyValuePair<string, Connection> kv in OnlineConnections){
-                    kv.Value.Context.Send("ready");
-                }
+                UserContext Player1 = ReadyUser.Dequeue();
+                UserContext Player2 = ReadyUser.Dequeue();
+
+                RoomList.Add(new GameRoom(Player1, Player2));
             }
+
+            /* 테스트
+            UserContext Player1 = ReadyUser.Dequeue();
+            UserContext Player2 = Player1;
+            RoomList.Add(new GameRoom(ref Player1, ref Player2));*/
         }
 
         public static void OnReceive(UserContext aContext)
         {
-            try
-            {
-                Console.WriteLine("Data Received From [" + aContext.ClientAddress.ToString() + "] - " + aContext.DataFrame.ToString());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message.ToString());
-            }
-            
+            string data = aContext.DataFrame.ToString();
+            string[] command = data.Split(';');
+            Delegate dg;
+            scp.CommandDic.TryGetValue(command[0], out dg);
+            dg.DynamicInvoke(aContext, data);
         }
         public static void OnSend(UserContext aContext)
         {            
@@ -96,7 +101,7 @@ namespace PrePrototypeConsolServer
         ***********[[ Singleton 적용 ]]****************
         ***********************************************/
         static ServerManager ServerConnectorInstance = null;
-        static readonly object padlock = new object();
+        static readonly object padlock = new object();       
         public static ServerManager Instance
         {
             get
@@ -111,7 +116,5 @@ namespace PrePrototypeConsolServer
                 }
             }
         }
-
-
     }
 }

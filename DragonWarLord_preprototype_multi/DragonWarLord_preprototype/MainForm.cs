@@ -11,27 +11,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarLord_Server_GUI.GameLogic_A;
-using WarLord_Server_GUI.GameLogic_B;
 using WebSocketSharp;
 
 namespace DragonWarLord_preprototype
 {
     public partial class MainForm : Form
     {
-        [STAThread]
-        static void Main(string[] args)
-        {
-            
-            Application.Run(new MainForm());
-        }
         GameBoard GB;
+        CardDealer cardDealer;
         public MainForm()
         {
-            GamePlayManager.Instance.mainForm = this;
             GB = GameBoard.Instance;
-            
+            cardDealer = CardDealer.Instance;
             InitializeComponent();
-            NetworkManager.Instance.start();
+            NetworkManager.ws.Send("CreatedRoom_OK;");
         }
 
         #region GUI 컨트롤을 위한 Invoke 집합
@@ -504,7 +497,7 @@ namespace DragonWarLord_preprototype
 
         private void Turn_btn_Click(object sender, EventArgs e)
         {
-            GamePlayManager.Instance.EndOfTurn();
+            //GamePlayManager.Instance.EndOfTurn();
         }
 
         private void Form1_Load(object sender, EventArgs e)

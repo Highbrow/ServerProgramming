@@ -88,6 +88,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardDealer.cs" />
     <Compile Include="CardLibrary\BlackQueenHatchling_Card.cs" />
     <Compile Include="Card_Control.cs">
       <SubType>UserControl</SubType>
@@ -96,9 +97,16 @@
       <DependentUpon>Card_Control.cs</DependentUpon>
     </Compile>
     <Compile Include="CardLibrary\Card.cs" />
+    <Compile Include="CommandLibrary\ClientCommandLibrary.cs" />
+    <Compile Include="CommandLibrary\ClientCommandProc.cs" />
+    <Compile Include="DataBaseManager.cs" />
     <Compile Include="GameLogic_A\GameBoard.cs" />
-    <Compile Include="GameLogic_B\GamePlayManager.cs" />
-    <Compile Include="GameLogic_B\GameSkillManager.cs" />
+    <Compile Include="GameLogic_B\GamePlayManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GameLogic_B\GameSkillManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,12 +125,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="StartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartForm.Designer.cs">
+      <DependentUpon>StartForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Card_Control.resx">
@@ -134,6 +145,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartForm.resx">
+      <DependentUpon>StartForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

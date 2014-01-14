@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using WarLord_Server_GUI.GameLogic_A;
-using WarLord_Server_GUI.GameLogic_B;
 using System.Threading;
 using System.Reflection;
-using DragonWarLord_preprototype.GameLogic_B;
 using DragonWarLord_preprototype.CardLibrary;
 using System.Resources;
+using WarLord_Server_GUI.GameLogic_B;
+using DragonWarLord_preprototype.GameLogic_B;
 
 namespace DragonWarLord_preprototype
 {

@@ -23,12 +23,8 @@ namespace PrePrototypeConsolServer
         public int thisTurnHP { get; set; }
         public int thisTurnAP { get; set; }
         public string Image_file { get; set; }
+        public int position { get; set; }
 
-        public void Attack(ref Card target_Card)
-        {
-        }
-        public void UnderAttack()
-        {
-        }
+        public string Id { get; set; }
     }
 }
