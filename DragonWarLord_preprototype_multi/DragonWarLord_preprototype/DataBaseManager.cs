@@ -56,7 +56,8 @@ namespace DragonWarLord_preprototype
                                     Image_file = reader.GetString(13),
                                     thisTurnAP = reader.GetInt16(7),
                                     thisTurnHP = reader.GetInt16(8),
-                                }
+                                },
+                                position = GameBoard.MY_CARDDECK
                             });
                         }
                     }
@@ -102,7 +103,8 @@ namespace DragonWarLord_preprototype
                                     Image_file = reader.GetString(13),
                                     thisTurnAP = reader.GetInt16(7),
                                     thisTurnHP = reader.GetInt16(8),
-                                }
+                                },
+                                position = GameBoard.OPPONENT_CARDDECK
                             });
                         }
                     }
@@ -114,7 +116,6 @@ namespace DragonWarLord_preprototype
                 }
             }
         }
-
 
         //=====[ 플레이어 생성 ]=====
         public static Card_Control makeMainPlayer(string userId)
@@ -151,7 +152,7 @@ namespace DragonWarLord_preprototype
                             Image_file = reader.GetString(13),
                             thisTurnAP = reader.GetInt16(7),
                             thisTurnHP = reader.GetInt16(8),
-                        }
+                        }                       
                     };
                 }
             }

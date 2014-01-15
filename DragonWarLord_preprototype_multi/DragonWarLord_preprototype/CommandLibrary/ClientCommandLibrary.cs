@@ -18,6 +18,10 @@ namespace DragonWarLord_preprototype.CommandLibrary
         abstract protected void cmdF_MoveCard(string command);
 
 
+        private readonly string cmd_Resource = "Resource";    //자원 정보 업데이트 시켜라
+        abstract protected void cmdF_Resource(string command);
+
+
         private readonly string cmd_YourTurn = "YourTurn";    //니 차례야
         abstract protected void cmdF_YourTurn(string command);
 
@@ -65,6 +69,7 @@ namespace DragonWarLord_preprototype.CommandLibrary
         {
             #region 공통 부분
             CommandDic.TryAdd(cmd_MoveCard, new cmdDelegate(cmdF_MoveCard));    //MoveCard
+            CommandDic.TryAdd(cmd_Resource, new cmdDelegate(cmdF_Resource));    //Resource
             CommandDic.TryAdd(cmd_YourTurn, new cmdDelegate(cmdF_YourTurn));    //YourTurn
             CommandDic.TryAdd(cmd_OpponentTurn, new cmdDelegate(cmdF_OpponentTurn));    //OpponentTurn
             CommandDic.TryAdd(cmd_Message, new cmdDelegate(cmdF_Message));    //Message

@@ -16,6 +16,15 @@ namespace PrePrototypeConsolServer
 
 
         #region 공통 부분
+
+        private readonly string cmd_MoveCard = "MoveCard";    //카드 이동합니다.
+        abstract protected void cmdF_MoveCard(UserContext aContext, string command);
+
+
+        private readonly string cmd_MakeResource = "MakeResource";    //카드 자원으로 쓸게요.
+        abstract protected void cmdF_MakeResource(UserContext aContext, string command);
+
+        
         private readonly string cmd_EndTurn = "EndTurn";    //턴 종료 합니다.
         abstract protected void cmdF_EndTurn(UserContext aContext, string command);
         #endregion 공통 부분
@@ -54,6 +63,8 @@ namespace PrePrototypeConsolServer
         public ServerCommandLibrary()
         {
             #region 공통 부분
+            CommandDic.TryAdd(cmd_MoveCard, new cmdDelegate(cmdF_MoveCard));  //MoveCard
+            CommandDic.TryAdd(cmd_MakeResource, new cmdDelegate(cmdF_MakeResource));  //MakeResource
             CommandDic.TryAdd(cmd_EndTurn, new cmdDelegate(cmdF_EndTurn));  //EndTurn
             #endregion 공통 부분
             #region 게임 준비 과정 부분

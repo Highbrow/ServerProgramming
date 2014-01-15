@@ -88,5 +88,22 @@ namespace DragonWarLord_preprototype
             Environment.Exit(0);
         }
 
+        public Point ptRect = new Point(0, 0);
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            ptRect.X = e.X;
+            ptRect.Y = e.Y;
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Point pt = new Point(this.Location.X + e.X - ptRect.X,this.Location.Y + e.Y - ptRect.Y);
+                this.Location = pt;
+            }
+        }
+
     }
 }

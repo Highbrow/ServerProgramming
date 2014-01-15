@@ -237,19 +237,19 @@ namespace DragonWarLord_preprototype.GameLogic_B
         {
             if (GamePlayManager.Instance.thisturn)
             {
-                //mana_dark = GamePlayManager.Instance.p1_remain_dark;
-                //mana_fire = GamePlayManager.Instance.p1_remain_fire;
-                GamePlayManager.Instance.p1_remain_dark += GamePlayManager.Instance.p2_remain_dark;
-                GamePlayManager.Instance.p1_remain_fire += GamePlayManager.Instance.p2_remain_fire;
-                GamePlayManager.Instance.mainForm.My_remain_dark.Text = GamePlayManager.Instance.p1_remain_dark.ToString();
-                GamePlayManager.Instance.mainForm.My_remain_fire.Text = GamePlayManager.Instance.p1_remain_fire.ToString();
+                //mana_dark = GamePlayManager.Instance.my_remain_dark;
+                //mana_fire = GamePlayManager.Instance.my_remain_fire;
+                GamePlayManager.Instance.my_remain_dark += GamePlayManager.Instance.opponent_remain_dark;
+                GamePlayManager.Instance.my_remain_fire += GamePlayManager.Instance.opponent_remain_fire;
+                GamePlayManager.Instance.mainForm.My_remain_dark.Text = GamePlayManager.Instance.my_remain_dark.ToString();
+                GamePlayManager.Instance.mainForm.My_remain_fire.Text = GamePlayManager.Instance.my_remain_fire.ToString();
             }else{
-                //mana_dark = GamePlayManager.Instance.p2_remain_dark;
-                //mana_fire = GamePlayManager.Instance.p2_remain_fire;
-                GamePlayManager.Instance.p2_remain_dark += GamePlayManager.Instance.p1_remain_dark;
-                GamePlayManager.Instance.p2_remain_fire += GamePlayManager.Instance.p1_remain_fire;
-                GamePlayManager.Instance.mainForm.My_remain_dark.Text = GamePlayManager.Instance.p2_remain_dark.ToString();
-                GamePlayManager.Instance.mainForm.My_remain_fire.Text = GamePlayManager.Instance.p2_remain_fire.ToString();
+                //mana_dark = GamePlayManager.Instance.opponent_remain_dark;
+                //mana_fire = GamePlayManager.Instance.opponent_remain_fire;
+                GamePlayManager.Instance.opponent_remain_dark += GamePlayManager.Instance.my_remain_dark;
+                GamePlayManager.Instance.opponent_remain_fire += GamePlayManager.Instance.my_remain_fire;
+                GamePlayManager.Instance.mainForm.My_remain_dark.Text = GamePlayManager.Instance.opponent_remain_dark.ToString();
+                GamePlayManager.Instance.mainForm.My_remain_fire.Text = GamePlayManager.Instance.opponent_remain_fire.ToString();
             }
             
             list_skill11 = true;
@@ -725,16 +725,16 @@ namespace DragonWarLord_preprototype.GameLogic_B
                     GamePlayManager.Instance.popCard(skill_card);
                     if (GamePlayManager.Instance.thisturn)
                     {
-                        if (GamePlayManager.Instance.p1_remain_dark >= GamePlayManager.Instance.p1_remain_fire)
+                        if (GamePlayManager.Instance.my_remain_dark >= GamePlayManager.Instance.my_remain_fire)
                         {
-                            GamePlayManager.Instance.p1_remain_dark -= 1;
+                            GamePlayManager.Instance.my_remain_dark -= 1;
                             int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.My_cnt_dark.Text);
                             result -= 1;
                             GamePlayManager.Instance.mainForm.My_cnt_dark.Text = result.ToString();
                         }
                         else
                         {
-                            GamePlayManager.Instance.p1_remain_fire -= 1;
+                            GamePlayManager.Instance.my_remain_fire -= 1;
                             int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.My_cnt_fire.Text);
                             result -= 1;
                             GamePlayManager.Instance.mainForm.My_cnt_fire.Text = result.ToString();
@@ -742,16 +742,16 @@ namespace DragonWarLord_preprototype.GameLogic_B
                     }
                     else
                     {
-                        if (GamePlayManager.Instance.p2_remain_dark >= GamePlayManager.Instance.p2_remain_fire)
+                        if (GamePlayManager.Instance.opponent_remain_dark >= GamePlayManager.Instance.opponent_remain_fire)
                         {
-                            GamePlayManager.Instance.p2_remain_dark -= 1;
+                            GamePlayManager.Instance.opponent_remain_dark -= 1;
                             int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.Opponent_cnt_dark.Text);
                             result -= 1;
                             GamePlayManager.Instance.mainForm.Opponent_cnt_dark.Text = result.ToString();
                         }
                         else
                         {
-                            GamePlayManager.Instance.p2_remain_fire -= 1;
+                            GamePlayManager.Instance.opponent_remain_fire -= 1;
                             int result = Convert.ToInt32(GamePlayManager.Instance.mainForm.Opponent_cnt_fire.Text);
                             result -= 1;
                             GamePlayManager.Instance.mainForm.Opponent_cnt_fire.Text = result.ToString();

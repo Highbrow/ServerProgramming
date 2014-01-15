@@ -57,18 +57,10 @@ namespace DragonWarLord_preprototype
             }
         }
 
-        internal void distribute()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void GameDefaultSetting()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
+        /// <summary>
+        /// 카드 이동 < 중요!! >
+        /// </summary>
+        /// <param name="p"></param>
         internal void moveCard(string[] p)
         {
             Card_Control card = null;
@@ -127,44 +119,108 @@ namespace DragonWarLord_preprototype
             switch(Convert.ToInt32(p[3])){
                 case GameBoard.MY_CARDDECK:
                     GameBoard.My_CardDeck.Add(card);
+                    card.position = GameBoard.MY_CARDDECK;
                     break;
                 case GameBoard.OPPONENT_CARDDECK:
                     GameBoard.Opponent_CardDeck.Add(card);
+                    card.position = GameBoard.OPPONENT_CARDDECK;
                     break;
                 case GameBoard.MY_HANDSZONE:
                     GameBoard.My_HandsZone.Add(card);
+                    card.position = GameBoard.MY_HANDSZONE;
                     mainForm.add_My_Hands(card);
                     break;
                 case GameBoard.OPPONENT_HANDSZONE:
                     GameBoard.Opponent_HandsZone.Add(card);
+                    card.position = GameBoard.OPPONENT_HANDSZONE;
                     mainForm.add_Opponent_Hands(card);
                     break;
                 case GameBoard.MY_WARZONE:
                     GameBoard.My_WarZone.Add(card);
+                    card.position = GameBoard.MY_WARZONE;
                     mainForm.add_My_WarZone(card);
                     break;
                 case GameBoard.OPPONENT_WARZONE:
                     GameBoard.Opponent_WarZone.Add(card);
+                    card.position = GameBoard.OPPONENT_WARZONE;
                     mainForm.add_Opponent_WarZone(card);
                     break;
                 case GameBoard.MY_MANAZONE:
                     GameBoard.My_ManaZone.Add(card);
+                    card.position = GameBoard.MY_MANAZONE;
                     mainForm.add_My_ManaZone(card);
                     break;
                 case GameBoard.OPPONENT_MANAZONE:
                     GameBoard.Opponent_ManaZone.Add(card);
+                    card.position = GameBoard.OPPONENT_MANAZONE;
                     mainForm.add_Opponent_ManaZone(card);
                     break;
                 case GameBoard.MY_TOMBZONE:
                     GameBoard.My_TombZone.Add(card);
+                    card.position = GameBoard.MY_TOMBZONE;
                     mainForm.add_My_TombZone(card);
                     break;
                 case GameBoard.OPPONENT_TOMBZONE:
                     GameBoard.Opponent_TombZone.Add(card);
+                    card.position = GameBoard.OPPONENT_TOMBZONE;
                     mainForm.add_Opponent_TombZone(card);
                     break;
             }
         }
+
+        public bool canMakeResource = true; //마나 생성 가능 유무
+        public void MakeResource(Card_Control card_con)
+        {
+            if (this.canMakeResource)   //마나생성이 가능할 경우
+            {
+                NetworkManager.ws.Send("MakeResource;" + card_con.position + ";"
+                + GameBoard.My_HandsZone.IndexOf(card_con)+";" + GameBoard.MY_MANAZONE+";");
+
+                CardDealer.Instance.canMakeResource = false;   //한턴에 한번만 가능하도록
+            }
+            else
+            {
+                MessageBox.Show("이번 턴에는 마나를 더 이상 생성 할 수 없습니다.");
+            }
+        }
+
+        #region 카드 사용 관련
+        /// <summary>
+        /// 카드 내기
+        /// </summary>
+        /// <param name="card_Control"></param>
+        internal void useCard(Card_Control card_Control)
+        {
+            MessageBox.Show(GameBoard.My_HandsZone.IndexOf(card_Control)+"");
+
+            NetworkManager.ws.Send("MoveCard;" + card_Control.position + ";"
+                + GameBoard.My_HandsZone.IndexOf(card_Control)+";" + GameBoard.MY_WARZONE+";");
+
+        }
+
+        /// <summary>
+        /// 카드 사용 가능 여부 판단
+        /// </summary>
+        /// <param name="card_Control"></param>
+        internal bool canUseCard(Card_Control card_Control)
+        {
+            string[] consump = card_Control.card.Consumption.Split(';');
+            int need_dark = Convert.ToInt32(consump[1]);    //필요 암흑 마나
+            int need_fire = Convert.ToInt32(consump[0]);    //필요 불 마나
+            int need_all = Convert.ToInt32(consump[2]);     //필요 아무 마나
+
+            if (GameBoard.Instance.My_remain_dark >= need_dark && GameBoard.Instance.My_remain_fire >= need_fire 
+                && (((GameBoard.Instance.My_remain_dark - need_dark) + (GameBoard.Instance.My_remain_fire - need_fire)) - GameBoard.Instance.My_remain_all) >= need_all)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion 카드 사용 관련
 
         #region 싱글톤
         static CardDealer CardDealerInstance = null;
@@ -189,6 +245,10 @@ namespace DragonWarLord_preprototype
 
         #endregion
 
-        
+
+
+
+
+      
     }
 }

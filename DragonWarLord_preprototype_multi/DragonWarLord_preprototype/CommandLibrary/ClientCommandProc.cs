@@ -27,6 +27,31 @@ namespace DragonWarLord_preprototype.CommandLibrary
                 MessageBox.Show(e.Data.ToString());
             }
         }
+
+        /// <summary>
+        /// 자원 정보 업데이트 시켜라
+        /// </summary>
+        /// <param name="command"></param>
+        protected override void cmdF_Resource(string command)
+        {
+            string[] resource = command.Split(';');
+            GameBoard.Instance.My_remain_dark = Convert.ToInt32(resource[1]);
+            GameBoard.Instance.My_remain_fire = Convert.ToInt32(resource[2]);
+            GameBoard.Instance.My_remain_all = Convert.ToInt32(resource[3]);
+
+            GameBoard.Instance.Opponent_remain_dark = Convert.ToInt32(resource[4]);
+            GameBoard.Instance.Opponent_remain_fire = Convert.ToInt32(resource[5]);
+            GameBoard.Instance.Opponent_remain_all = Convert.ToInt32(resource[6]);
+
+            MainForm.mf.setText_My_remain_dark(GameBoard.Instance.My_remain_dark.ToString());
+            MainForm.mf.setText_My_remain_fire(GameBoard.Instance.My_remain_fire.ToString());
+            MainForm.mf.setText_My_remain_all(GameBoard.Instance.My_remain_all.ToString());
+
+            MainForm.mf.setText_Opponent_remain_dark(GameBoard.Instance.Opponent_remain_dark.ToString());
+            MainForm.mf.setText_Opponent_remain_fire(GameBoard.Instance.Opponent_remain_fire.ToString());
+            MainForm.mf.setText_Opponent_remain_all(GameBoard.Instance.Opponent_remain_all.ToString());
+        }
+
         /// <summary>
         /// 니 차례다
         /// </summary>
@@ -34,6 +59,7 @@ namespace DragonWarLord_preprototype.CommandLibrary
         protected override void cmdF_YourTurn(string command)
         {
             TurnManager.Turn = true;
+            CardDealer.Instance.canMakeResource = true;
             MainForm.mf.EnabledButton(true);
         }
         /// <summary>

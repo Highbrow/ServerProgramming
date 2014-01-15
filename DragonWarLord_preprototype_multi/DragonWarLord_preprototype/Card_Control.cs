@@ -106,15 +106,23 @@ namespace DragonWarLord_preprototype
             if (TurnManager.Turn)
             {
                 //======[ 핸드 존일 경우 처리 ]=====
-                if (this.position == GamePlayManager.MY_HANDSZONE || this.position == GamePlayManager.OPPONENT_HANDSZONE)
+                if (this.position == GameBoard.MY_HANDSZONE)
                 {
                     if (e.Button == MouseButtons.Right) //마우스 오른쪽 더블 클릭
                     {
-                        GamePlayManager.Instance.makeMana(this);    //마나생성
-                        GamePlayManager.Instance.canMakeMana = false;   //한턴에 한번만 가능하도록
+                        CardDealer.Instance.MakeResource(this);    //마나생성
                     }
                     else  //마우스 왼쪽 더블 클릭
                     {
+                        if (CardDealer.Instance.canUseCard(this))
+                        {
+                            CardDealer.Instance.useCard(this);
+                        }
+                        else
+                        {
+                            MessageBox.Show("자원이 부족합니다.");
+                        }
+                        /*
                         if (this.card.Skill.Equals("20"))
                         {
                             if (GamePlayManager.Instance.canPopCard(this, "20"))
@@ -207,7 +215,7 @@ namespace DragonWarLord_preprototype
                             {
                                 MessageBox.Show("마나가 부족합니다.");
                             }
-                        }
+                        }*/
                     }
                 }
                 //=====카드 선택 초기화(null)전달

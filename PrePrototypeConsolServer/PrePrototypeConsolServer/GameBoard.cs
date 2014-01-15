@@ -40,5 +40,13 @@ namespace PrePrototypeConsolServer
         //=====[ 무덤 존 ]=====
         public List<Card> P1_TombZone = new List<Card>();
         public List<Card> P2_TombZone = new List<Card>();
+        
+        public int P1_RemainResource_dark = 0;
+        public int P1_RemainResource_fire = 0;
+        public int P1_RemainResource_all = 0;
+
+        public int P2_RemainResource_dark = 0;
+        public int P2_RemainResource_fire = 0;
+        public int P2_RemainResource_all = 0;
     }
 }

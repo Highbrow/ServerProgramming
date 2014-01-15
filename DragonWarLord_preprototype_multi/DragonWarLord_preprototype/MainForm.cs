@@ -230,11 +230,11 @@ namespace DragonWarLord_preprototype
         /// 사용한 아무 코스트
         /// </summary>
         /// <param name="str"></param>
-        public void setText_My_use_all(string str)
+        public void setText_My_remain_all(string str)
         {
             if (My_use_all.InvokeRequired)
             {
-                invokeProctext call = new invokeProctext(setText_My_use_all);
+                invokeProctext call = new invokeProctext(setText_My_remain_all);
                 this.Invoke(call, str);
             }
             else
@@ -460,11 +460,11 @@ namespace DragonWarLord_preprototype
         /// 사용한 아무 코스트
         /// </summary>
         /// <param name="str"></param>
-        public void setText_Opponent_use_all(string str)
+        public void setText_Opponent_remain_all(string str)
         {
             if (Opponent_use_all.InvokeRequired)
             {
-                invokeProctext call = new invokeProctext(setText_Opponent_use_all);
+                invokeProctext call = new invokeProctext(setText_Opponent_remain_all);
                 this.Invoke(call, str);
             }
             else
@@ -515,17 +515,6 @@ namespace DragonWarLord_preprototype
         private void Turn_btn_Click(object sender, EventArgs e)
         {
             NetworkManager.ws.Send("EndTurn;");
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            int scrW = Screen.PrimaryScreen.WorkingArea.Width;
-            int scrH = Screen.PrimaryScreen.WorkingArea.Height;
-            int thisW = this.Width;
-            int thisH = this.Height;
-            int centerW = (scrW - thisW) / 2;
-            int centerH = (scrH - thisH) / 2;
-            this.DesktopLocation = new Point(centerW, centerH);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
