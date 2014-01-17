@@ -334,19 +334,20 @@ namespace PrePrototypeConsolServer
 
                     moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
                     sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                    
                     moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
                     sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
 
                     sendPacket_P2("Message;" + "당신은 너그러운 마음으로 상대방에게 우선권을 주었습니다.");
 
                     moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
                     sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
                     moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
                     sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
 
                     tm = new TurnManager()
                     {
@@ -403,6 +404,11 @@ namespace PrePrototypeConsolServer
         }
         #endregion 게임 시작 처리
 
+        /// <summary>
+        /// 턴 바꾸기
+        /// </summary>
+        /// <param name="aContext"></param>
+        /// <param name="command"></param>
         public void changeTurn(UserContext aContext, string command)
         {
             if (aContext.Equals(player1))
@@ -419,7 +425,43 @@ namespace PrePrototypeConsolServer
                 sendPacket_P1("YourTurn;");
                 sendPacket_P2("OpponentTurn;");
             }
+            gameBoard.P1_RemainResource_dark = gameBoard.P1_Resource_dark;
+            gameBoard.P1_RemainResource_fire  = gameBoard.P1_Resource_fire;
+            gameBoard.P1_UsedResource = 0;
+            gameBoard.P2_RemainResource_dark = gameBoard.P2_Resource_dark;
+            gameBoard.P2_RemainResource_fire  = gameBoard.P2_Resource_fire;
+            gameBoard.P2_UsedResource = 0;
+            sendResourceInformation();
+            distributeCard();   //카드 분배
         }
+
+        /// <summary>
+        /// 카드 분배
+        /// </summary>
+        public void distributeCard()
+        {
+            if (tm.Turn.Equals(player1))
+            {
+                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
+                sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+
+                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
+                sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                
+            }
+            else if (tm.Turn.Equals(player2))
+            {
+                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
+                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
+                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
+                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+            }
+        }
+
 
         /// <summary>
         /// 카드 이동
@@ -445,14 +487,30 @@ namespace PrePrototypeConsolServer
             
             card = findPositionCard(Convert.ToInt32(position[1]), Convert.ToInt32(position[2]));
 
+            if (aContext.Equals(player1))
+            {
+                if (position[1].Equals(GameBoard.PLAYER1_HANDSZONE.ToString()) && position[3].Equals(GameBoard.PLAYER1_WARZONE.ToString()))
+                {
+                    useResource(card, player1);
+                }
+            }
+            else if (aContext.Equals(player2))
+            {
+                if (position[1].Equals(GameBoard.PLAYER2_HANDSZONE.ToString()) && position[3].Equals(GameBoard.PLAYER2_WARZONE.ToString()))
+                {
+                    useResource(card, player2);
+                }
+            }
             moveZone(card, Convert.ToInt32(position[3]));
 
             if(aContext.Equals(player1)){
+                
                 sendPacket_P1(myMessage);
                 sendPacket_P2(opponentMessage);
                 Console.WriteLine(myMessage);//DEBUG
                 Console.WriteLine(opponentMessage);//DEBUG
             }else if(aContext.Equals(player2)){
+                
                 sendPacket_P1(opponentMessage);
                 sendPacket_P2(myMessage);
                 Console.WriteLine(opponentMessage);//DEBUG
@@ -737,6 +795,41 @@ namespace PrePrototypeConsolServer
             }
         }
 
+
+        #region Resource 관련 내용
+        /// <summary>
+        /// 자원 사용
+        /// </summary>
+        /// <param name="card"></param>
+        /// <param name="player"></param>
+        private void useResource(Card card, UserContext player)
+        {
+            string[] consump = card.Consumption.Split(';');
+            int need_dark = Convert.ToInt32(consump[1]);    //필요 암흑 마나
+            int need_fire = Convert.ToInt32(consump[0]);    //필요 불 마나
+            int need_all = Convert.ToInt32(consump[2]);     //필요 아무 마나
+
+            if (player.Equals(player1))
+            {
+                //----[마나 연산]----
+                gameBoard.P1_RemainResource_dark -= need_dark;
+                gameBoard.P1_RemainResource_fire -= need_fire;
+                gameBoard.P1_UsedResource += need_all;
+            }
+            else if (player.Equals(player2))
+            {
+                //----[마나 연산]----
+                gameBoard.P2_RemainResource_dark -= need_dark;
+                gameBoard.P2_RemainResource_fire -= need_fire;
+                gameBoard.P2_UsedResource += need_all;
+            }
+            sendResourceInformation();
+        }
+        /// <summary>
+        /// 자원 생산
+        /// </summary>
+        /// <param name="aContext"></param>
+        /// <param name="command"></param>
         internal void MakeResource(UserContext aContext, string command)
         {
             string[] position = command.Split(';');
@@ -751,10 +844,12 @@ namespace PrePrototypeConsolServer
             {
                 if (card.Attribute.Equals("암흑"))
                 {
+                    gameBoard.P1_Resource_dark++;
                     gameBoard.P1_RemainResource_dark++;
                 }
                 else if (card.Attribute.Equals("불"))
                 {
+                    gameBoard.P1_Resource_fire++;
                     gameBoard.P1_RemainResource_fire++;
                 }
             }
@@ -762,51 +857,67 @@ namespace PrePrototypeConsolServer
             {
                 if (card.Attribute.Equals("암흑"))
                 {
+                    gameBoard.P2_Resource_dark++;
                     gameBoard.P2_RemainResource_dark++;
                 }
                 else if (card.Attribute.Equals("불"))
                 {
+                    gameBoard.P2_Resource_fire++;
                     gameBoard.P2_RemainResource_fire++;
                 }
             }
-            sendPacket_P1("Resource;"+ gameBoard.P1_RemainResource_dark +";"
-                + gameBoard.P1_RemainResource_fire +";"
-                + gameBoard.P1_RemainResource_all + ";"
-                + gameBoard.P2_RemainResource_dark +";"
-                + gameBoard.P2_RemainResource_fire +";"
-                + gameBoard.P2_RemainResource_all + ";");
-            sendPacket_P2("Resource;" + gameBoard.P2_RemainResource_dark + ";"
-                + gameBoard.P2_RemainResource_fire + ";"
-                + gameBoard.P2_RemainResource_all + ";"
-                + gameBoard.P1_RemainResource_dark + ";"
-                + gameBoard.P1_RemainResource_fire + ";"
-                + gameBoard.P1_RemainResource_all + ";");
-
-            Console.WriteLine("Resource;" + gameBoard.P1_RemainResource_dark + ";"
-                + gameBoard.P1_RemainResource_fire + ";"
-                + gameBoard.P1_RemainResource_all + ";"
-                + gameBoard.P2_RemainResource_dark + ";"
-                + gameBoard.P2_RemainResource_fire + ";"
-                + gameBoard.P2_RemainResource_all + ";");//DEBUG
-            Console.WriteLine("Resource;" + gameBoard.P2_RemainResource_dark + ";"
-                + gameBoard.P2_RemainResource_fire + ";"
-                + gameBoard.P2_RemainResource_all + ";"
-                + gameBoard.P1_RemainResource_dark + ";"
-                + gameBoard.P1_RemainResource_fire + ";"
-                + gameBoard.P1_RemainResource_all + ";");//DEBUG
-            Console.WriteLine(card.Name);//DEBUG
-
+            sendResourceInformation();
             MoveCard(aContext, command);
-
         }
 
+        /// <summary>
+        /// Resource 정보 업데이트
+        /// </summary>
+        private void sendResourceInformation()
+        {
+            CalculationResource();
+
+            sendPacket_P1("Resource;" + gameBoard.P1_Resource_dark + ";"
+                 + gameBoard.P1_Resource_fire + ";"
+                 + gameBoard.P1_RemainResource_dark + ";"
+                 + gameBoard.P1_RemainResource_fire + ";"
+                 + gameBoard.P1_RemainResource_all + ";"
+                 + gameBoard.P1_UsedResource + ";"
+                 + gameBoard.P2_Resource_dark + ";"
+                 + gameBoard.P2_Resource_fire + ";"
+                 + gameBoard.P2_RemainResource_dark + ";"
+                 + gameBoard.P2_RemainResource_fire + ";"
+                 + gameBoard.P2_RemainResource_all + ";"
+                 + gameBoard.P2_UsedResource + ";");
+
+            sendPacket_P2("Resource;" + gameBoard.P2_Resource_dark + ";"
+                + gameBoard.P2_Resource_fire + ";"
+                 + gameBoard.P2_RemainResource_dark + ";"
+                 + gameBoard.P2_RemainResource_fire + ";"
+                 + gameBoard.P2_RemainResource_all + ";"
+                 + gameBoard.P2_UsedResource + ";"
+                 + gameBoard.P1_Resource_dark + ";"
+                 + gameBoard.P1_Resource_fire + ";"
+                 + gameBoard.P1_RemainResource_dark + ";"
+                 + gameBoard.P1_RemainResource_fire + ";"
+                 + gameBoard.P1_RemainResource_all + ";"
+                 + gameBoard.P1_UsedResource + ";");
+        }
+
+        /// <summary>
+        /// 자원 계산
+        /// </summary>
+        private void CalculationResource()
+        {
+            gameBoard.P1_RemainResource_all = (gameBoard.P1_RemainResource_dark + gameBoard.P1_RemainResource_fire) - gameBoard.P1_UsedResource;
+            gameBoard.P2_RemainResource_all = (gameBoard.P2_RemainResource_dark + gameBoard.P2_RemainResource_fire) - gameBoard.P2_UsedResource;
+        }
+
+        #endregion Resource 관련 내용
         //======[게임 승패 결정]=====
         private void judgment_Winner(String winner)
         {
         }
-
-
-
         
     }
 }

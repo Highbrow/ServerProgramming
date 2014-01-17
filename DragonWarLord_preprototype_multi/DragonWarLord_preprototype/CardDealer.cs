@@ -56,7 +56,7 @@ namespace DragonWarLord_preprototype
                 MessageBox.Show("카드 생성위치가 잘못되었습니다.");
             }
         }
-
+        
         /// <summary>
         /// 카드 이동 < 중요!! >
         /// </summary>
@@ -139,10 +139,14 @@ namespace DragonWarLord_preprototype
                     GameBoard.My_WarZone.Add(card);
                     card.position = GameBoard.MY_WARZONE;
                     mainForm.add_My_WarZone(card);
+                    card.activatable = false;
+                    card.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimgused;
                     break;
                 case GameBoard.OPPONENT_WARZONE:
                     GameBoard.Opponent_WarZone.Add(card);
                     card.position = GameBoard.OPPONENT_WARZONE;
+                    card.activatable = false;
+                    card.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimgused;
                     mainForm.add_Opponent_WarZone(card);
                     break;
                 case GameBoard.MY_MANAZONE:
@@ -164,6 +168,208 @@ namespace DragonWarLord_preprototype
                     GameBoard.Opponent_TombZone.Add(card);
                     card.position = GameBoard.OPPONENT_TOMBZONE;
                     mainForm.add_Opponent_TombZone(card);
+                    break;
+            }
+        }
+        /// <summary>
+        /// 카드 존 이동
+        /// </summary>
+        /// <param name="card_con"></param> 카드
+        /// <param name="position"></param> 이동 목적지
+        public void moveZone(Card_Control card_con, int position)
+        {
+            //=====[기존 리스트 탐색]=====
+            int pre_position = 0;
+
+            if (GameBoard.My_CardDeck.Contains(card_con))
+            {
+                pre_position = GameBoard.MY_CARDDECK;
+            }
+            else if (GameBoard.Opponent_CardDeck.Contains(card_con))
+            {
+                pre_position = GameBoard.OPPONENT_CARDDECK;
+            }
+            else if (GameBoard.My_HandsZone.Contains(card_con))
+            {
+                pre_position = GameBoard.MY_HANDSZONE;
+            }
+            else if (GameBoard.Opponent_HandsZone.Contains(card_con))
+            {
+                pre_position = GameBoard.OPPONENT_HANDSZONE;
+            }
+            else if (GameBoard.My_WarZone.Contains(card_con))
+            {
+                pre_position = GameBoard.MY_WARZONE;
+            }
+            else if (GameBoard.Opponent_WarZone.Contains(card_con))
+            {
+                pre_position = GameBoard.OPPONENT_WARZONE;
+            }
+            else if (GameBoard.My_ManaZone.Contains(card_con))
+            {
+                pre_position = GameBoard.MY_MANAZONE;
+            }
+            else if (GameBoard.Opponent_ManaZone.Contains(card_con))
+            {
+                pre_position = GameBoard.OPPONENT_MANAZONE;
+            }
+            else if (GameBoard.My_TombZone.Contains(card_con))
+            {
+                pre_position = GameBoard.MY_TOMBZONE;
+            }
+            else if (GameBoard.Opponent_TombZone.Contains(card_con))
+            {
+                pre_position = GameBoard.OPPONENT_TOMBZONE;
+            }
+            else if (GameBoard.My_PlayerZone.Equals(card_con))
+            {
+                pre_position = GameBoard.MY_PLAYERZONE;
+            }
+            else if (GameBoard.Opponent_PlayerZone.Equals(card_con))
+            {
+                pre_position = GameBoard.OPPONENT_PLAYERZONE;
+            }
+            else
+            {
+                pre_position = 0;
+            }
+
+            //=====[기본 리스트에서 삭제]=====
+            switch (pre_position)
+            {
+                case GameBoard.MY_CARDDECK:
+                    GameBoard.My_CardDeck.Remove(card_con);
+                    break;
+                case GameBoard.OPPONENT_CARDDECK:
+                    GameBoard.Opponent_CardDeck.Remove(card_con);
+                    break;
+                case GameBoard.MY_HANDSZONE:
+                    GameBoard.My_HandsZone.Remove(card_con);
+                    mainForm.remove_My_Hands(card_con);
+                    break;
+                case GameBoard.OPPONENT_HANDSZONE:
+                    GameBoard.Opponent_HandsZone.Remove(card_con);
+                    mainForm.remove_Opponent_Hands(card_con);
+                    break;
+                case GameBoard.MY_WARZONE:
+                    GameBoard.My_WarZone.Remove(card_con);
+                    mainForm.remove_My_WarZone(card_con);
+                    break;
+                case GameBoard.OPPONENT_WARZONE:
+                    GameBoard.Opponent_WarZone.Remove(card_con);
+                    mainForm.remove_Opponent_WarZone(card_con);
+                    break;
+                case GameBoard.MY_MANAZONE:
+                    GameBoard.My_ManaZone.Remove(card_con);
+                    mainForm.remove_My_ManaZone(card_con);
+                    break;
+                case GameBoard.OPPONENT_MANAZONE:
+                    GameBoard.Opponent_ManaZone.Remove(card_con);
+                    mainForm.remove_Opponent_ManaZone(card_con);
+                    break;
+                case GameBoard.MY_TOMBZONE:
+                    GameBoard.My_TombZone.Remove(card_con);
+                    break;
+                case GameBoard.OPPONENT_TOMBZONE:
+                    GameBoard.Opponent_TombZone.Remove(card_con);
+                    break;
+                case GameBoard.MY_PLAYERZONE:
+                    break;
+                case GameBoard.OPPONENT_PLAYERZONE:
+                    break;
+            }
+            //=====[새로운 포지션 배치]=====
+            card_con.position = position;
+            switch (position)
+            {
+                case GameBoard.MY_CARDDECK:
+                    GameBoard.My_CardDeck.Add(card_con);
+                    break;
+                case GameBoard.OPPONENT_CARDDECK:
+                    GameBoard.Opponent_CardDeck.Add(card_con);
+                    break;
+                case GameBoard.MY_HANDSZONE:
+                    GameBoard.My_HandsZone.Add(card_con);
+                    mainForm.add_My_Hands(card_con);
+                    card_con.activatable = true;
+                    break;
+                case GameBoard.OPPONENT_HANDSZONE:
+                    GameBoard.Opponent_HandsZone.Add(card_con);
+                    mainForm.add_Opponent_Hands(card_con);
+                    card_con.activatable = true;
+                    break;
+                case GameBoard.MY_WARZONE:
+                    GameBoard.My_WarZone.Add(card_con);
+                    mainForm.add_My_WarZone(card_con);
+                    card_con.activatable = false;
+                    break;
+                case GameBoard.OPPONENT_WARZONE:
+                    GameBoard.Opponent_WarZone.Add(card_con);
+                    mainForm.add_Opponent_WarZone(card_con);
+                    card_con.activatable = false;
+                    break;
+                case GameBoard.MY_MANAZONE:
+                    GameBoard.My_ManaZone.Add(card_con);
+                    mainForm.add_My_ManaZone(card_con);
+                    card_con.activatable = false;
+                    break;
+                case GameBoard.OPPONENT_MANAZONE:
+                    GameBoard.Opponent_ManaZone.Add(card_con);
+                    mainForm.add_Opponent_ManaZone(card_con);
+                    card_con.activatable = false;
+                    break;
+                case GameBoard.MY_TOMBZONE:
+                    if (card_con.Equals(GameSkillManager.Instance.tombCard))
+                    {
+                        GameSkillManager.Instance.skill_8_p1 = false;
+                    }
+                    else
+                    {
+                        if (GameSkillManager.Instance.skill_8_p1)
+                        {
+                            GameBoard.My_PlayerZone.card.Hp++;
+                            GameBoard.My_PlayerZone.lb_aphp.Text = GameBoard.My_PlayerZone.card.Ap + " / " + GameBoard.My_PlayerZone.card.Hp;
+                        }
+                        if (GameSkillManager.Instance.skill_8_p2)
+                        {
+                            GameBoard.Opponent_PlayerZone.card.Hp++;
+                            GameBoard.Opponent_PlayerZone.lb_aphp.Text = GameBoard.Opponent_PlayerZone.card.Ap + " / " + GameBoard.Opponent_PlayerZone.card.Hp;
+                        }
+                    }
+
+                    GameBoard.My_TombZone.Add(card_con);
+                    mainForm.add_My_TombZone(card_con);
+                    card_con.activatable = false;                   
+                    //cardDestruction(card_con);//=====[카드 파괴 이벤트 호출]=====
+
+                    break;
+                case GameBoard.OPPONENT_TOMBZONE:
+                    if (card_con.Equals(GameSkillManager.Instance.tombCard))
+                    {
+                        GameSkillManager.Instance.skill_8_p2 = false;
+                    }
+                    else
+                    {
+                        if (GameSkillManager.Instance.skill_8_p1)
+                        {
+                            GameBoard.My_PlayerZone.card.Hp++;
+                            GameBoard.My_PlayerZone.lb_aphp.Text = GameBoard.My_PlayerZone.card.Ap + " / " + GameBoard.My_PlayerZone.card.Hp;
+                        }
+                        if (GameSkillManager.Instance.skill_8_p2)
+                        {
+                            GameBoard.Opponent_PlayerZone.card.Hp++;
+                            GameBoard.Opponent_PlayerZone.lb_aphp.Text = GameBoard.Opponent_PlayerZone.card.Ap + " / " + GameBoard.Opponent_PlayerZone.card.Hp;
+                        }
+                    }
+
+                    GameBoard.Opponent_TombZone.Add(card_con);
+                    mainForm.add_Opponent_TombZone(card_con);
+
+
+                    card_con.activatable = false;
+
+                    //cardDestruction(card_con);//=====[카드 파괴 이벤트 호출]=====
+
                     break;
             }
         }
@@ -191,11 +397,11 @@ namespace DragonWarLord_preprototype
         /// <param name="card_Control"></param>
         internal void useCard(Card_Control card_Control)
         {
-            MessageBox.Show(GameBoard.My_HandsZone.IndexOf(card_Control)+"");
+            card_Control.activatable = false;
+            card_Control.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimgused;
 
             NetworkManager.ws.Send("MoveCard;" + card_Control.position + ";"
                 + GameBoard.My_HandsZone.IndexOf(card_Control)+";" + GameBoard.MY_WARZONE+";");
-
         }
 
         /// <summary>
@@ -204,23 +410,204 @@ namespace DragonWarLord_preprototype
         /// <param name="card_Control"></param>
         internal bool canUseCard(Card_Control card_Control)
         {
-            string[] consump = card_Control.card.Consumption.Split(';');
-            int need_dark = Convert.ToInt32(consump[1]);    //필요 암흑 마나
-            int need_fire = Convert.ToInt32(consump[0]);    //필요 불 마나
-            int need_all = Convert.ToInt32(consump[2]);     //필요 아무 마나
-
-            if (GameBoard.Instance.My_remain_dark >= need_dark && GameBoard.Instance.My_remain_fire >= need_fire 
-                && (((GameBoard.Instance.My_remain_dark - need_dark) + (GameBoard.Instance.My_remain_fire - need_fire)) - GameBoard.Instance.My_remain_all) >= need_all)
+            if (card_Control.activatable)
             {
-                return true;
+                string[] consump = card_Control.card.Consumption.Split(';');
+                int need_dark = Convert.ToInt32(consump[1]);    //필요 암흑 마나
+                int need_fire = Convert.ToInt32(consump[0]);    //필요 불 마나
+                int need_all = Convert.ToInt32(consump[2]);     //필요 아무 마나
+
+                if (GameBoard.Instance.My_RemainResource_dark >= need_dark && GameBoard.Instance.My_RemainResource_fire >= need_fire
+                    && (((GameBoard.Instance.My_RemainResource_dark - need_dark) + (GameBoard.Instance.My_RemainResource_fire - need_fire)) - GameBoard.Instance.My_UsedResource) >= need_all)
+                {
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("이 카드를 사용하기 위한 자원이 부족합니다.");
+                    return false;
+                }
             }
             else
             {
+                MessageBox.Show("이미 사용한 카드입니다.");
                 return false;
             }
+            
         }
 
         #endregion 카드 사용 관련
+
+
+        //=====[ 카드 선택 관련 ]=====
+        Card_Control selectCard = null;
+        Card_Control targetCard = null;
+        public void CardSelectProc(Card_Control card_con)
+        {
+            //====[초기화]====
+            if (card_con == null)
+            {
+                if (selectCard != null)
+                {
+                    selectCard.card_panel.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.card_deselect;
+                }
+                if (targetCard != null)
+                {
+                    targetCard.card_panel.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.card_deselect;
+                }
+                selectCard = null;
+                targetCard = null;
+            }//===============================
+            else
+            {//=====[ 동작 ]=====
+                card_con.card_panel.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.card_select;
+                if (selectCard == null)
+                {
+                    selectCard = card_con;
+                }
+                else if (selectCard.Equals(card_con))
+                {
+                    selectCard.card_panel.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.card_deselect;
+                    selectCard = null;
+                    targetCard = null;
+                }
+                else
+                {
+                    targetCard = card_con;
+                    //=====[전투 처리 메소드 추가]=====
+                    canMatchCheck(selectCard, targetCard);  //매치 가능여부 체크 후 매치
+                    ///////////////////////////////////
+                    selectCard.card_panel.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.card_deselect;
+                    targetCard.card_panel.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.card_deselect;
+                    selectCard = null;
+                    targetCard = null;
+                }
+            }
+        }
+
+        public void canMatchCheck(Card_Control selectCard, Card_Control targetCard)
+        {
+            if (selectCard.activatable) //활동력이 있어야 가능
+            {
+                if (TurnManager.Turn)
+                {
+                    if (GameBoard.My_WarZone.Contains(selectCard) && (GameBoard.Opponent_WarZone.Contains(targetCard) || GameBoard.Opponent_PlayerZone.Equals(targetCard)))
+                    {
+                        MatchCard(selectCard, targetCard);
+                    }
+                }
+                else
+                {
+                    if (GameBoard.Opponent_WarZone.Contains(selectCard) && (GameBoard.My_WarZone.Contains(targetCard) || GameBoard.My_PlayerZone.Equals(targetCard)))
+                    {
+                        MatchCard(selectCard, targetCard);
+                    }
+                }
+            }
+        }
+
+        //=====[ Match ]=====
+        public void MatchCard(Card_Control selectCard, Card_Control targetCard)
+        {
+            if (GameSkillManager.Instance.list_skill19.Contains(selectCard) || GameSkillManager.Instance.list_skill19.Contains(targetCard))
+            {
+                if (TurnManager.Turn)
+                {
+                    moveZone(selectCard, GameBoard.MY_TOMBZONE);
+                    moveZone(targetCard, GameBoard.OPPONENT_TOMBZONE);
+                }
+                else
+                {
+                    moveZone(selectCard, GameBoard.OPPONENT_TOMBZONE);
+                    moveZone(targetCard, GameBoard.MY_TOMBZONE);
+                }
+            }
+            else
+            {
+                if (targetCard.card.Skill.Equals("13"))
+                {
+                    if (!GameSkillManager.Instance.list_skill13_used.Contains(targetCard))
+                    {
+                        targetCard.card.thisTurnHP += 2;
+                        targetCard.card.thisTurnAP += 2;
+
+                        selectCard.card.thisTurnHP -= targetCard.card.thisTurnAP;
+                        targetCard.card.thisTurnHP -= selectCard.card.thisTurnAP;
+                        GameSkillManager.Instance.list_skill13_used.Add(targetCard);
+                    }
+                    else
+                    {
+                        selectCard.card.thisTurnHP -= targetCard.card.thisTurnAP;
+                        targetCard.card.thisTurnHP -= selectCard.card.thisTurnAP;
+                    }
+                }
+                else
+                {
+                    selectCard.card.thisTurnHP -= targetCard.card.thisTurnAP;
+                    targetCard.card.thisTurnHP -= selectCard.card.thisTurnAP;
+                }
+            }
+
+            if (TurnManager.Turn)
+            {
+                if (GameSkillManager.Instance.list_skill18.Contains(selectCard))
+                {
+                    GameBoard.My_PlayerZone.card.thisTurnHP += selectCard.card.thisTurnAP;
+                }
+                if (GameSkillManager.Instance.list_skill18.Contains(targetCard))
+                {
+                    GameBoard.Opponent_PlayerZone.card.thisTurnHP += targetCard.card.thisTurnAP;
+                }
+            }
+            else
+            {
+                if (GameSkillManager.Instance.list_skill18.Contains(selectCard))
+                {
+                    GameBoard.Opponent_PlayerZone.card.thisTurnHP += selectCard.card.thisTurnAP;
+                }
+                if (GameSkillManager.Instance.list_skill18.Contains(targetCard))
+                {
+                    GameBoard.My_PlayerZone.card.thisTurnHP += targetCard.card.thisTurnAP;
+                }
+            }
+
+
+            GameBoard.My_PlayerZone.lb_aphp.Text = GameBoard.My_PlayerZone.card.thisTurnAP + " / " + GameBoard.My_PlayerZone.card.thisTurnHP;
+            GameBoard.Opponent_PlayerZone.lb_aphp.Text = GameBoard.Opponent_PlayerZone.card.thisTurnAP + " / " + GameBoard.Opponent_PlayerZone.card.thisTurnHP;
+            selectCard.lb_aphp.Text = selectCard.card.thisTurnAP + " / " + selectCard.card.thisTurnHP;
+            targetCard.lb_aphp.Text = targetCard.card.thisTurnAP + " / " + targetCard.card.thisTurnHP;
+
+            if (TurnManager.Turn)
+            {
+                if (selectCard.card.thisTurnHP <= 0)
+                {
+                    moveZone(selectCard, GameBoard.MY_TOMBZONE);
+                }
+                if (targetCard.card.thisTurnHP <= 0)
+                {
+                    moveZone(targetCard, GameBoard.OPPONENT_TOMBZONE);
+                }
+            }
+            else
+            {
+                if (selectCard.card.thisTurnHP <= 0)
+                {
+                    moveZone(selectCard, GameBoard.OPPONENT_TOMBZONE);
+                }
+                if (targetCard.card.thisTurnHP <= 0)
+                {
+                    moveZone(targetCard, GameBoard.MY_TOMBZONE);
+                }
+            }
+            //selectCard.activatable = false;
+        }
+        //=====[게임 스킬 관련]=====
+        public void gameSkill(String skill, Card_Control card_con)
+        {
+            Delegate dg;
+            GameSkillManager.Instance.SkillDictionary.TryGetValue(skill, out dg);
+            dg.DynamicInvoke(card_con);
+        }
 
         #region 싱글톤
         static CardDealer CardDealerInstance = null;

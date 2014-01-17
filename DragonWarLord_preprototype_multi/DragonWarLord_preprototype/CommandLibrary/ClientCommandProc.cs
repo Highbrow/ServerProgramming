@@ -35,21 +35,46 @@ namespace DragonWarLord_preprototype.CommandLibrary
         protected override void cmdF_Resource(string command)
         {
             string[] resource = command.Split(';');
-            GameBoard.Instance.My_remain_dark = Convert.ToInt32(resource[1]);
-            GameBoard.Instance.My_remain_fire = Convert.ToInt32(resource[2]);
-            GameBoard.Instance.My_remain_all = Convert.ToInt32(resource[3]);
 
-            GameBoard.Instance.Opponent_remain_dark = Convert.ToInt32(resource[4]);
-            GameBoard.Instance.Opponent_remain_fire = Convert.ToInt32(resource[5]);
-            GameBoard.Instance.Opponent_remain_all = Convert.ToInt32(resource[6]);
+            //=====[ 전체 자원 ]====
+            GameBoard.Instance.My_Resource_dark = Convert.ToInt32(resource[1]);
+            GameBoard.Instance.My_Resource_fire = Convert.ToInt32(resource[2]);
 
-            MainForm.mf.setText_My_remain_dark(GameBoard.Instance.My_remain_dark.ToString());
-            MainForm.mf.setText_My_remain_fire(GameBoard.Instance.My_remain_fire.ToString());
-            MainForm.mf.setText_My_remain_all(GameBoard.Instance.My_remain_all.ToString());
+            MainForm.mf.setText_My_cnt_dark(GameBoard.Instance.My_Resource_dark.ToString());
+            MainForm.mf.setText_My_cnt_fire(GameBoard.Instance.My_Resource_fire.ToString());
 
-            MainForm.mf.setText_Opponent_remain_dark(GameBoard.Instance.Opponent_remain_dark.ToString());
-            MainForm.mf.setText_Opponent_remain_fire(GameBoard.Instance.Opponent_remain_fire.ToString());
-            MainForm.mf.setText_Opponent_remain_all(GameBoard.Instance.Opponent_remain_all.ToString());
+            //=====[ 남은 자원 ]====
+            GameBoard.Instance.My_RemainResource_dark = Convert.ToInt32(resource[3]);
+            GameBoard.Instance.My_RemainResource_fire = Convert.ToInt32(resource[4]);
+            GameBoard.Instance.My_RemainResource_all = Convert.ToInt32(resource[5]);
+
+            MainForm.mf.setText_My_remain_dark(GameBoard.Instance.My_RemainResource_dark.ToString());
+            MainForm.mf.setText_My_remain_fire(GameBoard.Instance.My_RemainResource_fire.ToString());
+            MainForm.mf.setText_My_remain_all(GameBoard.Instance.My_RemainResource_all.ToString());
+
+            GameBoard.Instance.My_UsedResource = Convert.ToInt32(resource[6]);
+
+            MainForm.mf.setText_My_use_all(GameBoard.Instance.My_UsedResource.ToString());
+
+            //=====[ 전체 자원 ]====
+            GameBoard.Instance.Opponent_Resource_dark = Convert.ToInt32(resource[7]);
+            GameBoard.Instance.Opponent_Resource_fire = Convert.ToInt32(resource[8]);
+
+            MainForm.mf.setText_Opponent_cnt_dark(GameBoard.Instance.Opponent_Resource_dark.ToString());
+            MainForm.mf.setText_Opponent_cnt_fire(GameBoard.Instance.Opponent_Resource_fire.ToString());
+
+            //=====[ 남은 자원 ]====
+            GameBoard.Instance.Opponent_RemainResource_dark = Convert.ToInt32(resource[9]);
+            GameBoard.Instance.Opponent_RemainResource_fire = Convert.ToInt32(resource[10]);
+            GameBoard.Instance.Opponent_RemainResource_all = Convert.ToInt32(resource[11]);
+
+            MainForm.mf.setText_Opponent_remain_dark(GameBoard.Instance.Opponent_RemainResource_dark.ToString());
+            MainForm.mf.setText_Opponent_remain_fire(GameBoard.Instance.Opponent_RemainResource_fire.ToString());
+            MainForm.mf.setText_Opponent_remain_all(GameBoard.Instance.Opponent_RemainResource_all.ToString());
+
+            GameBoard.Instance.Opponent_UsedResource = Convert.ToInt32(resource[12]);
+
+            MainForm.mf.setText_Opponent_use_all(GameBoard.Instance.Opponent_UsedResource.ToString());
         }
 
         /// <summary>
@@ -61,6 +86,27 @@ namespace DragonWarLord_preprototype.CommandLibrary
             TurnManager.Turn = true;
             CardDealer.Instance.canMakeResource = true;
             MainForm.mf.EnabledButton(true);
+
+            foreach(Card_Control card in GameBoard.My_HandsZone){
+                card.activatable = true;
+                card.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.background;
+            }
+            foreach (Card_Control card in GameBoard.My_WarZone)
+            {
+                card.activatable = true;
+                card.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.background;
+            }
+            foreach (Card_Control card in GameBoard.Opponent_HandsZone)
+            {
+                card.activatable = true;
+                card.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.background;
+            }
+            foreach (Card_Control card in GameBoard.Opponent_WarZone)
+            {
+                card.activatable = true;
+                card.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.background;
+            }
+
         }
         /// <summary>
         /// 상대 차례다

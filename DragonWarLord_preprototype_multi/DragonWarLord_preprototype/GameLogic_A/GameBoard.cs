@@ -23,14 +23,24 @@ namespace WarLord_Server_GUI.GameLogic_A
         public const int MY_PLAYERZONE = 100;
         public const int OPPONENT_PLAYERZONE = 200;
 
-        public int My_remain_dark = 0;
-        public int My_remain_fire = 0;
+        public int My_Resource_dark = 0;
+        public int My_Resource_fire = 0;
 
-        public int Opponent_remain_dark = 0;
-        public int Opponent_remain_fire = 0;
+        public int My_RemainResource_dark = 0;
+        public int My_RemainResource_fire = 0;
+        public int My_RemainResource_all = 0;
 
-        public int My_remain_all = 0;
-        public int Opponent_remain_all = 0;
+        public int My_UsedResource = 0;
+
+        public int Opponent_Resource_dark = 0;
+        public int Opponent_Resource_fire = 0;
+
+        public int Opponent_RemainResource_dark = 0;
+        public int Opponent_RemainResource_fire = 0;
+        public int Opponent_RemainResource_all = 0;
+
+        public int Opponent_UsedResource = 0;
+        
 
         //=====[ 카드 덱 ]=====
         public static List<Card_Control> My_CardDeck = new List<Card_Control>();
@@ -56,7 +66,7 @@ namespace WarLord_Server_GUI.GameLogic_A
         /// 싱글톤
         /// </summary>
         static GameBoard GameBoardInstance = null;
-        static readonly object padlock = new object();
+        static readonly object padlock = new object();       
 
         public static GameBoard Instance
         {

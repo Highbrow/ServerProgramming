@@ -116,113 +116,90 @@ namespace DragonWarLord_preprototype
                     {
                         if (CardDealer.Instance.canUseCard(this))
                         {
-                            CardDealer.Instance.useCard(this);
-                        }
-                        else
-                        {
-                            MessageBox.Show("자원이 부족합니다.");
-                        }
-                        /*
-                        if (this.card.Skill.Equals("20"))
-                        {
-                            if (GamePlayManager.Instance.canPopCard(this, "20"))
+                            if (this.card.Skill.Equals("1"))
+                            {
+                                CardDealer.Instance.useCard(this);
+                            }
+                            else if (this.card.Skill.Equals("2"))
+                            {
+                                CardDealer.Instance.useCard(this);
+                            }
+                            else if (this.card.Skill.Equals("3"))
+                            {
+                                CardDealer.Instance.gameSkill("3", this);
+                                CardDealer.Instance.useCard(this);
+                            }
+                            else if (this.card.Skill.Equals("4"))
+                            {
+                                CardDealer.Instance.useCard(this);
+                            }
+                            else if (this.card.Skill.Equals("5"))
+                            {
+                                CardDealer.Instance.useCard(this);
+                            }
+                            else if (this.card.Skill.Equals("7"))
+                            {
+                                CardDealer.Instance.gameSkill("7", this);
+                                CardDealer.Instance.useCard(this);
+                            }
+                            else if (this.card.Skill.Equals("8"))
+                            {
+                                CardDealer.Instance.gameSkill("8", this);
+                                CardDealer.Instance.useCard(this);
+                            }
+                            else if (this.card.Skill.Equals("9"))
+                            {
+                                CardDealer.Instance.gameSkill("9", this);
+                                CardDealer.Instance.useCard(this);
+                            }
+                            else if (this.card.Skill.Equals("11"))
+                            {
+                                CardDealer.Instance.gameSkill("11", this);
+                                CardDealer.Instance.useCard(this);
+                            }
+                            else if (this.card.Skill.Equals("16"))
                             {
                                 GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                GamePlayManager.Instance.gameSkill("20", this);
+                                CardDealer.Instance.gameSkill("16", this);
+                            }
+                            else if (this.card.Skill.Equals("17"))
+                            {
+                                GameSkillManager.Instance.skill_card = this;    //자신 등록
+                                CardDealer.Instance.gameSkill("17", this);
+                            }
+                            else if (this.card.Skill.Equals("18"))
+                            {
+                                GameSkillManager.Instance.skill_card = this;    //자신 등록
+                                CardDealer.Instance.gameSkill("18", this);
+                            }
+                            else if (this.card.Skill.Equals("19"))
+                            {
+                                GameSkillManager.Instance.skill_card = this;    //자신 등록
+                                CardDealer.Instance.gameSkill("19", this);
+                            }
+                            else if (this.card.Skill.Equals("20"))
+                            {
+                                GameSkillManager.Instance.skill_card = this;    //자신 등록
+                                CardDealer.Instance.gameSkill("20", this);
+                            }
+                            else if (this.card.Skill.Equals("21"))
+                            {
+                                GameSkillManager.Instance.skill_card = this;    //자신 등록
+                                CardDealer.Instance.gameSkill("21", this);
                             }
                             else
                             {
-                                MessageBox.Show("마나가 부족합니다.");
+                                CardDealer.Instance.useCard(this);
                             }
                         }
                         else
                         {
-                            if (GamePlayManager.Instance.canPopCard(this))
-                            {
-
-                                if (this.card.Skill.Equals("1"))
-                                {
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                                else if (this.card.Skill.Equals("2"))
-                                {
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                                else if (this.card.Skill.Equals("3"))
-                                {
-                                    GamePlayManager.Instance.gameSkill("3", this);
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                                else if (this.card.Skill.Equals("4"))
-                                {
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                                else if (this.card.Skill.Equals("5"))
-                                {
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                                else if (this.card.Skill.Equals("7"))
-                                {
-                                    GamePlayManager.Instance.gameSkill("7", this);
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                                else if (this.card.Skill.Equals("8"))
-                                {
-                                    GamePlayManager.Instance.gameSkill("8", this);
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                                else if (this.card.Skill.Equals("9"))
-                                {
-                                    GamePlayManager.Instance.gameSkill("9", this);
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                                else if (this.card.Skill.Equals("11"))
-                                {
-                                    GamePlayManager.Instance.gameSkill("11", this);
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                                else if (this.card.Skill.Equals("16"))
-                                {
-                                    GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                    GamePlayManager.Instance.gameSkill("16", this);
-                                }
-                                else if (this.card.Skill.Equals("17"))
-                                {
-                                    GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                    GamePlayManager.Instance.gameSkill("17", this);
-                                }
-                                else if (this.card.Skill.Equals("18"))
-                                {
-                                    GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                    GamePlayManager.Instance.gameSkill("18", this);
-                                }
-                                else if (this.card.Skill.Equals("19"))
-                                {
-                                    GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                    GamePlayManager.Instance.gameSkill("19", this);
-                                }
-                                else if (this.card.Skill.Equals("21"))
-                                {
-                                    GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                    GamePlayManager.Instance.gameSkill("21", this);
-                                }
-                                else
-                                {
-                                    GamePlayManager.Instance.popCard(this);
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("마나가 부족합니다.");
-                            }
-                        }*/
+                        }
                     }
                 }
-                //=====카드 선택 초기화(null)전달
-                GamePlayManager.Instance.CardSelectProc(null);
+                CardDealer.Instance.CardSelectProc(null);
             }
         }
-
 
         //=====[클릭 이벤트]=====
         public void Card_Control_MouseClick(object sender, MouseEventArgs e)
@@ -231,38 +208,37 @@ namespace DragonWarLord_preprototype
             {
                 if (GameSkillManager.Instance.skill_16)
                 {
-                    GamePlayManager.Instance.gameSkill("16", this);
+                    CardDealer.Instance.gameSkill("16", this);
                 }
                 else if (GameSkillManager.Instance.skill_18)
                 {
-                    GamePlayManager.Instance.gameSkill("18", this);
+                    CardDealer.Instance.gameSkill("18", this);
                 }
                 else if (GameSkillManager.Instance.skill_19)
                 {
-                    GamePlayManager.Instance.gameSkill("19", this);
+                    CardDealer.Instance.gameSkill("19", this);
                 }
                 else if (GameSkillManager.Instance.skill_20)
                 {
-                    GamePlayManager.Instance.gameSkill("20", this);
+                    CardDealer.Instance.gameSkill("20", this);
                 }
                 else if (GameSkillManager.Instance.skill_21)
                 {
-                    GamePlayManager.Instance.gameSkill("21", this);
+                    CardDealer.Instance.gameSkill("21", this);
                 }
                 else if (GameSkillManager.Instance.skill_17_first)
                 {
-                    GamePlayManager.Instance.gameSkill("17", this);
+                    CardDealer.Instance.gameSkill("17", this);
                 }
                 else if (GameSkillManager.Instance.skill_17_second)
                 {
-                    GamePlayManager.Instance.gameSkill("17", this);
+                    CardDealer.Instance.gameSkill("17", this);
                 }
                 else
                 {
-                    GamePlayManager.Instance.CardSelectProc(this);
+                    CardDealer.Instance.CardSelectProc(this);
                 }
             }
         }
-
     }
 }

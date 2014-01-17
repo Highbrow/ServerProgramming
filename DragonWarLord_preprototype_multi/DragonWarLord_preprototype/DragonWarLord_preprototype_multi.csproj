@@ -161,12 +161,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="131230___04.ico" />
+    <Content Include="Resources\background.png" />
     <Content Include="Resources\backimg.png" />
-    <Content Include="Resources\backimg_select.png" />
+    <None Include="Resources\backimgused.png" />
     <Content Include="Resources\bg.jpg" />
     <None Include="Resources\Zombie.PNG" />
     <None Include="Resources\can_backimg_select.png" />
     <None Include="Resources\BlackQueenDragonHatchling.PNG" />
+    <None Include="Resources\card_deselect.png" />
+    <None Include="Resources\card_select.png" />
     <Content Include="Resources\dark.png" />
     <None Include="Resources\DevilsFruit.PNG" />
     <None Include="Resources\DevilsWhisper.PNG" />
@@ -195,6 +198,7 @@
     <None Include="Resources\VampiresLord.PNG" />
     <None Include="Resources\VampiresNight.PNG" />
     <None Include="Resources\taelimoh.PNG" />
+    <None Include="Resources\skillcard_select.png" />
     <Content Include="Resources\water.png" />
   </ItemGroup>
   <ItemGroup>

@@ -63,9 +63,9 @@ namespace DragonWarLord_preprototype.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap backimg {
+        internal static System.Drawing.Bitmap background {
             get {
-                object obj = ResourceManager.GetObject("backimg", resourceCulture);
+                object obj = ResourceManager.GetObject("background", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace DragonWarLord_preprototype.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap backimg_select {
+        internal static System.Drawing.Bitmap backimgused {
             get {
-                object obj = ResourceManager.GetObject("backimg_select", resourceCulture);
+                object obj = ResourceManager.GetObject("backimgused", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,19 @@ namespace DragonWarLord_preprototype.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap can_backimg_select {
+        internal static System.Drawing.Bitmap card_deselect {
             get {
-                object obj = ResourceManager.GetObject("can_backimg_select", resourceCulture);
+                object obj = ResourceManager.GetObject("card_deselect", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap card_select {
+            get {
+                object obj = ResourceManager.GetObject("card_select", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -336,6 +346,16 @@ namespace DragonWarLord_preprototype.Properties {
         internal static System.Drawing.Bitmap Skeleton {
             get {
                 object obj = ResourceManager.GetObject("Skeleton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap skillcard_select {
+            get {
+                object obj = ResourceManager.GetObject("skillcard_select", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -32,11 +32,13 @@ namespace DragonWarLord_preprototype
         {
             this.lb_name = new System.Windows.Forms.Label();
             this.lb_information = new System.Windows.Forms.Label();
-            this.attribute_layout = new System.Windows.Forms.FlowLayoutPanel();
+            this.lb_aphp = new System.Windows.Forms.Label();
             this.pb_image = new System.Windows.Forms.PictureBox();
             this.lb_type = new System.Windows.Forms.Label();
-            this.lb_aphp = new System.Windows.Forms.Label();
+            this.attribute_layout = new System.Windows.Forms.FlowLayoutPanel();
+            this.card_panel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pb_image)).BeginInit();
+            this.card_panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // lb_name
@@ -72,19 +74,22 @@ namespace DragonWarLord_preprototype
             this.lb_information.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
             this.lb_information.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
-            // attribute_layout
+            // lb_aphp
             // 
-            this.attribute_layout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.attribute_layout.AutoSize = true;
-            this.attribute_layout.BackColor = System.Drawing.Color.White;
-            this.attribute_layout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.attribute_layout.Font = new System.Drawing.Font("새굴림", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.attribute_layout.Location = new System.Drawing.Point(150, 18);
-            this.attribute_layout.Name = "attribute_layout";
-            this.attribute_layout.Size = new System.Drawing.Size(10, 20);
-            this.attribute_layout.TabIndex = 5;
-            this.attribute_layout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
-            this.attribute_layout.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
+            this.lb_aphp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lb_aphp.AutoSize = true;
+            this.lb_aphp.BackColor = System.Drawing.Color.Transparent;
+            this.lb_aphp.Font = new System.Drawing.Font("휴먼둥근헤드라인", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lb_aphp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lb_aphp.Location = new System.Drawing.Point(49, 194);
+            this.lb_aphp.Name = "lb_aphp";
+            this.lb_aphp.Size = new System.Drawing.Size(72, 17);
+            this.lb_aphp.TabIndex = 7;
+            this.lb_aphp.Text = "AP/HP";
+            this.lb_aphp.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lb_aphp.UseMnemonic = false;
+            this.lb_aphp.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
+            this.lb_aphp.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
             // pb_image
             // 
@@ -112,44 +117,54 @@ namespace DragonWarLord_preprototype
             this.lb_type.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
             this.lb_type.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
-            // lb_aphp
+            // attribute_layout
             // 
-            this.lb_aphp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lb_aphp.AutoSize = true;
-            this.lb_aphp.BackColor = System.Drawing.Color.Transparent;
-            this.lb_aphp.Font = new System.Drawing.Font("휴먼둥근헤드라인", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lb_aphp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lb_aphp.Location = new System.Drawing.Point(49, 194);
-            this.lb_aphp.Name = "lb_aphp";
-            this.lb_aphp.Size = new System.Drawing.Size(72, 17);
-            this.lb_aphp.TabIndex = 7;
-            this.lb_aphp.Text = "AP/HP";
-            this.lb_aphp.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lb_aphp.UseMnemonic = false;
-            this.lb_aphp.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
-            this.lb_aphp.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
+            this.attribute_layout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.attribute_layout.AutoSize = true;
+            this.attribute_layout.BackColor = System.Drawing.Color.White;
+            this.attribute_layout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.attribute_layout.Font = new System.Drawing.Font("새굴림", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.attribute_layout.Location = new System.Drawing.Point(150, 18);
+            this.attribute_layout.Name = "attribute_layout";
+            this.attribute_layout.Size = new System.Drawing.Size(10, 20);
+            this.attribute_layout.TabIndex = 5;
+            this.attribute_layout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
+            this.attribute_layout.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
+            // 
+            // card_panel
+            // 
+            this.card_panel.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.card_deselect;
+            this.card_panel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.card_panel.Controls.Add(this.attribute_layout);
+            this.card_panel.Controls.Add(this.lb_type);
+            this.card_panel.Controls.Add(this.pb_image);
+            this.card_panel.Controls.Add(this.lb_aphp);
+            this.card_panel.Controls.Add(this.lb_information);
+            this.card_panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.card_panel.Location = new System.Drawing.Point(0, 0);
+            this.card_panel.Name = "card_panel";
+            this.card_panel.Size = new System.Drawing.Size(166, 213);
+            this.card_panel.TabIndex = 8;
+            this.card_panel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
+            this.card_panel.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             // 
             // Card_Control
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.backimg;
+            this.BackgroundImage = global::DragonWarLord_preprototype.Properties.Resources.background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.lb_type);
-            this.Controls.Add(this.lb_aphp);
             this.Controls.Add(this.lb_name);
-            this.Controls.Add(this.lb_information);
-            this.Controls.Add(this.attribute_layout);
-            this.Controls.Add(this.pb_image);
+            this.Controls.Add(this.card_panel);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DoubleBuffered = true;
             this.Name = "Card_Control";
             this.Size = new System.Drawing.Size(166, 213);
             this.Load += new System.EventHandler(this.Card_Control_Load);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseClick);
-            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Card_Control_MouseDoubleClick);
             ((System.ComponentModel.ISupportInitialize)(this.pb_image)).EndInit();
+            this.card_panel.ResumeLayout(false);
+            this.card_panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,10 +173,12 @@ namespace DragonWarLord_preprototype
         #endregion
 
         private System.Windows.Forms.Label lb_name;
-        private System.Windows.Forms.Label lb_information;
-        private System.Windows.Forms.PictureBox pb_image;
-        private System.Windows.Forms.FlowLayoutPanel attribute_layout;
-        private System.Windows.Forms.Label lb_type;
-        public System.Windows.Forms.Label lb_aphp;
+        private Label lb_information;
+        public Label lb_aphp;
+        private PictureBox pb_image;
+        private Label lb_type;
+        private FlowLayoutPanel attribute_layout;
+        public Panel card_panel;
+        
     }
 }

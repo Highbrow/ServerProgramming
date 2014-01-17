@@ -40,20 +40,13 @@
             this.My_remain_dark = new System.Windows.Forms.Label();
             this.My_remain_fire = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.My_use_all = new System.Windows.Forms.Label();
+            this.My_remain_all = new System.Windows.Forms.Label();
             this.My_Mana_frame = new System.Windows.Forms.FlowLayoutPanel();
             this.Opponent_Mana_frame = new System.Windows.Forms.FlowLayoutPanel();
             this.My_Tomb_frame = new System.Windows.Forms.FlowLayoutPanel();
             this.Opponent_Tomb_frame = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
-            this.My_use_all = new System.Windows.Forms.Label();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.Opponent_cnt_dark = new System.Windows.Forms.Label();
-            this.Opponent_cnt_fire = new System.Windows.Forms.Label();
-            this.Opponent_remain_dark = new System.Windows.Forms.Label();
-            this.Opponent_remain_fire = new System.Windows.Forms.Label();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.Opponent_use_all = new System.Windows.Forms.Label();
             this.Opponent_Player = new System.Windows.Forms.FlowLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -66,12 +59,21 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.Opponent_cnt_dark = new System.Windows.Forms.Label();
+            this.Opponent_cnt_fire = new System.Windows.Forms.Label();
+            this.Opponent_remain_dark = new System.Windows.Forms.Label();
+            this.Opponent_remain_fire = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.Opponent_use_all = new System.Windows.Forms.Label();
+            this.Opponent_remain_all = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // Opponent_hands_frame
@@ -133,7 +135,8 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -143,6 +146,8 @@
             this.tableLayoutPanel1.Controls.Add(this.My_remain_dark, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.My_remain_fire, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.My_use_all, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.My_remain_all, 3, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(1261, 613);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -157,7 +162,7 @@
             this.pictureBox2.Image = global::DragonWarLord_preprototype.Properties.Resources.fire;
             this.pictureBox2.Location = new System.Drawing.Point(4, 74);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(64, 63);
+            this.pictureBox2.Size = new System.Drawing.Size(46, 63);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
@@ -167,9 +172,9 @@
             this.My_cnt_dark.Dock = System.Windows.Forms.DockStyle.Fill;
             this.My_cnt_dark.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.My_cnt_dark.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.My_cnt_dark.Location = new System.Drawing.Point(75, 1);
+            this.My_cnt_dark.Location = new System.Drawing.Point(57, 1);
             this.My_cnt_dark.Name = "My_cnt_dark";
-            this.My_cnt_dark.Size = new System.Drawing.Size(64, 69);
+            this.My_cnt_dark.Size = new System.Drawing.Size(46, 69);
             this.My_cnt_dark.TabIndex = 3;
             this.My_cnt_dark.Text = "0";
             this.My_cnt_dark.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -179,9 +184,9 @@
             this.My_cnt_fire.Dock = System.Windows.Forms.DockStyle.Fill;
             this.My_cnt_fire.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.My_cnt_fire.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.My_cnt_fire.Location = new System.Drawing.Point(75, 71);
+            this.My_cnt_fire.Location = new System.Drawing.Point(57, 71);
             this.My_cnt_fire.Name = "My_cnt_fire";
-            this.My_cnt_fire.Size = new System.Drawing.Size(64, 69);
+            this.My_cnt_fire.Size = new System.Drawing.Size(46, 69);
             this.My_cnt_fire.TabIndex = 3;
             this.My_cnt_fire.Text = "0";
             this.My_cnt_fire.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -191,9 +196,9 @@
             this.My_remain_dark.Dock = System.Windows.Forms.DockStyle.Fill;
             this.My_remain_dark.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.My_remain_dark.ForeColor = System.Drawing.Color.Green;
-            this.My_remain_dark.Location = new System.Drawing.Point(146, 1);
+            this.My_remain_dark.Location = new System.Drawing.Point(110, 1);
             this.My_remain_dark.Name = "My_remain_dark";
-            this.My_remain_dark.Size = new System.Drawing.Size(66, 69);
+            this.My_remain_dark.Size = new System.Drawing.Size(46, 69);
             this.My_remain_dark.TabIndex = 3;
             this.My_remain_dark.Text = "0";
             this.My_remain_dark.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -203,9 +208,9 @@
             this.My_remain_fire.Dock = System.Windows.Forms.DockStyle.Fill;
             this.My_remain_fire.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.My_remain_fire.ForeColor = System.Drawing.Color.Green;
-            this.My_remain_fire.Location = new System.Drawing.Point(146, 71);
+            this.My_remain_fire.Location = new System.Drawing.Point(110, 71);
             this.My_remain_fire.Name = "My_remain_fire";
-            this.My_remain_fire.Size = new System.Drawing.Size(66, 69);
+            this.My_remain_fire.Size = new System.Drawing.Size(46, 69);
             this.My_remain_fire.TabIndex = 3;
             this.My_remain_fire.Text = "0";
             this.My_remain_fire.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -216,10 +221,34 @@
             this.pictureBox1.Image = global::DragonWarLord_preprototype.Properties.Resources.dark;
             this.pictureBox1.Location = new System.Drawing.Point(4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(64, 63);
+            this.pictureBox1.Size = new System.Drawing.Size(46, 63);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // My_use_all
+            // 
+            this.My_use_all.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.My_use_all.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.My_use_all.ForeColor = System.Drawing.Color.Red;
+            this.My_use_all.Location = new System.Drawing.Point(163, 71);
+            this.My_use_all.Name = "My_use_all";
+            this.My_use_all.Size = new System.Drawing.Size(49, 69);
+            this.My_use_all.TabIndex = 3;
+            this.My_use_all.Text = "0";
+            this.My_use_all.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // My_remain_all
+            // 
+            this.My_remain_all.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.My_remain_all.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.My_remain_all.ForeColor = System.Drawing.Color.Red;
+            this.My_remain_all.Location = new System.Drawing.Point(163, 1);
+            this.My_remain_all.Name = "My_remain_all";
+            this.My_remain_all.Size = new System.Drawing.Size(49, 69);
+            this.My_remain_all.TabIndex = 3;
+            this.My_remain_all.Text = "0";
+            this.My_remain_all.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // My_Mana_frame
             // 
@@ -276,123 +305,6 @@
             this.label2.Size = new System.Drawing.Size(193, 35);
             this.label2.TabIndex = 4;
             this.label2.Text = "TOMB_ZONE";
-            // 
-            // My_use_all
-            // 
-            this.My_use_all.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.My_use_all.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.My_use_all.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.My_use_all.ForeColor = System.Drawing.Color.Red;
-            this.My_use_all.Location = new System.Drawing.Point(1483, 663);
-            this.My_use_all.Name = "My_use_all";
-            this.My_use_all.Size = new System.Drawing.Size(51, 42);
-            this.My_use_all.TabIndex = 3;
-            this.My_use_all.Text = "0";
-            this.My_use_all.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.Controls.Add(this.pictureBox3, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.Opponent_cnt_dark, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.Opponent_cnt_fire, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.Opponent_remain_dark, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.Opponent_remain_fire, 2, 1);
-            this.tableLayoutPanel3.Controls.Add(this.pictureBox6, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(1261, 276);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(216, 141);
-            this.tableLayoutPanel3.TabIndex = 2;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox3.Image = global::DragonWarLord_preprototype.Properties.Resources.fire;
-            this.pictureBox3.Location = new System.Drawing.Point(4, 74);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(64, 63);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 1;
-            this.pictureBox3.TabStop = false;
-            // 
-            // Opponent_cnt_dark
-            // 
-            this.Opponent_cnt_dark.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Opponent_cnt_dark.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Opponent_cnt_dark.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.Opponent_cnt_dark.Location = new System.Drawing.Point(75, 1);
-            this.Opponent_cnt_dark.Name = "Opponent_cnt_dark";
-            this.Opponent_cnt_dark.Size = new System.Drawing.Size(64, 69);
-            this.Opponent_cnt_dark.TabIndex = 3;
-            this.Opponent_cnt_dark.Text = "0";
-            this.Opponent_cnt_dark.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Opponent_cnt_fire
-            // 
-            this.Opponent_cnt_fire.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Opponent_cnt_fire.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Opponent_cnt_fire.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.Opponent_cnt_fire.Location = new System.Drawing.Point(75, 71);
-            this.Opponent_cnt_fire.Name = "Opponent_cnt_fire";
-            this.Opponent_cnt_fire.Size = new System.Drawing.Size(64, 69);
-            this.Opponent_cnt_fire.TabIndex = 3;
-            this.Opponent_cnt_fire.Text = "0";
-            this.Opponent_cnt_fire.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Opponent_remain_dark
-            // 
-            this.Opponent_remain_dark.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Opponent_remain_dark.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Opponent_remain_dark.ForeColor = System.Drawing.Color.Green;
-            this.Opponent_remain_dark.Location = new System.Drawing.Point(146, 1);
-            this.Opponent_remain_dark.Name = "Opponent_remain_dark";
-            this.Opponent_remain_dark.Size = new System.Drawing.Size(66, 69);
-            this.Opponent_remain_dark.TabIndex = 3;
-            this.Opponent_remain_dark.Text = "0";
-            this.Opponent_remain_dark.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // Opponent_remain_fire
-            // 
-            this.Opponent_remain_fire.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Opponent_remain_fire.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Opponent_remain_fire.ForeColor = System.Drawing.Color.Green;
-            this.Opponent_remain_fire.Location = new System.Drawing.Point(146, 71);
-            this.Opponent_remain_fire.Name = "Opponent_remain_fire";
-            this.Opponent_remain_fire.Size = new System.Drawing.Size(66, 69);
-            this.Opponent_remain_fire.TabIndex = 3;
-            this.Opponent_remain_fire.Text = "0";
-            this.Opponent_remain_fire.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox6.Image = global::DragonWarLord_preprototype.Properties.Resources.dark;
-            this.pictureBox6.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(64, 63);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox6.TabIndex = 0;
-            this.pictureBox6.TabStop = false;
-            // 
-            // Opponent_use_all
-            // 
-            this.Opponent_use_all.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Opponent_use_all.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Opponent_use_all.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Opponent_use_all.ForeColor = System.Drawing.Color.Red;
-            this.Opponent_use_all.Location = new System.Drawing.Point(1483, 324);
-            this.Opponent_use_all.Name = "Opponent_use_all";
-            this.Opponent_use_all.Size = new System.Drawing.Size(51, 42);
-            this.Opponent_use_all.TabIndex = 3;
-            this.Opponent_use_all.Text = "0";
-            this.Opponent_use_all.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Opponent_Player
             // 
@@ -493,7 +405,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("함초롬바탕 확장", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.label3.Location = new System.Drawing.Point(1261, 585);
+            this.label3.Location = new System.Drawing.Point(1249, 589);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 21);
             this.label3.TabIndex = 5;
@@ -505,7 +417,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("함초롬바탕 확장", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.label4.Location = new System.Drawing.Point(1347, 585);
+            this.label4.Location = new System.Drawing.Point(1347, 589);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(44, 21);
             this.label4.TabIndex = 5;
@@ -517,7 +429,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("함초롬바탕 확장", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.label5.Location = new System.Drawing.Point(1408, 585);
+            this.label5.Location = new System.Drawing.Point(1408, 589);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 21);
             this.label5.TabIndex = 5;
@@ -547,6 +459,124 @@
             this.label10.TabIndex = 5;
             this.label10.Text = "PLAYER2";
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.Controls.Add(this.pictureBox3, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.Opponent_cnt_dark, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.Opponent_cnt_fire, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.Opponent_remain_dark, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.Opponent_remain_fire, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.pictureBox4, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.Opponent_use_all, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.Opponent_remain_all, 3, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(1261, 276);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(216, 141);
+            this.tableLayoutPanel2.TabIndex = 2;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox3.Image = global::DragonWarLord_preprototype.Properties.Resources.fire;
+            this.pictureBox3.Location = new System.Drawing.Point(4, 74);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(46, 63);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox3.TabIndex = 1;
+            this.pictureBox3.TabStop = false;
+            // 
+            // Opponent_cnt_dark
+            // 
+            this.Opponent_cnt_dark.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Opponent_cnt_dark.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.Opponent_cnt_dark.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.Opponent_cnt_dark.Location = new System.Drawing.Point(57, 1);
+            this.Opponent_cnt_dark.Name = "Opponent_cnt_dark";
+            this.Opponent_cnt_dark.Size = new System.Drawing.Size(46, 69);
+            this.Opponent_cnt_dark.TabIndex = 3;
+            this.Opponent_cnt_dark.Text = "0";
+            this.Opponent_cnt_dark.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Opponent_cnt_fire
+            // 
+            this.Opponent_cnt_fire.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Opponent_cnt_fire.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.Opponent_cnt_fire.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.Opponent_cnt_fire.Location = new System.Drawing.Point(57, 71);
+            this.Opponent_cnt_fire.Name = "Opponent_cnt_fire";
+            this.Opponent_cnt_fire.Size = new System.Drawing.Size(46, 69);
+            this.Opponent_cnt_fire.TabIndex = 3;
+            this.Opponent_cnt_fire.Text = "0";
+            this.Opponent_cnt_fire.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Opponent_remain_dark
+            // 
+            this.Opponent_remain_dark.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Opponent_remain_dark.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.Opponent_remain_dark.ForeColor = System.Drawing.Color.Green;
+            this.Opponent_remain_dark.Location = new System.Drawing.Point(110, 1);
+            this.Opponent_remain_dark.Name = "Opponent_remain_dark";
+            this.Opponent_remain_dark.Size = new System.Drawing.Size(46, 69);
+            this.Opponent_remain_dark.TabIndex = 3;
+            this.Opponent_remain_dark.Text = "0";
+            this.Opponent_remain_dark.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Opponent_remain_fire
+            // 
+            this.Opponent_remain_fire.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Opponent_remain_fire.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.Opponent_remain_fire.ForeColor = System.Drawing.Color.Green;
+            this.Opponent_remain_fire.Location = new System.Drawing.Point(110, 71);
+            this.Opponent_remain_fire.Name = "Opponent_remain_fire";
+            this.Opponent_remain_fire.Size = new System.Drawing.Size(46, 69);
+            this.Opponent_remain_fire.TabIndex = 3;
+            this.Opponent_remain_fire.Text = "0";
+            this.Opponent_remain_fire.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox4.Image = global::DragonWarLord_preprototype.Properties.Resources.dark;
+            this.pictureBox4.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(46, 63);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox4.TabIndex = 0;
+            this.pictureBox4.TabStop = false;
+            // 
+            // Opponent_use_all
+            // 
+            this.Opponent_use_all.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Opponent_use_all.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.Opponent_use_all.ForeColor = System.Drawing.Color.Red;
+            this.Opponent_use_all.Location = new System.Drawing.Point(163, 71);
+            this.Opponent_use_all.Name = "Opponent_use_all";
+            this.Opponent_use_all.Size = new System.Drawing.Size(49, 69);
+            this.Opponent_use_all.TabIndex = 3;
+            this.Opponent_use_all.Text = "0";
+            this.Opponent_use_all.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Opponent_remain_all
+            // 
+            this.Opponent_remain_all.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Opponent_remain_all.Font = new System.Drawing.Font("굴림", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.Opponent_remain_all.ForeColor = System.Drawing.Color.Red;
+            this.Opponent_remain_all.Location = new System.Drawing.Point(163, 1);
+            this.Opponent_remain_all.Name = "Opponent_remain_all";
+            this.Opponent_remain_all.Size = new System.Drawing.Size(49, 69);
+            this.Opponent_remain_all.TabIndex = 3;
+            this.Opponent_remain_all.Text = "0";
+            this.Opponent_remain_all.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -565,14 +595,12 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Opponent_Tomb_frame);
-            this.Controls.Add(this.Opponent_use_all);
-            this.Controls.Add(this.My_use_all);
             this.Controls.Add(this.My_Player);
             this.Controls.Add(this.Opponent_Player);
             this.Controls.Add(this.Opponent_Mana_frame);
             this.Controls.Add(this.My_Tomb_frame);
             this.Controls.Add(this.My_Mana_frame);
-            this.Controls.Add(this.tableLayoutPanel3);
+            this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.Turn_btn);
             this.Controls.Add(this.Opponent_warZone_frame);
@@ -589,9 +617,9 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -615,15 +643,6 @@
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label My_remain_dark;
         public System.Windows.Forms.Label My_remain_fire;
-        public System.Windows.Forms.Label My_use_all;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        public System.Windows.Forms.Label Opponent_cnt_dark;
-        public System.Windows.Forms.Label Opponent_cnt_fire;
-        public System.Windows.Forms.Label Opponent_remain_dark;
-        public System.Windows.Forms.Label Opponent_remain_fire;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        public System.Windows.Forms.Label Opponent_use_all;
         public System.Windows.Forms.FlowLayoutPanel Opponent_Player;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
@@ -636,5 +655,16 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        public System.Windows.Forms.Label My_use_all;
+        public System.Windows.Forms.Label My_remain_all;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        public System.Windows.Forms.Label Opponent_cnt_dark;
+        public System.Windows.Forms.Label Opponent_cnt_fire;
+        public System.Windows.Forms.Label Opponent_remain_dark;
+        public System.Windows.Forms.Label Opponent_remain_fire;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        public System.Windows.Forms.Label Opponent_use_all;
+        public System.Windows.Forms.Label Opponent_remain_all;
     }
 }

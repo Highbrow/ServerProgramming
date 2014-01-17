@@ -36,6 +36,7 @@ namespace DragonWarLord_preprototype
         delegate void invokeProctext(string text);  //쓰레드로부터 안전한 처리를 위한 invoke delegate
         delegate void invokeProcbtn(bool p);//쓰레드로부터 안전한 처리를 위한 invoke delegate
 
+       
         public void EnabledButton(bool p)
         {
             if (Turn_btn.InvokeRequired)
@@ -230,16 +231,33 @@ namespace DragonWarLord_preprototype
         /// 사용한 아무 코스트
         /// </summary>
         /// <param name="str"></param>
-        public void setText_My_remain_all(string str)
+        public void setText_My_use_all(string str)
         {
             if (My_use_all.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_My_use_all);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.My_use_all.Text = str;
+            }
+        }
+
+        /// <summary>
+        /// 남은 전체 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_My_remain_all(string str)
+        {
+            if (My_remain_all.InvokeRequired)
             {
                 invokeProctext call = new invokeProctext(setText_My_remain_all);
                 this.Invoke(call, str);
             }
             else
             {
-                this.My_use_all.Text = str;
+                this.My_remain_all.Text = str;
             }
         }
 
@@ -460,16 +478,33 @@ namespace DragonWarLord_preprototype
         /// 사용한 아무 코스트
         /// </summary>
         /// <param name="str"></param>
-        public void setText_Opponent_remain_all(string str)
+        public void setText_Opponent_use_all(string str)
         {
             if (Opponent_use_all.InvokeRequired)
+            {
+                invokeProctext call = new invokeProctext(setText_Opponent_use_all);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                this.Opponent_use_all.Text = str;
+            }
+        }
+
+        /// <summary>
+        /// 남은 아무 코스트
+        /// </summary>
+        /// <param name="str"></param>
+        public void setText_Opponent_remain_all(string str)
+        {
+            if (Opponent_remain_all.InvokeRequired)
             {
                 invokeProctext call = new invokeProctext(setText_Opponent_remain_all);
                 this.Invoke(call, str);
             }
             else
             {
-                this.Opponent_use_all.Text = str;
+                this.Opponent_remain_all.Text = str;
             }
         }
 
@@ -536,7 +571,6 @@ namespace DragonWarLord_preprototype
             // MessageBox 의 [아니오] 버튼이 클릭되었을 경우 - 이벤트 취소
             e.Cancel = (result == DialogResult.No);
         }
-
         
     }
 }
