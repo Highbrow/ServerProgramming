@@ -73,6 +73,16 @@ namespace DragonWarLord_preprototype.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap backimg {
+            get {
+                object obj = ResourceManager.GetObject("backimg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap backimgused {
             get {
                 object obj = ResourceManager.GetObject("backimgused", resourceCulture);
@@ -96,6 +106,16 @@ namespace DragonWarLord_preprototype.Properties {
         internal static System.Drawing.Bitmap BlackQueenDragonHatchling {
             get {
                 object obj = ResourceManager.GetObject("BlackQueenDragonHatchling", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap can_backimg_select {
+            get {
+                object obj = ResourceManager.GetObject("can_backimg_select", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -406,6 +426,16 @@ namespace DragonWarLord_preprototype.Properties {
         internal static System.Drawing.Bitmap VampiresNight {
             get {
                 object obj = ResourceManager.GetObject("VampiresNight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap warlord_icon {
+            get {
+                object obj = ResourceManager.GetObject("warlord_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

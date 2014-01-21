@@ -14,8 +14,8 @@ namespace WarLord_Server_GUI.GameLogic_A
         public const int OPPONENT_CARDDECK = 2;
         public const int MY_HANDSZONE = 3;
         public const int OPPONENT_HANDSZONE = 4;
-        public const int MY_WARZONE = 5;
-        public const int OPPONENT_WARZONE = 6;
+        public const int MY_BATTLEZONE = 5;
+        public const int OPPONENT_BATTLEZONE = 6;
         public const int MY_MANAZONE = 7;
         public const int OPPONENT_MANAZONE = 8;
         public const int MY_TOMBZONE = 9;
@@ -40,7 +40,7 @@ namespace WarLord_Server_GUI.GameLogic_A
         public int Opponent_RemainResource_all = 0;
 
         public int Opponent_UsedResource = 0;
-        
+
 
         //=====[ 카드 덱 ]=====
         public static List<Card_Control> My_CardDeck = new List<Card_Control>();
@@ -52,8 +52,8 @@ namespace WarLord_Server_GUI.GameLogic_A
         public static List<Card_Control> My_HandsZone = new List<Card_Control>();
         public static List<Card_Control> Opponent_HandsZone = new List<Card_Control>();
         //=====[ 전장 ]=====
-        public static List<Card_Control> My_WarZone = new List<Card_Control>();
-        public static List<Card_Control> Opponent_WarZone = new List<Card_Control>();
+        public static List<Card_Control> My_BattleZone = new List<Card_Control>();
+        public static List<Card_Control> Opponent_BattleZone = new List<Card_Control>();
         //=====[ 마나 존 ]=====
         public static List<Card_Control> My_ManaZone = new List<Card_Control>();
         public static List<Card_Control> Opponent_ManaZone = new List<Card_Control>();
@@ -66,7 +66,7 @@ namespace WarLord_Server_GUI.GameLogic_A
         /// 싱글톤
         /// </summary>
         static GameBoard GameBoardInstance = null;
-        static readonly object padlock = new object();       
+        static readonly object padlock = new object();
 
         public static GameBoard Instance
         {

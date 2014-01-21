@@ -15,7 +15,7 @@ namespace DragonWarLord_preprototype
         public static WebSocket ws;
         public StartForm startForm;
 
-        
+
         public NetworkManager()
         {
             commandP = new ClientCommandProc();

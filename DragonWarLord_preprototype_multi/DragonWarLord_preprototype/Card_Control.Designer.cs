@@ -179,6 +179,6 @@ namespace DragonWarLord_preprototype
         private Label lb_type;
         private FlowLayoutPanel attribute_layout;
         public Panel card_panel;
-        
+
     }
 }

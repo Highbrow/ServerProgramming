@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonWarLord_preprototype_multi", "DragonWarLord_preprototype\DragonWarLord_preprototype_multi.csproj", "{9E95BA59-358A-465A-88A6-13638E51061A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonWarLord_preprototype", "DragonWarLord_preprototype\DragonWarLord_preprototype.csproj", "{9E95BA59-358A-465A-88A6-13638E51061A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

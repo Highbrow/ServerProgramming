@@ -20,8 +20,8 @@ namespace DragonWarLord_preprototype.CardLibrary
         public int Limited_amount { get; set; }
         public string Skill { get; set; }
         public string Information { get; set; }
-        public int thisTurnHP { get; set; }
-        public int thisTurnAP { get; set; }
+        public int TurnHP { get; set; }
+        public int TurnAP { get; set; }
         public string Image_file { get; set; }
 
         public void Attack(ref Card target_Card)

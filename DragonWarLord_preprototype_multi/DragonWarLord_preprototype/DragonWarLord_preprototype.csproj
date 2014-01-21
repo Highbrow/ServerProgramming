@@ -88,7 +88,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CardDealer.cs" />
     <Compile Include="CardLibrary\BlackQueenHatchling_Card.cs" />
     <Compile Include="Card_Control.cs">
       <SubType>UserControl</SubType>
@@ -101,12 +100,8 @@
     <Compile Include="CommandLibrary\ClientCommandProc.cs" />
     <Compile Include="DataBaseManager.cs" />
     <Compile Include="GameLogic_A\GameBoard.cs" />
-    <Compile Include="GameLogic_B\GamePlayManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GameLogic_B\GameSkillManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="GameLogic_B\GamePlayManager.cs" />
+    <Compile Include="GameLogic_B\GameSkillManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Card_Control.resx">
@@ -146,9 +144,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StartForm.resx">
-      <DependentUpon>StartForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="131230___04.ico" />
-    <Content Include="Resources\background.png" />
+    <None Include="Resources\background.png" />
     <Content Include="Resources\backimg.png" />
     <None Include="Resources\backimgused.png" />
     <Content Include="Resources\bg.jpg" />

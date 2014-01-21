@@ -14,20 +14,31 @@ namespace DragonWarLord_preprototype.CommandLibrary
 
         #region 공통 부분
 
-        private readonly string cmd_MoveCard = "MoveCard";    //카드이동 시켜라
-        abstract protected void cmdF_MoveCard(string command);
-
-
-        private readonly string cmd_Resource = "Resource";    //자원 정보 업데이트 시켜라
-        abstract protected void cmdF_Resource(string command);
-
-
         private readonly string cmd_YourTurn = "YourTurn";    //니 차례야
         abstract protected void cmdF_YourTurn(string command);
 
 
         private readonly string cmd_OpponentTurn = "OpponentTurn";    //상대 차례다
         abstract protected void cmdF_OpponentTurn(string command);
+
+
+        private readonly string cmd_MatchCard = "MatchCard";    //카드 선택
+        abstract protected void cmdF_MatchCard(string command);
+
+
+        private readonly string cmd_UseCard = "UseCard";    //카드 사용
+        abstract protected void cmdF_UseCard(string command);
+
+
+        private readonly string cmd_FirstDistribute = "FirstDistribute";    //첫 카드 분배
+        abstract protected void cmdF_FirstDistribute(string command);
+
+        private readonly string cmd_Distribute = "Distribute";    //카드 분배
+        abstract protected void cmdF_Distribute(string command);
+
+
+        private readonly string cmd_MakeResource = "MakeResource";    //리소스 생성
+        abstract protected void cmdF_MakeResource(string command);
 
 
         private readonly string cmd_Message = "Message";    //알림 띄워라
@@ -68,10 +79,13 @@ namespace DragonWarLord_preprototype.CommandLibrary
         public ClientCommandLibrary()
         {
             #region 공통 부분
-            CommandDic.TryAdd(cmd_MoveCard, new cmdDelegate(cmdF_MoveCard));    //MoveCard
-            CommandDic.TryAdd(cmd_Resource, new cmdDelegate(cmdF_Resource));    //Resource
             CommandDic.TryAdd(cmd_YourTurn, new cmdDelegate(cmdF_YourTurn));    //YourTurn
             CommandDic.TryAdd(cmd_OpponentTurn, new cmdDelegate(cmdF_OpponentTurn));    //OpponentTurn
+            CommandDic.TryAdd(cmd_MatchCard, new cmdDelegate(cmdF_MatchCard));    //MatchCard
+            CommandDic.TryAdd(cmd_UseCard, new cmdDelegate(cmdF_UseCard));    //UseCard
+            CommandDic.TryAdd(cmd_FirstDistribute, new cmdDelegate(cmdF_FirstDistribute));    //FirstDistribute
+            CommandDic.TryAdd(cmd_Distribute, new cmdDelegate(cmdF_Distribute));    //Distribute
+            CommandDic.TryAdd(cmd_MakeResource, new cmdDelegate(cmdF_MakeResource));    //MakeResoure
             CommandDic.TryAdd(cmd_Message, new cmdDelegate(cmdF_Message));    //Message
             #endregion 공통 부분
 

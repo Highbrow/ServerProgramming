@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WebSocketSharp;
 
 namespace DragonWarLord_preprototype
 {
@@ -50,9 +49,10 @@ namespace DragonWarLord_preprototype
 
         public void setEnabledButton(bool tf)
         {
-            if(ready_btn.InvokeRequired){
+            if (ready_btn.InvokeRequired)
+            {
                 invokeProcbool call = new invokeProcbool(setEnabledButton);
-                    this.Invoke(call, tf);
+                this.Invoke(call, tf);
             }
             else
             {
@@ -100,7 +100,7 @@ namespace DragonWarLord_preprototype
         {
             if (e.Button == MouseButtons.Left)
             {
-                Point pt = new Point(this.Location.X + e.X - ptRect.X,this.Location.Y + e.Y - ptRect.Y);
+                Point pt = new Point(this.Location.X + e.X - ptRect.X, this.Location.Y + e.Y - ptRect.Y);
                 this.Location = pt;
             }
         }

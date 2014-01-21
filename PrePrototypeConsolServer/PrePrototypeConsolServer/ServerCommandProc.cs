@@ -14,23 +14,14 @@ namespace PrePrototypeConsolServer
         #region 공통 부분
 
         /// <summary>
-        /// 카드 이동
-        /// </summary>
-        /// <param name="aContext"></param>
-        /// <param name="command"></param>
-        protected override void cmdF_MoveCard(UserContext aContext, string command)
-        {
-            dealer.MoveCard(aContext, command);
-        }
-
-        /// <summary>
         /// 카드 자원으로 쓸게요
         /// </summary>
         /// <param name="aContext"></param>
         /// <param name="command"></param>
         protected override void cmdF_MakeResource(UserContext aContext, string command)
         {
-            dealer.MakeResource(aContext, command);
+            //dealer.MakeResource(aContext, command);
+            dealer.packetProc(aContext, command, "MakeResource");
         }
 
         /// <summary>
@@ -41,6 +32,16 @@ namespace PrePrototypeConsolServer
         protected override void cmdF_EndTurn(UserContext aContext, string command)
         {
             dealer.changeTurn(aContext, command);
+        }
+
+        protected override void cmdF_MatchCard(UserContext aContext, string command)
+        {
+            dealer.MatchCard(aContext, command);
+        }
+
+        protected override void cmdF_UseCard(UserContext aContext, string command)
+        {
+            dealer.packetProc(aContext, command, "UseCard");
         }
 
         #endregion 공통 부분
@@ -121,5 +122,7 @@ namespace PrePrototypeConsolServer
         }
 
         #endregion 게임 준비 과정 부분
+
+       
     }
 }

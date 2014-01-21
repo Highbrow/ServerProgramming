@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using WarLord_Server_GUI.GameLogic_A;
+using WarLord_Server_GUI.GameLogic_B;
 using System.Threading;
 using System.Reflection;
+using DragonWarLord_preprototype.GameLogic_B;
 using DragonWarLord_preprototype.CardLibrary;
 using System.Resources;
-using WarLord_Server_GUI.GameLogic_B;
-using DragonWarLord_preprototype.GameLogic_B;
 
 namespace DragonWarLord_preprototype
 {
@@ -30,17 +30,63 @@ namespace DragonWarLord_preprototype
             InitializeComponent();
         }
 
+        delegate void invokeProcCardString(string str);//쓰레드로부터 안전한 처리를 위한 invoke delegate
+        delegate void invokeProcCard(bool p);//쓰레드로부터 안전한 처리를 위한 invoke delegate
+
+        public void setCardEnabled(bool p)
+        {
+            if (this.InvokeRequired)
+            {
+                invokeProcCard call = new invokeProcCard(setCardEnabled);
+                this.Invoke(call, p);
+            }
+            else
+            {
+                this.Enabled = p;
+            }
+        }
+
+        
+        public void setText_lb_aphp(string str)
+        {
+            if (lb_aphp.InvokeRequired)
+            {
+                invokeProcCardString call = new invokeProcCardString(setText_lb_aphp);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                lb_aphp.Text = str;
+            }
+        }
+
+
+        public void setText_lb_name(string str)
+        {
+            if (lb_name.InvokeRequired)
+            {
+                invokeProcCardString call = new invokeProcCardString(setText_lb_name);
+                this.Invoke(call, str);
+            }
+            else
+            {
+                lb_name.Text = str;
+            }
+        }
+        
+
+
         public void Card_refresh()
         {
-            this.card.thisTurnAP = card.Ap;
-            this.card.thisTurnHP = card.Hp;
-            this.lb_name.Text = card.Name;  //카드 이름 부여
-            this.lb_aphp.Text = card.Ap + " / " + card.Hp;
+            this.card.TurnAP = card.Ap;
+            this.card.TurnHP = card.Hp;
+            this.setText_lb_name(card.Name);  //카드 이름 부여
+            this.setText_lb_aphp(card.Ap + " / " + card.Hp);
         }
 
         private void Card_Control_Load(object sender, EventArgs e)
         {
-            this.lb_name.Text = card.Name;  //카드 이름 부여
+            this.setText_lb_name(card.Name);  //카드 이름 부여
             string[] s_con = card.Consumption.Split(';');
 
             if (Convert.ToInt32(s_con[0]) > 0)  //불
@@ -110,95 +156,15 @@ namespace DragonWarLord_preprototype
                 {
                     if (e.Button == MouseButtons.Right) //마우스 오른쪽 더블 클릭
                     {
-                        CardDealer.Instance.MakeResource(this);    //마나생성
+                        NetworkManager.ws.Send("MakeResource;" + GamePlayManager.Instance.findCard(this));
                     }
                     else  //마우스 왼쪽 더블 클릭
                     {
-                        if (CardDealer.Instance.canUseCard(this))
-                        {
-                            if (this.card.Skill.Equals("1"))
-                            {
-                                CardDealer.Instance.useCard(this);
-                            }
-                            else if (this.card.Skill.Equals("2"))
-                            {
-                                CardDealer.Instance.useCard(this);
-                            }
-                            else if (this.card.Skill.Equals("3"))
-                            {
-                                CardDealer.Instance.gameSkill("3", this);
-                                CardDealer.Instance.useCard(this);
-                            }
-                            else if (this.card.Skill.Equals("4"))
-                            {
-                                CardDealer.Instance.useCard(this);
-                            }
-                            else if (this.card.Skill.Equals("5"))
-                            {
-                                CardDealer.Instance.useCard(this);
-                            }
-                            else if (this.card.Skill.Equals("7"))
-                            {
-                                CardDealer.Instance.gameSkill("7", this);
-                                CardDealer.Instance.useCard(this);
-                            }
-                            else if (this.card.Skill.Equals("8"))
-                            {
-                                CardDealer.Instance.gameSkill("8", this);
-                                CardDealer.Instance.useCard(this);
-                            }
-                            else if (this.card.Skill.Equals("9"))
-                            {
-                                CardDealer.Instance.gameSkill("9", this);
-                                CardDealer.Instance.useCard(this);
-                            }
-                            else if (this.card.Skill.Equals("11"))
-                            {
-                                CardDealer.Instance.gameSkill("11", this);
-                                CardDealer.Instance.useCard(this);
-                            }
-                            else if (this.card.Skill.Equals("16"))
-                            {
-                                GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                CardDealer.Instance.gameSkill("16", this);
-                            }
-                            else if (this.card.Skill.Equals("17"))
-                            {
-                                GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                CardDealer.Instance.gameSkill("17", this);
-                            }
-                            else if (this.card.Skill.Equals("18"))
-                            {
-                                GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                CardDealer.Instance.gameSkill("18", this);
-                            }
-                            else if (this.card.Skill.Equals("19"))
-                            {
-                                GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                CardDealer.Instance.gameSkill("19", this);
-                            }
-                            else if (this.card.Skill.Equals("20"))
-                            {
-                                GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                CardDealer.Instance.gameSkill("20", this);
-                            }
-                            else if (this.card.Skill.Equals("21"))
-                            {
-                                GameSkillManager.Instance.skill_card = this;    //자신 등록
-                                CardDealer.Instance.gameSkill("21", this);
-                            }
-                            else
-                            {
-                                CardDealer.Instance.useCard(this);
-                            }
-                        }
-                        else
-                        {
-                        }
+                        NetworkManager.ws.Send("UseCard;" + GamePlayManager.Instance.findCard(this));
                     }
                 }
-                CardDealer.Instance.CardSelectProc(null);
             }
+            
         }
 
         //=====[클릭 이벤트]=====
@@ -208,37 +174,38 @@ namespace DragonWarLord_preprototype
             {
                 if (GameSkillManager.Instance.skill_16)
                 {
-                    CardDealer.Instance.gameSkill("16", this);
+                    GamePlayManager.Instance.gameSkill("16", this);
                 }
                 else if (GameSkillManager.Instance.skill_18)
                 {
-                    CardDealer.Instance.gameSkill("18", this);
+                    GamePlayManager.Instance.gameSkill("18", this);
                 }
                 else if (GameSkillManager.Instance.skill_19)
                 {
-                    CardDealer.Instance.gameSkill("19", this);
+                    GamePlayManager.Instance.gameSkill("19", this);
                 }
                 else if (GameSkillManager.Instance.skill_20)
                 {
-                    CardDealer.Instance.gameSkill("20", this);
+                    GamePlayManager.Instance.gameSkill("20", this);
                 }
                 else if (GameSkillManager.Instance.skill_21)
                 {
-                    CardDealer.Instance.gameSkill("21", this);
+                    GamePlayManager.Instance.gameSkill("21", this);
                 }
                 else if (GameSkillManager.Instance.skill_17_first)
                 {
-                    CardDealer.Instance.gameSkill("17", this);
+                    GamePlayManager.Instance.gameSkill("17", this);
                 }
                 else if (GameSkillManager.Instance.skill_17_second)
                 {
-                    CardDealer.Instance.gameSkill("17", this);
+                    GamePlayManager.Instance.gameSkill("17", this);
                 }
                 else
                 {
-                    CardDealer.Instance.CardSelectProc(this);
+                    GamePlayManager.Instance.CardSelectProc(this);
                 }
             }
         }
+
     }
 }

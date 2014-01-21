@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace DragonWarLord_preprototype
 {
-
     class TurnManager
     {
         public static bool Turn { get; set; }

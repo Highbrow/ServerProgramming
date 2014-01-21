@@ -21,7 +21,7 @@ namespace DragonWarLord_preprototype
         public static void inputCard(string[] card_list, bool my)
         {
             conn = new MySqlConnection(strConn);
-            
+
             if (my)
             {
                 foreach (string q in card_list)
@@ -54,8 +54,8 @@ namespace DragonWarLord_preprototype
                                     Skill = reader.GetString(11),
                                     Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
                                     Image_file = reader.GetString(13),
-                                    thisTurnAP = reader.GetInt16(7),
-                                    thisTurnHP = reader.GetInt16(8),
+                                    TurnAP = reader.GetInt16(7),
+                                    TurnHP = reader.GetInt16(8),
                                 },
                                 position = GameBoard.MY_CARDDECK
                             });
@@ -101,8 +101,8 @@ namespace DragonWarLord_preprototype
                                     Skill = reader.GetString(11),
                                     Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
                                     Image_file = reader.GetString(13),
-                                    thisTurnAP = reader.GetInt16(7),
-                                    thisTurnHP = reader.GetInt16(8),
+                                    TurnAP = reader.GetInt16(7),
+                                    TurnHP = reader.GetInt16(8),
                                 },
                                 position = GameBoard.OPPONENT_CARDDECK
                             });
@@ -150,9 +150,9 @@ namespace DragonWarLord_preprototype
                             Skill = reader.GetString(11),
                             Information = (reader.IsDBNull(12)) ? "" : reader.GetString(12),
                             Image_file = reader.GetString(13),
-                            thisTurnAP = reader.GetInt16(7),
-                            thisTurnHP = reader.GetInt16(8),
-                        }                       
+                            TurnAP = reader.GetInt16(7),
+                            TurnHP = reader.GetInt16(8),
+                        }
                     };
                 }
             }
@@ -165,6 +165,4 @@ namespace DragonWarLord_preprototype
             return userCharacter;
         }
     }
-
-
 }

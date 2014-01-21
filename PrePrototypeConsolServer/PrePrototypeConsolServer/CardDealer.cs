@@ -227,30 +227,12 @@ namespace PrePrototypeConsolServer
         {
             if (aContext.Equals(player1))
             {
-                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+                sendPacket_P1("FirstDistribute;");
             }
-            else if (aContext.Equals(player2))
-            {
-                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
+            else if(aContext.Equals(player2)){ 
+                sendPacket_P2("FirstDistribute;");
             }
         }
-
 
         bool player1_ReadyForStart = false;
         bool player2_ReadyForStart = false;
@@ -268,23 +250,8 @@ namespace PrePrototypeConsolServer
                 if (number % 2 == 0)
                 {
                     sendPacket_P1("Message;" + "상대방이 당신에게 우선권을 주었습니다. 시작하십시오!");
-
-                    moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                    sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                    moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                    sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-
                     sendPacket_P2("Message;" + "당신은 너그러운 마음으로 상대방에게 우선권을 주었습니다.");
-
-                    moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                    sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                    moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                    sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-
+                    
                     tm = new TurnManager()
                     {
                         Player1 = player1,
@@ -297,22 +264,8 @@ namespace PrePrototypeConsolServer
                 else
                 {
                     sendPacket_P2("Message;" + "상대방이 당신에게 우선권을 주었습니다. 시작하십시오!");
-
-                    moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                    sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                    moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                    sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-
                     sendPacket_P1("Message;" + "당신은 너그러운 마음으로 상대방에게 우선권을 주었습니다.");
 
-                    moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                    sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                    moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                    sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
                     tm = new TurnManager()
                     {
                         Player1 = player1,
@@ -322,7 +275,6 @@ namespace PrePrototypeConsolServer
                     sendPacket_P2("YourTurn;");
                     sendPacket_P1("OpponentTurn;");
                 }
-
             }
             else if ((aContext.Equals(player2) && player1_ReadyForStart))
             {
@@ -331,24 +283,7 @@ namespace PrePrototypeConsolServer
                 if (number % 2 == 0)
                 {
                     sendPacket_P1("Message;" + "상대방이 당신에게 우선권을 주었습니다. 시작하십시오!");
-
-                    moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                    sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                    
-                    moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                    sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-
                     sendPacket_P2("Message;" + "당신은 너그러운 마음으로 상대방에게 우선권을 주었습니다.");
-
-                    moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                    sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                    moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                    sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-
                     tm = new TurnManager()
                     {
                         Player1 = player1,
@@ -361,23 +296,7 @@ namespace PrePrototypeConsolServer
                 else
                 {
                     sendPacket_P2("Message;" + "상대방이 당신에게 우선권을 주었습니다. 시작하십시오!");
-
-                    moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                    sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                    moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                    sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-
                     sendPacket_P1("Message;" + "당신은 너그러운 마음으로 상대방에게 우선권을 주었습니다.");
-
-                    moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                    sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                    moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                    sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                    sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-
                     tm = new TurnManager()
                     {
                         Player1 = player1,
@@ -386,7 +305,7 @@ namespace PrePrototypeConsolServer
                     };
                     sendPacket_P2("YourTurn;");
                     sendPacket_P1("OpponentTurn;");
-                }
+                }               
             }
             else
             {
@@ -425,13 +344,7 @@ namespace PrePrototypeConsolServer
                 sendPacket_P1("YourTurn;");
                 sendPacket_P2("OpponentTurn;");
             }
-            gameBoard.P1_RemainResource_dark = gameBoard.P1_Resource_dark;
-            gameBoard.P1_RemainResource_fire  = gameBoard.P1_Resource_fire;
-            gameBoard.P1_UsedResource = 0;
-            gameBoard.P2_RemainResource_dark = gameBoard.P2_Resource_dark;
-            gameBoard.P2_RemainResource_fire  = gameBoard.P2_Resource_fire;
-            gameBoard.P2_UsedResource = 0;
-            sendResourceInformation();
+
             distributeCard();   //카드 분배
         }
 
@@ -440,480 +353,97 @@ namespace PrePrototypeConsolServer
         /// </summary>
         public void distributeCard()
         {
-            if (tm.Turn.Equals(player1))
-            {
-                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-
-                moveZone(gameBoard.P1_CardDeck[0], GameBoard.PLAYER1_HANDSZONE);
-                sendPacket_P1("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P2("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                
-            }
-            else if (tm.Turn.Equals(player2))
-            {
-                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-                moveZone(gameBoard.P2_CardDeck[0], GameBoard.PLAYER2_HANDSZONE);
-                sendPacket_P2("MoveCard;" + MY_CARDDECK + ";" + "0;" + MY_HANDSZONE + ";");
-                sendPacket_P1("MoveCard;" + OPPONENT_CARDDECK + ";" + "0;" + OPPONENT_HANDSZONE + ";");
-            }
+            sendPacket_P1("Distribute;");
+            sendPacket_P2("Distribute;");
         }
-
-
-        /// <summary>
-        /// 카드 이동
-        /// </summary>
-        /// <param name="aContext"></param>
-        /// <param name="command"></param>
-        internal void MoveCard(UserContext aContext, string command)
+        
+        internal void packetProc(UserContext aContext, string command, string what)
         {
-            //이동 가능 여부 판단 함수 필요함 (추가 예정)
-
-            Card card = null;
             string[] position = command.Split(';');
 
-            string myMessage = "MoveCard;" + position[1] + ";" +
-                position[2] + ";" + position[3] + ";";
-            string opponentMessage = "MoveCard;" +
+            string myMessage = what+";" + position[1] + ";" +
+                position[2] + ";";
+            string opponentMessage = what+";" +
                 (Convert.ToInt32(position[1]) + 1) + ";" +
-                position[2] + ";" +
-                (Convert.ToInt32(position[3]) + 1) + ";";
-
-            position[1] = positionMatcher(aContext, position[1]);
-            position[3] = positionMatcher(aContext, position[3]);
-            
-            card = findPositionCard(Convert.ToInt32(position[1]), Convert.ToInt32(position[2]));
+                position[2] + ";";
 
             if (aContext.Equals(player1))
             {
-                if (position[1].Equals(GameBoard.PLAYER1_HANDSZONE.ToString()) && position[3].Equals(GameBoard.PLAYER1_WARZONE.ToString()))
-                {
-                    useResource(card, player1);
-                }
-            }
-            else if (aContext.Equals(player2))
-            {
-                if (position[1].Equals(GameBoard.PLAYER2_HANDSZONE.ToString()) && position[3].Equals(GameBoard.PLAYER2_WARZONE.ToString()))
-                {
-                    useResource(card, player2);
-                }
-            }
-            moveZone(card, Convert.ToInt32(position[3]));
-
-            if(aContext.Equals(player1)){
-                
                 sendPacket_P1(myMessage);
                 sendPacket_P2(opponentMessage);
                 Console.WriteLine(myMessage);//DEBUG
                 Console.WriteLine(opponentMessage);//DEBUG
-            }else if(aContext.Equals(player2)){
-                
+            }
+            else if (aContext.Equals(player2))
+            {
                 sendPacket_P1(opponentMessage);
                 sendPacket_P2(myMessage);
                 Console.WriteLine(opponentMessage);//DEBUG
                 Console.WriteLine(myMessage);//DEBUG
-                
             }
-        }
-
-        private Card findPositionCard(int position, int index)
-        {
-            Card card = null;
-            switch (position)
-            {
-                case GameBoard.PLAYER1_CARDDECK:
-                    card = gameBoard.P1_CardDeck[index];
-                    break;
-                case GameBoard.PLAYER2_CARDDECK:
-                    card = gameBoard.P2_CardDeck[index];
-                    break;
-                case GameBoard.PLAYER1_HANDSZONE:
-                    card = gameBoard.P1_HandsZone[index];
-                    break;
-                case GameBoard.PLAYER2_HANDSZONE:
-                    card = gameBoard.P2_HandsZone[index];
-                    break;
-                case GameBoard.PLAYER1_WARZONE:
-                    card = gameBoard.P1_WarZone[index];
-                    break;
-                case GameBoard.PLAYER2_WARZONE:
-                    card = gameBoard.P2_WarZone[index];
-                    break;
-                case GameBoard.PLAYER1_MANAZONE:
-                    card = gameBoard.P1_ManaZone[index];
-                    break;
-                case GameBoard.PLAYER2_MANAZONE:
-                    card = gameBoard.P2_ManaZone[index];
-                    break;
-                case GameBoard.PLAYER1_TOMBZONE:
-                    card = gameBoard.P1_TombZone[index];
-                    break;
-                case GameBoard.PLAYER2_TOMBZONE:
-                    card = gameBoard.P2_TombZone[index];
-                    break;
-            }
-            return card;
-        }
-
-        /// <summary>
-        /// 클라이언트-서버 포지션 매칭
-        /// </summary>
-        /// <param name="aContext"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        private string positionMatcher(UserContext aContext, string position)
-        {
-            string result = null;
-
-            if (aContext.Equals(player1))
-            {
-                switch (Convert.ToInt32(position))
-                {
-                    case MY_CARDDECK:
-                        result = GameBoard.PLAYER1_CARDDECK.ToString();
-                        break;
-                    case OPPONENT_CARDDECK:
-                        result = GameBoard.PLAYER2_CARDDECK.ToString();
-                        break;
-                    case MY_HANDSZONE:
-                        result = GameBoard.PLAYER1_HANDSZONE.ToString();
-                        break;
-                    case OPPONENT_HANDSZONE:
-                        result = GameBoard.PLAYER2_HANDSZONE.ToString();
-                        break;
-                    case MY_WARZONE:
-                        result = GameBoard.PLAYER1_WARZONE.ToString();
-                        break;
-                    case OPPONENT_WARZONE:
-                        result = GameBoard.PLAYER2_WARZONE.ToString();
-                        break;
-                    case MY_MANAZONE:
-                        result = GameBoard.PLAYER1_MANAZONE.ToString();
-                        break;
-                    case OPPONENT_MANAZONE:
-                        result = GameBoard.PLAYER2_MANAZONE.ToString();
-                        break;
-                    case MY_TOMBZONE:
-                        result = GameBoard.PLAYER1_TOMBZONE.ToString();
-                        break;
-                    case OPPONENT_TOMBZONE:
-                        result = GameBoard.PLAYER2_TOMBZONE.ToString();
-                        break;
-                    case MY_PLAYERZONE:
-                        result = GameBoard.PLAYER1_PLAYERZONE.ToString();
-                        break;
-                    case OPPONENT_PLAYERZONE:
-                        result = GameBoard.PLAYER2_PLAYERZONE.ToString();
-                        break;
-                }
-            }
-            else if (aContext.Equals(player2))
-            {
-                switch (Convert.ToInt32(position))
-                {
-                    case MY_CARDDECK:
-                        result = GameBoard.PLAYER2_CARDDECK.ToString();
-                        break;
-                    case OPPONENT_CARDDECK:
-                        result = GameBoard.PLAYER1_CARDDECK.ToString();
-                        break;
-                    case MY_HANDSZONE:
-                        result = GameBoard.PLAYER2_HANDSZONE.ToString();
-                        break;
-                    case OPPONENT_HANDSZONE:
-                        result = GameBoard.PLAYER1_HANDSZONE.ToString();
-                        break;
-                    case MY_WARZONE:
-                        result = GameBoard.PLAYER2_WARZONE.ToString();
-                        break;
-                    case OPPONENT_WARZONE:
-                        result = GameBoard.PLAYER1_WARZONE.ToString();
-                        break;
-                    case MY_MANAZONE:
-                        result = GameBoard.PLAYER2_MANAZONE.ToString();
-                        break;
-                    case OPPONENT_MANAZONE:
-                        result = GameBoard.PLAYER1_MANAZONE.ToString();
-                        break;
-                    case MY_TOMBZONE:
-                        result = GameBoard.PLAYER2_TOMBZONE.ToString();
-                        break;
-                    case OPPONENT_TOMBZONE:
-                        result = GameBoard.PLAYER1_TOMBZONE.ToString();
-                        break;
-                    case MY_PLAYERZONE:
-                        result = GameBoard.PLAYER2_PLAYERZONE.ToString();
-                        break;
-                    case OPPONENT_PLAYERZONE:
-                        result = GameBoard.PLAYER1_PLAYERZONE.ToString();
-                        break;
-                }
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// 카드 존 이동
-        /// </summary>
-        /// <param name="card_con"></param> 카드
-        /// <param name="position"></param> 이동 목적지
-        public void moveZone(Card card, int position)
-        {
-            //=====[기존 리스트 탐색]=====
-            int pre_position = 0;
-
-            if (gameBoard.P1_CardDeck.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER1_CARDDECK;
-            }
-            else if (gameBoard.P2_CardDeck.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER2_CARDDECK;
-            }
-            else if (gameBoard.P1_HandsZone.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER1_HANDSZONE;
-            }
-            else if (gameBoard.P2_HandsZone.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER2_HANDSZONE;
-            }
-            else if (gameBoard.P1_WarZone.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER1_WARZONE;
-            }
-            else if (gameBoard.P2_WarZone.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER2_WARZONE;
-            }
-            else if (gameBoard.P1_ManaZone.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER1_MANAZONE;
-            }
-            else if (gameBoard.P2_ManaZone.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER2_MANAZONE;
-            }
-            else if (gameBoard.P1_TombZone.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER1_TOMBZONE;
-            }
-            else if (gameBoard.P2_TombZone.Contains(card))
-            {
-                pre_position = GameBoard.PLAYER2_TOMBZONE;
-            }
-            else if (gameBoard.P1_PlayerZone.Equals(card))
-            {
-                pre_position = GameBoard.PLAYER1_PLAYERZONE;
-            }
-            else if (gameBoard.P2_PlayerZone.Equals(card))
-            {
-                pre_position = GameBoard.PLAYER2_PLAYERZONE;
-            }
-            else
-            {
-                pre_position = 0;
-            }
-
-            //=====[기본 리스트에서 삭제]=====
-            switch (pre_position)
-            {
-                case GameBoard.PLAYER1_CARDDECK:
-                    gameBoard.P1_CardDeck.Remove(card);
-                    break;
-                case GameBoard.PLAYER2_CARDDECK:
-                    gameBoard.P2_CardDeck.Remove(card);
-                    break;
-                case GameBoard.PLAYER1_HANDSZONE:
-                    gameBoard.P1_HandsZone.Remove(card);
-                    break;
-                case GameBoard.PLAYER2_HANDSZONE:
-                    gameBoard.P2_HandsZone.Remove(card);
-                    break;
-                case GameBoard.PLAYER1_WARZONE:
-                    gameBoard.P1_WarZone.Remove(card);
-                    break;
-                case GameBoard.PLAYER2_WARZONE:
-                    gameBoard.P2_WarZone.Remove(card);
-                    break;
-                case GameBoard.PLAYER1_MANAZONE:
-                    gameBoard.P1_ManaZone.Remove(card);
-                    break;
-                case GameBoard.PLAYER2_MANAZONE:
-                    gameBoard.P2_ManaZone.Remove(card);
-                    break;
-                case GameBoard.PLAYER1_TOMBZONE:
-                    gameBoard.P1_TombZone.Remove(card);
-                    break;
-                case GameBoard.PLAYER2_TOMBZONE:
-                    gameBoard.P2_TombZone.Remove(card);
-                    break;
-                case GameBoard.PLAYER1_PLAYERZONE:
-                    judgment_Winner("PLAYER2");
-                    break;
-                case GameBoard.PLAYER2_PLAYERZONE:
-                    judgment_Winner("PLAYER1");
-                    break;
-            }
-            //=====[새로운 포지션 배치]=====
-            card.position = position;
-            switch (position)
-            {
-                case GameBoard.PLAYER1_CARDDECK:
-                    gameBoard.P1_CardDeck.Add(card);
-                    break;
-                case GameBoard.PLAYER2_CARDDECK:
-                    gameBoard.P2_CardDeck.Add(card);
-                    break;
-                case GameBoard.PLAYER1_HANDSZONE:
-                    gameBoard.P1_HandsZone.Add(card);
-                    break;
-                case GameBoard.PLAYER2_HANDSZONE:
-                    gameBoard.P2_HandsZone.Add(card);
-                    break;
-                case GameBoard.PLAYER1_WARZONE:
-                    gameBoard.P1_WarZone.Add(card);
-                    break;
-                case GameBoard.PLAYER2_WARZONE:
-                    gameBoard.P2_WarZone.Add(card);
-                    break;
-                case GameBoard.PLAYER1_MANAZONE:
-                    gameBoard.P1_ManaZone.Add(card);
-                    break;
-                case GameBoard.PLAYER2_MANAZONE:
-                    gameBoard.P2_ManaZone.Add(card);
-                    break;
-                case GameBoard.PLAYER1_TOMBZONE:
-                    gameBoard.P1_TombZone.Add(card);
-                    break;
-                case GameBoard.PLAYER2_TOMBZONE:
-                    gameBoard.P2_TombZone.Add(card);
-                    break;
-            }
-        }
-
-
-        #region Resource 관련 내용
-        /// <summary>
-        /// 자원 사용
-        /// </summary>
-        /// <param name="card"></param>
-        /// <param name="player"></param>
-        private void useResource(Card card, UserContext player)
-        {
-            string[] consump = card.Consumption.Split(';');
-            int need_dark = Convert.ToInt32(consump[1]);    //필요 암흑 마나
-            int need_fire = Convert.ToInt32(consump[0]);    //필요 불 마나
-            int need_all = Convert.ToInt32(consump[2]);     //필요 아무 마나
-
-            if (player.Equals(player1))
-            {
-                //----[마나 연산]----
-                gameBoard.P1_RemainResource_dark -= need_dark;
-                gameBoard.P1_RemainResource_fire -= need_fire;
-                gameBoard.P1_UsedResource += need_all;
-            }
-            else if (player.Equals(player2))
-            {
-                //----[마나 연산]----
-                gameBoard.P2_RemainResource_dark -= need_dark;
-                gameBoard.P2_RemainResource_fire -= need_fire;
-                gameBoard.P2_UsedResource += need_all;
-            }
-            sendResourceInformation();
         }
         /// <summary>
         /// 자원 생산
         /// </summary>
         /// <param name="aContext"></param>
         /// <param name="command"></param>
-        internal void MakeResource(UserContext aContext, string command)
+        internal void MatchCard(UserContext aContext, string command)
         {
             string[] position = command.Split(';');
-            Card card = null;
 
-            position[1] = positionMatcher(aContext, position[1]);
-            position[3] = positionMatcher(aContext, position[3]);
+            string myMessage = "MatchCard;"
+                + position[1] + ";" 
+                + position[2] + ";"
+                + position[3] + ";"
+                + position[4] + ";";
 
-            card = findPositionCard(Convert.ToInt32(position[1]), Convert.ToInt32(position[2]));
+            for (int i = 0; i < position.Length; i++)
+            {
+                if (position[i].Equals("200"))
+                {
+                    position[i] = "100";
+                }else if (position[i].Equals("100"))
+                {
+                    position[i] = "200";
+                }
+
+                if (i != 2 && i != 4)
+                {
+                    if (position[i].Equals("5"))
+                    {
+                        position[i] = "6";
+                    }
+                    else if (position[i].Equals("6"))
+                    {
+                        position[i] = "5";
+                    }
+                }
+            }
+                
+            string opponentMessage = "MatchCard;" 
+                + position[1] + ";" 
+                + position[2] + ";"
+                + position[3] + ";"
+                + position[4] + ";";
 
             if (aContext.Equals(player1))
             {
-                if (card.Attribute.Equals("암흑"))
-                {
-                    gameBoard.P1_Resource_dark++;
-                    gameBoard.P1_RemainResource_dark++;
-                }
-                else if (card.Attribute.Equals("불"))
-                {
-                    gameBoard.P1_Resource_fire++;
-                    gameBoard.P1_RemainResource_fire++;
-                }
+                sendPacket_P1(myMessage);
+                sendPacket_P2(opponentMessage);
+                Console.WriteLine(myMessage);//DEBUG
+                Console.WriteLine(opponentMessage);//DEBUG
             }
             else if (aContext.Equals(player2))
             {
-                if (card.Attribute.Equals("암흑"))
-                {
-                    gameBoard.P2_Resource_dark++;
-                    gameBoard.P2_RemainResource_dark++;
-                }
-                else if (card.Attribute.Equals("불"))
-                {
-                    gameBoard.P2_Resource_fire++;
-                    gameBoard.P2_RemainResource_fire++;
-                }
+                sendPacket_P1(opponentMessage);
+                sendPacket_P2(myMessage);
+                Console.WriteLine(opponentMessage);//DEBUG
+                Console.WriteLine(myMessage);//DEBUG
             }
-            sendResourceInformation();
-            MoveCard(aContext, command);
         }
 
-        /// <summary>
-        /// Resource 정보 업데이트
-        /// </summary>
-        private void sendResourceInformation()
-        {
-            CalculationResource();
 
-            sendPacket_P1("Resource;" + gameBoard.P1_Resource_dark + ";"
-                 + gameBoard.P1_Resource_fire + ";"
-                 + gameBoard.P1_RemainResource_dark + ";"
-                 + gameBoard.P1_RemainResource_fire + ";"
-                 + gameBoard.P1_RemainResource_all + ";"
-                 + gameBoard.P1_UsedResource + ";"
-                 + gameBoard.P2_Resource_dark + ";"
-                 + gameBoard.P2_Resource_fire + ";"
-                 + gameBoard.P2_RemainResource_dark + ";"
-                 + gameBoard.P2_RemainResource_fire + ";"
-                 + gameBoard.P2_RemainResource_all + ";"
-                 + gameBoard.P2_UsedResource + ";");
 
-            sendPacket_P2("Resource;" + gameBoard.P2_Resource_dark + ";"
-                + gameBoard.P2_Resource_fire + ";"
-                 + gameBoard.P2_RemainResource_dark + ";"
-                 + gameBoard.P2_RemainResource_fire + ";"
-                 + gameBoard.P2_RemainResource_all + ";"
-                 + gameBoard.P2_UsedResource + ";"
-                 + gameBoard.P1_Resource_dark + ";"
-                 + gameBoard.P1_Resource_fire + ";"
-                 + gameBoard.P1_RemainResource_dark + ";"
-                 + gameBoard.P1_RemainResource_fire + ";"
-                 + gameBoard.P1_RemainResource_all + ";"
-                 + gameBoard.P1_UsedResource + ";");
-        }
-
-        /// <summary>
-        /// 자원 계산
-        /// </summary>
-        private void CalculationResource()
-        {
-            gameBoard.P1_RemainResource_all = (gameBoard.P1_RemainResource_dark + gameBoard.P1_RemainResource_fire) - gameBoard.P1_UsedResource;
-            gameBoard.P2_RemainResource_all = (gameBoard.P2_RemainResource_dark + gameBoard.P2_RemainResource_fire) - gameBoard.P2_UsedResource;
-        }
-
-        #endregion Resource 관련 내용
         //======[게임 승패 결정]=====
         private void judgment_Winner(String winner)
         {
